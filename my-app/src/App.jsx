@@ -8,7 +8,6 @@ function App() {
 
   return (
     <>
-      <h1>User Dashboard Branch</h1>
       <AppRoutes />
     </>
   )
