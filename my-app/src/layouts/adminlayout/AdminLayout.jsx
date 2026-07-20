@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 import AdminSidebar from "../../dashboard/admin/component/AdminSidebar";
 import { AuthProvider } from "../../app/providers/AuthContextApi/AuthProvider";
+import AdminNavbar from "../../dashboard/admin/component/AdminNavbar";
 
 export default function AdminLayout(){
     return(
