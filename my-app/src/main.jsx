@@ -8,8 +8,8 @@ import { CartProvider } from './app/providers/cartProvider.jsx'
 import { AuthProvider } from './app/providers/AuthContextApi/AuthProvider.jsx'
 createRoot(document.getElementById('root')).render(
    <AuthProvider>
- <BrowserRouter>
-    <App />
- </BrowserRouter>
+     <BrowserRouter>
+       <App/>
+     </BrowserRouter>
    </AuthProvider>
 )
