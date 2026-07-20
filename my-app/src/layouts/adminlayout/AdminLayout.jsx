@@ -1,22 +1,29 @@
 import { Outlet } from "react-router-dom";
 import AdminSidebar from "../../dashboard/admin/component/AdminSidebar";
-import { AuthProvider } from "../../app/providers/AuthContextApi/AuthProvider";
+import AdminNavbar from "../../dashboard/admin/component/AdminNavbar";
 
-export default function AdminLayout(){
-    return(
-    <>
+export default function AdminLayout() {
+  return (
+    <div className="flex w-full h-screen">
 
-    <div className="flex border border-black w-full h-screen">
-           <div className="flex w-1/5 border border-red-500">
-            <AdminSidebar/>
-           </div>
-           <div className="flex flex-col w-screen border border-green-600">
-            <AdminNavbar/>
-            <Outlet/>
-           </div>
+      {/* Sidebar */}
+
+      <div className="w-72 border-r">
+        <AdminSidebar />
+      </div>
+
+      {/* Main Content */}
+
+      <div className="flex flex-col flex-1 bg-gray-100">
+
+        <AdminNavbar />
+
+        <div className="flex-1 overflow-y-auto">
+          <Outlet />
         </div>
-    
-    </>
-    )
-}
 
+      </div>
+
+    </div>
+  );
+}
