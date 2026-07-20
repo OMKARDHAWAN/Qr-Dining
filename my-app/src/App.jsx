@@ -1,8 +1,7 @@
-
-import ChefHomePage from "./dashboard/chef/pages/ChefHomePage";
+import AppRoutes from "./app/router/AppRoutes";
 
 function App() {
-  return <ChefHomePage />;
+  return <AppRoutes />;
 }
 
 export default App;

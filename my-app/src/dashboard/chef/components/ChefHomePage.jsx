@@ -1,54 +1,35 @@
 import React from "react";
 
-import ChefSidebar from "../components/ChefSidebar";
-import ChefNavbar from "../components/ChefNavbar";
-import StatsCards from "../components/StatsCards";
-import OrdersTable from "../components/OrdersTable";
-import ActionCard from "../components/ActionCard";
-import FloatingButton from "../components/FloatingButton";
+import ChefNavbar from "./ChefNavbar";
+import StatsCards from "./StatsCards";
+import OrdersTable from "./OrdersTable";
+import ActionCard from "./ActionCard";
+import FloatingButton from "./FloatingButton";
 
 function ChefHomePage() {
     return (
-        <div className="min-h-screen bg-gray-100">
+        <div className="space-y-6">
 
-            {/* Sidebar */}
+            {/* Navbar */}
+            <ChefNavbar />
 
-            <ChefSidebar />
+            {/* Dashboard */}
+            <div className="space-y-8">
 
-            {/* Main Content */}
+                {/* Stats */}
+                <StatsCards />
 
-            <main className="md:ml-72 min-h-screen">
+                {/* Orders */}
+                <OrdersTable />
 
-                {/* Navbar */}
-
-                <ChefNavbar />
-
-                {/* Dashboard */}
-
-                <div className="p-8 space-y-8">
-
-                    {/* Stats */}
-
-                    <StatsCards />
-
-                    {/* Orders */}
-
-                    <OrdersTable />
-
-                    {/* Bottom Card */}
-
-                    <div className="flex justify-end">
-
-                        <ActionCard />
-
-                    </div>
-
+                {/* Bottom Card */}
+                <div className="flex justify-end">
+                    <ActionCard />
                 </div>
 
-            </main>
+            </div>
 
             {/* Floating Action Button */}
-
             <FloatingButton />
 
         </div>
