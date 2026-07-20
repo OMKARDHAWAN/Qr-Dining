@@ -1,9 +1,9 @@
-import ChefHome from "../component/ChefHome";
+import ChefHome from "../components/ChefHomePage";
 
-export default function ChefHomePage(){
-    return(
+export default function ChefHomePage() {
+    return (
         <>
-       <ChefHome/>
+            <ChefHome />
         </>
     )
 }

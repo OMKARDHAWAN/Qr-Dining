@@ -1,16 +1,8 @@
-import { useState } from 'react'
-import './App.css'
-import AppRoutes from './app/router/AppRoutes'
 
+import ChefHomePage from "./dashboard/chef/pages/ChefHomePage";
 
 function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-    <AppRoutes/>
-    </>
-  )
+  return <ChefHomePage />;
 }
 
-export default App
+export default App;
