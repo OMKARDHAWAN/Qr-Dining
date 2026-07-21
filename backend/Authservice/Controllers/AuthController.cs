@@ -1,11 +1,10 @@
+using backend.DTOs;
+using backend.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using backend.DTOs;
-using backend.Services;
-
 namespace backend.Controllers
 {
     [ApiController]
@@ -13,12 +12,10 @@ namespace backend.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _authService;
-
         public AuthController(IAuthService authService)
         {
             _authService = authService;
         }
-
         /// <summary>
         /// Customer Login / Auto-Registration.
         /// Receives Username, Email, and Mobile Number.
@@ -30,16 +27,20 @@ namespace backend.Controllers
             {
                 return BadRequest(ModelState);
             }
-
             var result = await _authService.CustomerLoginAsync(request);
-            if (result == null)
-            {
-                return BadRequest(new { message = "Username or Email is already registered by a staff member." });
-            }
 
+            // If the customer registration fails due to duplicate username/email taken by staff
+            if (!result.IsRegistered && !string.IsNullOrEmpty(request.Username) && !string.IsNullOrEmpty(request.Email))
+            {
+                return BadRequest(new { message = result.Message });
+            }
+            // If OTP verification was attempted and failed
+            if (result.IsRegistered && result.OtpSent && string.IsNullOrEmpty(result.Token) && !string.IsNullOrEmpty(request.Otp))
+            {
+                return BadRequest(new { message = result.Message });
+            }
             return Ok(result);
         }
-
         /// <summary>
         /// Staff Login (for Admin and Chef).
         /// Receives Username and Password.
@@ -51,17 +52,14 @@ namespace backend.Controllers
             {
                 return BadRequest(ModelState);
             }
-
             var result = await _authService.StaffLoginAsync(request);
             if (result == null)
             {
                 // To prevent user enumeration, we return a generic error message
                 return Unauthorized(new { message = "Invalid Username or Password." });
             }
-
             return Ok(result);
         }
-
         /// <summary>
         /// Admin Action: Create a Chef account.
         /// Requires Admin role JWT to access.
@@ -74,16 +72,13 @@ namespace backend.Controllers
             {
                 return BadRequest(ModelState);
             }
-
             var result = await _authService.CreateChefAsync(request);
             if (result == null)
             {
                 return BadRequest(new { message = "Username or Email is already registered." });
             }
-
             return Ok(new { message = "Chef account created successfully.", chefDetails = result });
         }
-
         /// <summary>
         /// User Profile verification.
         /// Requires an authenticated JWT token.
@@ -99,7 +94,6 @@ namespace backend.Controllers
             var email = User.FindFirst(ClaimTypes.Email)?.Value;
             var role = User.FindFirst(ClaimTypes.Role)?.Value;
             var mobileNumber = User.FindFirst("MobileNumber")?.Value;
-
             return Ok(new
             {
                 Id = userId,
@@ -109,7 +103,6 @@ namespace backend.Controllers
                 MobileNumber = mobileNumber
             });
         }
-
         /// <summary>
         /// Logout Endpoint.
         /// Requires an authenticated JWT token.

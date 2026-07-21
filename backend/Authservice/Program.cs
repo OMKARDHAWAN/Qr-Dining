@@ -37,7 +37,7 @@ namespace backend
                 options.UseSqlServer(connectionString));
 
             // 3. REGISTER REPOSITORIES AND SERVICES (DEPENDENCY INJECTION)
-            builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<IUserRepository, backend.Repositories.UserRepository>();
             builder.Services.AddScoped<IAuthService, AuthService>();
 
             // 4. CONFIGURE JWT AUTHENTICATION
