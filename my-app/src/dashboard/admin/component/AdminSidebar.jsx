@@ -13,7 +13,9 @@ import { Link } from "react-router-dom";
 const AdminSidebar = () => {
   return (
     <aside className="w-72 bg-white border-r flex flex-col justify-between">
+
       <div>
+
         {/* Logo */}
 
         <div className="flex items-center gap-4 p-8">
@@ -32,7 +34,7 @@ const AdminSidebar = () => {
           </div>
         </div>
 
-        {/* Menu */}
+        {/* Sidebar Menu */}
 
         <div className="px-5 space-y-2">
 
@@ -78,10 +80,13 @@ const AdminSidebar = () => {
 
           {/* Profile */}
 
-          <button className="flex items-center gap-4 w-full rounded-xl px-5 py-4 hover:bg-gray-100 cursor-pointer">
+          <Link
+            to="/admin/profile"
+            className="flex items-center gap-4 w-full rounded-xl px-5 py-4 hover:bg-gray-100"
+          >
             <FiUser size={22} />
             <span>Profile</span>
-          </button>
+          </Link>
 
         </div>
       </div>
@@ -89,22 +94,25 @@ const AdminSidebar = () => {
       {/* Bottom */}
 
       <div className="p-6">
+
         <hr />
 
         <div className="mt-6 space-y-4">
 
-          <button className="flex items-center gap-4 hover:text-orange-500">
+          <button className="flex items-center gap-4 hover:text-orange-500 cursor-pointer">
             <FiHelpCircle size={22} />
-            Support
+            <span>Support</span>
           </button>
 
-          <button className="flex items-center gap-4 text-red-600">
+          <button className="flex items-center gap-4 text-red-600 cursor-pointer">
             <FiLogOut size={22} />
-            Logout
+            <span>Logout</span>
           </button>
 
         </div>
+
       </div>
+
     </aside>
   );
 };

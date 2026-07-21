@@ -26,15 +26,14 @@ const StaffData = [
     image:
       "https://randomuser.me/api/portraits/men/75.jpg",
   },
-  {
-    id: 4,
-    name: "Marcus Chen",
-    role: "Senior Server",
-    location: "Front of House",
-    status: "On Duty",
-    image:
-      "https://randomuser.me/api/portraits/men/22.jpg",
-  },
+{
+  id: 4,
+  name: "Marcus Chen",
+  role: "Senior Server",
+  location: "Front of House",
+  status: "On Duty",
+ image: "https://randomuser.me/api/portraits/men/68.jpg",
+},
   {
     id: 5,
     name: "Elena Kozlova",
