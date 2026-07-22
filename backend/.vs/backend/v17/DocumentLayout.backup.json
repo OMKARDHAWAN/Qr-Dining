@@ -3,8 +3,28 @@
   "WorkspaceRootPath": "C:\\Users\\dhawa\\vs project\\Qr-dining\\backend\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\dhawa\\vs project\\Qr-dining\\backend\\Migrations\\20260719170558_InitialCreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Migrations\\20260719170558_InitialCreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{CECF9345-721A-4BD6-9B2F-7D2C5DCE59CA}|backend.csproj|c:\\users\\dhawa\\vs project\\qr-dining\\backend\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CECF9345-721A-4BD6-9B2F-7D2C5DCE59CA}|backend.csproj|solutionrelative:controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CECF9345-721A-4BD6-9B2F-7D2C5DCE59CA}|backend.csproj|c:\\users\\dhawa\\vs project\\qr-dining\\backend\\repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CECF9345-721A-4BD6-9B2F-7D2C5DCE59CA}|backend.csproj|solutionrelative:repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CECF9345-721A-4BD6-9B2F-7D2C5DCE59CA}|backend.csproj|c:\\users\\dhawa\\vs project\\qr-dining\\backend\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CECF9345-721A-4BD6-9B2F-7D2C5DCE59CA}|backend.csproj|solutionrelative:services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CECF9345-721A-4BD6-9B2F-7D2C5DCE59CA}|backend.csproj|c:\\users\\dhawa\\vs project\\qr-dining\\backend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CECF9345-721A-4BD6-9B2F-7D2C5DCE59CA}|backend.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CECF9345-721A-4BD6-9B2F-7D2C5DCE59CA}|backend.csproj|c:\\users\\dhawa\\vs project\\qr-dining\\backend\\dtos\\chefregisterrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CECF9345-721A-4BD6-9B2F-7D2C5DCE59CA}|backend.csproj|solutionrelative:dtos\\chefregisterrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CECF9345-721A-4BD6-9B2F-7D2C5DCE59CA}|backend.csproj|c:\\users\\dhawa\\vs project\\qr-dining\\backend\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CECF9345-721A-4BD6-9B2F-7D2C5DCE59CA}|backend.csproj|solutionrelative:data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{CECF9345-721A-4BD6-9B2F-7D2C5DCE59CA}|backend.csproj|c:\\users\\dhawa\\vs project\\qr-dining\\backend\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
@@ -15,72 +35,8 @@
       "RelativeMoniker": "D:0:0:{CECF9345-721A-4BD6-9B2F-7D2C5DCE59CA}|backend.csproj|solutionrelative:backend.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CECF9345-721A-4BD6-9B2F-7D2C5DCE59CA}|backend.csproj|c:\\users\\dhawa\\vs project\\qr-dining\\backend\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CECF9345-721A-4BD6-9B2F-7D2C5DCE59CA}|backend.csproj|solutionrelative:controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CECF9345-721A-4BD6-9B2F-7D2C5DCE59CA}|backend.csproj|c:\\users\\dhawa\\vs project\\qr-dining\\backend\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CECF9345-721A-4BD6-9B2F-7D2C5DCE59CA}|backend.csproj|solutionrelative:data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CECF9345-721A-4BD6-9B2F-7D2C5DCE59CA}|backend.csproj|c:\\users\\dhawa\\vs project\\qr-dining\\backend\\services\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CECF9345-721A-4BD6-9B2F-7D2C5DCE59CA}|backend.csproj|solutionrelative:services\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CECF9345-721A-4BD6-9B2F-7D2C5DCE59CA}|backend.csproj|c:\\users\\dhawa\\vs project\\qr-dining\\backend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CECF9345-721A-4BD6-9B2F-7D2C5DCE59CA}|backend.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CECF9345-721A-4BD6-9B2F-7D2C5DCE59CA}|backend.csproj|c:\\users\\dhawa\\vs project\\qr-dining\\backend\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CECF9345-721A-4BD6-9B2F-7D2C5DCE59CA}|backend.csproj|solutionrelative:services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CECF9345-721A-4BD6-9B2F-7D2C5DCE59CA}|backend.csproj|c:\\users\\dhawa\\vs project\\qr-dining\\backend\\repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CECF9345-721A-4BD6-9B2F-7D2C5DCE59CA}|backend.csproj|solutionrelative:repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CECF9345-721A-4BD6-9B2F-7D2C5DCE59CA}|backend.csproj|c:\\users\\dhawa\\vs project\\qr-dining\\backend\\repositories\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CECF9345-721A-4BD6-9B2F-7D2C5DCE59CA}|backend.csproj|solutionrelative:repositories\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CECF9345-721A-4BD6-9B2F-7D2C5DCE59CA}|backend.csproj|c:\\users\\dhawa\\vs project\\qr-dining\\backend\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CECF9345-721A-4BD6-9B2F-7D2C5DCE59CA}|backend.csproj|solutionrelative:models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CECF9345-721A-4BD6-9B2F-7D2C5DCE59CA}|backend.csproj|c:\\users\\dhawa\\vs project\\qr-dining\\backend\\models\\errorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CECF9345-721A-4BD6-9B2F-7D2C5DCE59CA}|backend.csproj|solutionrelative:models\\errorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{CECF9345-721A-4BD6-9B2F-7D2C5DCE59CA}|backend.csproj|c:\\users\\dhawa\\vs project\\qr-dining\\backend\\models\\admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{CECF9345-721A-4BD6-9B2F-7D2C5DCE59CA}|backend.csproj|solutionrelative:models\\admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CECF9345-721A-4BD6-9B2F-7D2C5DCE59CA}|backend.csproj|c:\\users\\dhawa\\vs project\\qr-dining\\backend\\helpers\\passwordhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CECF9345-721A-4BD6-9B2F-7D2C5DCE59CA}|backend.csproj|solutionrelative:helpers\\passwordhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CECF9345-721A-4BD6-9B2F-7D2C5DCE59CA}|backend.csproj|c:\\users\\dhawa\\vs project\\qr-dining\\backend\\dtos\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CECF9345-721A-4BD6-9B2F-7D2C5DCE59CA}|backend.csproj|solutionrelative:dtos\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CECF9345-721A-4BD6-9B2F-7D2C5DCE59CA}|backend.csproj|c:\\users\\dhawa\\vs project\\qr-dining\\backend\\dtos\\staffloginrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CECF9345-721A-4BD6-9B2F-7D2C5DCE59CA}|backend.csproj|solutionrelative:dtos\\staffloginrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CECF9345-721A-4BD6-9B2F-7D2C5DCE59CA}|backend.csproj|c:\\users\\dhawa\\vs project\\qr-dining\\backend\\dtos\\loginresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CECF9345-721A-4BD6-9B2F-7D2C5DCE59CA}|backend.csproj|solutionrelative:dtos\\loginresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CECF9345-721A-4BD6-9B2F-7D2C5DCE59CA}|backend.csproj|c:\\users\\dhawa\\vs project\\qr-dining\\backend\\dtos\\customerloginrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CECF9345-721A-4BD6-9B2F-7D2C5DCE59CA}|backend.csproj|solutionrelative:dtos\\customerloginrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CECF9345-721A-4BD6-9B2F-7D2C5DCE59CA}|backend.csproj|c:\\users\\dhawa\\vs project\\qr-dining\\backend\\dtos\\chefregisterrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CECF9345-721A-4BD6-9B2F-7D2C5DCE59CA}|backend.csproj|solutionrelative:dtos\\chefregisterrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CECF9345-721A-4BD6-9B2F-7D2C5DCE59CA}|backend.csproj|c:\\users\\dhawa\\vs project\\qr-dining\\backend\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CECF9345-721A-4BD6-9B2F-7D2C5DCE59CA}|backend.csproj|solutionrelative:controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -90,167 +46,101 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "20260719170558_InitialCreate.cs",
-              "DocumentMoniker": "C:\\Users\\dhawa\\vs project\\Qr-dining\\backend\\Migrations\\20260719170558_InitialCreate.cs",
-              "RelativeDocumentMoniker": "Migrations\\20260719170558_InitialCreate.cs",
-              "ToolTip": "C:\\Users\\dhawa\\vs project\\Qr-dining\\backend\\Migrations\\20260719170558_InitialCreate.cs",
-              "RelativeToolTip": "Migrations\\20260719170558_InitialCreate.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "AuthService.cs",
+              "DocumentMoniker": "C:\\Users\\dhawa\\vs project\\Qr-dining\\backend\\Services\\AuthService.cs",
+              "RelativeDocumentMoniker": "Services\\AuthService.cs",
+              "ToolTip": "C:\\Users\\dhawa\\vs project\\Qr-dining\\backend\\Services\\AuthService.cs",
+              "RelativeToolTip": "Services\\AuthService.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAAB0AAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-19T17:05:59.745Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "IAuthService.cs",
-              "DocumentMoniker": "C:\\Users\\dhawa\\vs project\\Qr-dining\\backend\\Services\\IAuthService.cs",
-              "RelativeDocumentMoniker": "Services\\IAuthService.cs",
-              "ToolTip": "C:\\Users\\dhawa\\vs project\\Qr-dining\\backend\\Services\\IAuthService.cs",
-              "RelativeToolTip": "Services\\IAuthService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAANAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-19T16:49:28.957Z",
+              "WhenOpened": "2026-07-22T11:25:54.468Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
+              "Title": "ChefRegisterRequest.cs",
+              "DocumentMoniker": "C:\\Users\\dhawa\\vs project\\Qr-dining\\backend\\DTOs\\ChefRegisterRequest.cs",
+              "RelativeDocumentMoniker": "DTOs\\ChefRegisterRequest.cs",
+              "ToolTip": "C:\\Users\\dhawa\\vs project\\Qr-dining\\backend\\DTOs\\ChefRegisterRequest.cs",
+              "RelativeToolTip": "DTOs\\ChefRegisterRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-22T10:04:43.209Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "C:\\Users\\dhawa\\vs project\\Qr-dining\\backend\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "Controllers\\AuthController.cs",
+              "ToolTip": "C:\\Users\\dhawa\\vs project\\Qr-dining\\backend\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "Controllers\\AuthController.cs",
+              "ViewState": "AgIAABYAAAAAAAAAAAAQwAoAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-22T10:04:15.055Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
               "Title": "AppDbContext.cs",
               "DocumentMoniker": "C:\\Users\\dhawa\\vs project\\Qr-dining\\backend\\Data\\AppDbContext.cs",
               "RelativeDocumentMoniker": "Data\\AppDbContext.cs",
               "ToolTip": "C:\\Users\\dhawa\\vs project\\Qr-dining\\backend\\Data\\AppDbContext.cs",
               "RelativeToolTip": "Data\\AppDbContext.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEIAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-07-19T16:38:26.774Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "AuthController.cs",
-              "DocumentMoniker": "C:\\Users\\dhawa\\vs project\\Qr-dining\\backend\\Controllers\\AuthController.cs",
-              "RelativeDocumentMoniker": "Controllers\\AuthController.cs",
-              "ToolTip": "C:\\Users\\dhawa\\vs project\\Qr-dining\\backend\\Controllers\\AuthController.cs",
-              "RelativeToolTip": "Controllers\\AuthController.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAYAAAAWAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-19T16:45:44.614Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "backend.csproj",
-              "DocumentMoniker": "C:\\Users\\dhawa\\vs project\\Qr-dining\\backend\\backend.csproj",
-              "RelativeDocumentMoniker": "backend.csproj",
-              "ToolTip": "C:\\Users\\dhawa\\vs project\\Qr-dining\\backend\\backend.csproj",
-              "RelativeToolTip": "backend.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAASAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2026-07-18T18:51:05.847Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\dhawa\\vs project\\Qr-dining\\backend\\appsettings.json",
-              "RelativeDocumentMoniker": "appsettings.json",
-              "ToolTip": "C:\\Users\\dhawa\\vs project\\Qr-dining\\backend\\appsettings.json",
-              "RelativeToolTip": "appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAABUAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-07-19T06:13:16.355Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\dhawa\\vs project\\Qr-dining\\backend\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "C:\\Users\\dhawa\\vs project\\Qr-dining\\backend\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAGUAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-19T06:13:32.165Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "AuthService.cs",
-              "DocumentMoniker": "C:\\Users\\dhawa\\vs project\\Qr-dining\\backend\\Services\\AuthService.cs",
-              "RelativeDocumentMoniker": "Services\\AuthService.cs",
-              "ToolTip": "C:\\Users\\dhawa\\vs project\\Qr-dining\\backend\\Services\\AuthService.cs",
-              "RelativeToolTip": "Services\\AuthService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-19T16:48:59.909Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
               "Title": "UserRepository.cs",
               "DocumentMoniker": "C:\\Users\\dhawa\\vs project\\Qr-dining\\backend\\Repositories\\UserRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\UserRepository.cs",
               "ToolTip": "C:\\Users\\dhawa\\vs project\\Qr-dining\\backend\\Repositories\\UserRepository.cs",
               "RelativeToolTip": "Repositories\\UserRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAvAAAAAAAAAA==",
+              "ViewState": "AgIAAB8AAAAAAAAAAAAkwCgAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-07-19T16:38:11.136Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "IUserRepository.cs",
-              "DocumentMoniker": "C:\\Users\\dhawa\\vs project\\Qr-dining\\backend\\Repositories\\IUserRepository.cs",
-              "RelativeDocumentMoniker": "Repositories\\IUserRepository.cs",
-              "ToolTip": "C:\\Users\\dhawa\\vs project\\Qr-dining\\backend\\Repositories\\IUserRepository.cs",
-              "RelativeToolTip": "Repositories\\IUserRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAANAAAAAAAAAA==",
+              "DocumentIndex": 3,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\dhawa\\vs project\\Qr-dining\\backend\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\dhawa\\vs project\\Qr-dining\\backend\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-19T16:47:43.571Z",
+              "WhenOpened": "2026-07-19T06:13:32.165Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "User.cs",
-              "DocumentMoniker": "C:\\Users\\dhawa\\vs project\\Qr-dining\\backend\\Models\\User.cs",
-              "RelativeDocumentMoniker": "Models\\User.cs",
-              "ToolTip": "C:\\Users\\dhawa\\vs project\\Qr-dining\\backend\\Models\\User.cs",
-              "RelativeToolTip": "Models\\User.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-19T16:47:29.583Z",
-              "EditorCaption": ""
+              "DocumentIndex": 6,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\dhawa\\vs project\\Qr-dining\\backend\\appsettings.json",
+              "RelativeDocumentMoniker": "appsettings.json",
+              "ToolTip": "C:\\Users\\dhawa\\vs project\\Qr-dining\\backend\\appsettings.json",
+              "RelativeToolTip": "appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAADnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-07-19T06:13:16.355Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "ErrorViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\dhawa\\vs project\\Qr-dining\\backend\\Models\\ErrorViewModel.cs",
-              "RelativeDocumentMoniker": "Models\\ErrorViewModel.cs",
-              "ToolTip": "C:\\Users\\dhawa\\vs project\\Qr-dining\\backend\\Models\\ErrorViewModel.cs",
-              "RelativeToolTip": "Models\\ErrorViewModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-19T16:47:41.413Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 8,
               "Title": "Admin.cs",
               "DocumentMoniker": "C:\\Users\\dhawa\\vs project\\Qr-dining\\backend\\Models\\Admin.cs",
               "RelativeDocumentMoniker": "Models\\Admin.cs",
@@ -258,99 +148,19 @@
               "RelativeToolTip": "Models\\Admin.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAzAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-19T06:08:42.572Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-19T06:08:42.572Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "PasswordHelper.cs",
-              "DocumentMoniker": "C:\\Users\\dhawa\\vs project\\Qr-dining\\backend\\Helpers\\PasswordHelper.cs",
-              "RelativeDocumentMoniker": "Helpers\\PasswordHelper.cs",
-              "ToolTip": "C:\\Users\\dhawa\\vs project\\Qr-dining\\backend\\Helpers\\PasswordHelper.cs",
-              "RelativeToolTip": "Helpers\\PasswordHelper.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-19T16:47:19.268Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "UserDto.cs",
-              "DocumentMoniker": "C:\\Users\\dhawa\\vs project\\Qr-dining\\backend\\DTOs\\UserDto.cs",
-              "RelativeDocumentMoniker": "DTOs\\UserDto.cs",
-              "ToolTip": "C:\\Users\\dhawa\\vs project\\Qr-dining\\backend\\DTOs\\UserDto.cs",
-              "RelativeToolTip": "DTOs\\UserDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-19T16:46:30.593Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "StaffLoginRequest.cs",
-              "DocumentMoniker": "C:\\Users\\dhawa\\vs project\\Qr-dining\\backend\\DTOs\\StaffLoginRequest.cs",
-              "RelativeDocumentMoniker": "DTOs\\StaffLoginRequest.cs",
-              "ToolTip": "C:\\Users\\dhawa\\vs project\\Qr-dining\\backend\\DTOs\\StaffLoginRequest.cs",
-              "RelativeToolTip": "DTOs\\StaffLoginRequest.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-19T16:46:39.106Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "LoginResponse.cs",
-              "DocumentMoniker": "C:\\Users\\dhawa\\vs project\\Qr-dining\\backend\\DTOs\\LoginResponse.cs",
-              "RelativeDocumentMoniker": "DTOs\\LoginResponse.cs",
-              "ToolTip": "C:\\Users\\dhawa\\vs project\\Qr-dining\\backend\\DTOs\\LoginResponse.cs",
-              "RelativeToolTip": "DTOs\\LoginResponse.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-19T16:46:50.666Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "CustomerLoginRequest.cs",
-              "DocumentMoniker": "C:\\Users\\dhawa\\vs project\\Qr-dining\\backend\\DTOs\\CustomerLoginRequest.cs",
-              "RelativeDocumentMoniker": "DTOs\\CustomerLoginRequest.cs",
-              "ToolTip": "C:\\Users\\dhawa\\vs project\\Qr-dining\\backend\\DTOs\\CustomerLoginRequest.cs",
-              "RelativeToolTip": "DTOs\\CustomerLoginRequest.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-19T16:46:58.039Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 18,
-              "Title": "ChefRegisterRequest.cs",
-              "DocumentMoniker": "C:\\Users\\dhawa\\vs project\\Qr-dining\\backend\\DTOs\\ChefRegisterRequest.cs",
-              "RelativeDocumentMoniker": "DTOs\\ChefRegisterRequest.cs",
-              "ToolTip": "C:\\Users\\dhawa\\vs project\\Qr-dining\\backend\\DTOs\\ChefRegisterRequest.cs",
-              "RelativeToolTip": "DTOs\\ChefRegisterRequest.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-19T16:47:04.551Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 19,
-              "Title": "HomeController.cs",
-              "DocumentMoniker": "C:\\Users\\dhawa\\vs project\\Qr-dining\\backend\\Controllers\\HomeController.cs",
-              "RelativeDocumentMoniker": "Controllers\\HomeController.cs",
-              "ToolTip": "C:\\Users\\dhawa\\vs project\\Qr-dining\\backend\\Controllers\\HomeController.cs",
-              "RelativeToolTip": "Controllers\\HomeController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-19T16:48:49.782Z",
-              "EditorCaption": ""
+              "DocumentIndex": 7,
+              "Title": "backend.csproj",
+              "DocumentMoniker": "C:\\Users\\dhawa\\vs project\\Qr-dining\\backend\\backend.csproj",
+              "RelativeDocumentMoniker": "backend.csproj",
+              "ToolTip": "C:\\Users\\dhawa\\vs project\\Qr-dining\\backend\\backend.csproj",
+              "RelativeToolTip": "backend.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-07-18T18:51:05.847Z"
             }
           ]
         }
