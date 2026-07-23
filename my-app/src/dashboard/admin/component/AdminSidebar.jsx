@@ -12,8 +12,8 @@ import { useAuth } from "../../../app/providers/AuthContextApi/AuthProvider";
 import LogoutConfirm from "./LogutConfirm";
 
 // Declared outside to optimize performance and prevent re-creation on every render
-const getLinkClass = ({ isActive }) => 
-  "flex items-center gap-4 w-full rounded-xl px-5 py-4 transition-all duration-200 " + 
+const getLinkClass = ({ isActive }) =>  
+  "flex items-center gap-4 w-full rounded-xl px-5 py-4 transition-all duration-200 " +
   (isActive ? "bg-orange-50 text-orange-600 font-semibold" : "text-gray-600 hover:bg-gray-100");
 
 const AdminSidebar = () => {
@@ -28,8 +28,10 @@ const AdminSidebar = () => {
   };
 
   return (
+
     <aside className="w-72 bg-white border-r flex flex-col justify-between h-screen relative">
       <div>
+
         {/* Logo */}
         <div className="flex items-center gap-4 p-8">
           <div className="bg-orange-500 rounded-xl w-14 h-14 flex items-center justify-center">
@@ -45,7 +47,8 @@ const AdminSidebar = () => {
           </div>
         </div>
 
-        {/* Menu Links */}
+        {/* Sidebar Menu */}
+
         <div className="px-5 space-y-2">
           {/* Order Status */}
           <NavLink
@@ -84,11 +87,16 @@ const AdminSidebar = () => {
             <span className="font-sans">Staff Directory</span>
           </NavLink>
 
-          {/* Profile Button */}
-          <button className="flex items-center gap-4 w-full rounded-xl px-5 py-4 text-gray-600 hover:bg-gray-100 cursor-pointer transition-all duration-200">
+          {/* Profile */}
+
+          <NavLink
+            to="/admin/profile"
+            className="flex items-center gap-4 w-full rounded-xl px-5 py-4 hover:bg-gray-100"
+          >
             <FiUser size={22} />
-            <span className="font-sans">Profile</span>
-          </button>
+            <span>Profile</span>
+          </NavLink>
+
         </div>
       </div>
 
@@ -96,7 +104,7 @@ const AdminSidebar = () => {
       <div className="p-6">
         <hr className="border-gray-200" />
         <div className="mt-6">
-          <button 
+          <button
             onClick={() => setShowLogoutConfirm(true)} // Opens the custom confirmation popup
             className="flex items-center gap-4 text-red-600 hover:text-red-800 cursor-pointer transition-colors font-sans w-full text-left"
           >
@@ -104,6 +112,7 @@ const AdminSidebar = () => {
             <span>Logout</span>
           </button>
         </div>
+
       </div>
 
       {/* Custom Logout Confirmation Popup Overlay */}
