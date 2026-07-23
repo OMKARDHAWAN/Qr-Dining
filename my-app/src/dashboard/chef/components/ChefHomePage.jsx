@@ -9,13 +9,12 @@ import FloatingButton from "./FloatingButton";
 function ChefHomePage() {
     return (
         <div className="space-y-6">
-
+            
             {/* Navbar */}
             <ChefNavbar />
 
             {/* Dashboard */}
             <div className="space-y-8">
-
                 {/* Stats */}
                 <StatsCards />
 
