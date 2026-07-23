@@ -10,7 +10,7 @@ namespace MenuService.Data
         {
         }
 
-        // DbSets representing the tables
+        // DbSets representing  the tables
         public DbSet<Category> Categories { get; set; }
         public DbSet<MenuItemList> MenuItemLists { get; set; }
 

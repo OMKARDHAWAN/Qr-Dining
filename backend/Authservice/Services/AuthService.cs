@@ -205,15 +205,8 @@ namespace backend.Services
             };
         }
 
-        Task<CustomerLoginResponse?> IAuthService.CustomerLoginAsync(CustomerLoginRequest request)
-        {
-            throw new NotImplementedException();
-        }
-
       
-        Task<CustomerLoginResponse?> IAuthService.StaffLoginAsync(StaffLoginRequest request)
-        {
-            throw new NotImplementedException();
-        }
+      
+      
     }
 }
