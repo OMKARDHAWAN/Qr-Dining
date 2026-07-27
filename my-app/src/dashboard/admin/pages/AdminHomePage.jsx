@@ -1,5 +1,9 @@
-import OrderStatus from "../component/OrderStatus";
+import AdminHome from "../component/AdminHome";
 
-export default function AdminHomePage() {
-  return <OrderStatus />;
+export default function AdminHomePage(){
+    return(
+        <>
+        <AdminHome/>
+        </>
+    )
 }
