@@ -10,6 +10,7 @@ export default function UserRoutes(){
  <Route element={<UserLayout/>}>
  <Route path="/" element={<TablePage/>}/>
  <Route path="/user" element={<UserHomePage/>}/>
+ <Route path="/" element={<UserHomePage/>}/>
  </Route>
  </Routes>
  </>        
