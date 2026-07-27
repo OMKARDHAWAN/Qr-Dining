@@ -9,6 +9,7 @@ export default function AppRoutes() {
   return (
     <>
       <Routes>
+        <Route path="/*" element={<UserRoutes />} />
         <Route path="/"  element={<TablePage/>}/>
         <Route path="/login" element= {<Login/>}/>
         <Route path="/user/*" element={<UserRoutes />} />
