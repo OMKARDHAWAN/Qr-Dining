@@ -1,18 +1,17 @@
 import React, { useState } from 'react';
-import { Search, Bell, ShoppingCart, User } from 'lucide-react';
+import { Search, Bell, ShoppingCart, User, Menu as MenuIcon, X } from 'lucide-react';
 import { useCart } from '../../../shared/hooks/useCart';
-
 export default function UserNavbar({ 
   searchQuery, 
   setSearchQuery, 
+  onCartClick, 
   onNotificationClick, 
   onProfileClick,
   activeSection,
   setActiveSection
 }) {
-  const { cartItemsCount, setCartOpen } = useCart();
+  const { cartItemsCount } = useCart();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
   return (
     <nav className="sticky top-0 z-40 w-full bg-white/90 backdrop-blur-md border-b border-gray-100 px-4 md:px-6 lg:px-8 py-4 transition-all duration-300">
       <div className="max-w-[1440px] mx-auto flex items-center justify-between">
@@ -23,7 +22,6 @@ export default function UserNavbar({
             Culinary<span className="text-[#B41B00]">AI</span>
           </span>
         </div>
-
         {/* Center: Desktop Navigation Links */}
         <div className="hidden md:flex items-center gap-8 font-semibold text-sm tracking-wider">
           <button 
@@ -46,8 +44,8 @@ export default function UserNavbar({
           >
             MENU
           </button>
+         
         </div>
-
         {/* Right: Search, Cart, Notifications, Profile */}
         <div className="flex items-center gap-3 md:gap-5">
           
@@ -62,10 +60,9 @@ export default function UserNavbar({
             />
             <Search className="absolute left-3.5 top-2.5 w-4 h-4 text-gray-400" />
           </div>
-
           {/* Cart Icon */}
           <button 
-            onClick={() => setCartOpen(true)}
+            onClick={onCartClick}
             className="relative p-2 rounded-full text-[#2D2F2F] hover:bg-gray-100 active:scale-95 transition-all duration-300"
           >
             <ShoppingCart className="w-5 h-5" />
@@ -75,7 +72,6 @@ export default function UserNavbar({
               </span>
             )}
           </button>
-
           {/* Notification Icon */}
           <button 
             onClick={onNotificationClick}
@@ -84,7 +80,6 @@ export default function UserNavbar({
             <Bell className="w-5 h-5" />
             <span className="absolute top-2 right-2 h-2 w-2 rounded-full bg-[#B41B00] ring-2 ring-white" />
           </button>
-
           {/* Profile Icon */}
           <button 
             onClick={onProfileClick}
@@ -103,7 +98,6 @@ export default function UserNavbar({
             </div>
           </button>
         </div>
-
       </div>
     </nav>
   );
