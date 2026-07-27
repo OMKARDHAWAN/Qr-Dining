@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import HeroSection from './HeroSection';
 import MobileBottomNav from './MobileBottomNav';
 import FeaturedOffers from './FeaturedOffers';
@@ -11,6 +11,8 @@ import CartDrawer from './CartDrawer';
 import AIAssistantModal from './AIAssistantModal';
 import { useCart } from '../../../shared/hooks/useCart';
 import UserNavbar from './UserNavbar';
+import { useSearchParams } from 'react-router-dom';
+import { useTable } from '../../../app/providers/TableContextApi/TableProvider';
 
 export default function UserHome() {
   // Navigation & Search State
@@ -43,8 +45,25 @@ export default function UserHome() {
     alert(`🎉 Offer Applied: "${offer.title}"! We've added this to your session discounts.`);
   };
 
+  const [searchParams] = useSearchParams();
+  const { setTableId, tableId } = useTable();
+
+  useEffect(() => {
+    // Read tableId from URL query parameter (e.g., /user?tableId=5)
+    const tableIdFromUrl = searchParams.get("tableId");
+    console.log(tableIdFromUrl);
+    if (tableIdFromUrl) {
+      setTableId(tableIdFromUrl); // Updates Context and sessionStorage
+      console.log("Table session started for Table ID:", tableIdFromUrl);
+    }
+  }, [searchParams, setTableId]);
+
   return (
-    <div className="min-h-screen bg-[#F6F6F6] text-[#2D2F2F] flex flex-col font-['Outfit',sans-serif] select-none antialiased">
+
+      <div>
+     
+      {/* ... rest of page */}
+      <div className="min-h-screen bg-[#F6F6F6] text-[#2D2F2F] flex flex-col font-['Outfit',sans-serif] select-none antialiased">
       
       {/* Navbar Header */}
     
@@ -68,12 +87,7 @@ export default function UserHome() {
             {/* Chef Selection - Cafe Classics */}
             <IndianCafeClassics onAddToOrder={handleAddToOrder} />
 
-            {/* Search/Filterable product card lists */}
-            <ProductGrid 
-              activeCategory={activeCategory}
-              searchQuery={searchQuery}
-              onAddToOrder={handleAddToOrder}
-            />
+           
 
             {/* Today's Special Highlights */}
             <TodayDesiDelights onAddToOrder={handleAddToOrder} />
@@ -119,5 +133,7 @@ export default function UserHome() {
       />
 
     </div>
+    </div>
+    
   );
 }

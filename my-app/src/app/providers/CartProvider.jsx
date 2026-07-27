@@ -1,25 +1,15 @@
 import React, { createContext, useState } from 'react';
+
 // Create the Context
 export const CartContext = createContext();
+
 // Create the Provider wrapper
 export function CartProvider({ children }) {
-  // Pre-load mock items exactly as in the original state
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 'butter-chicken-bowl',
-      name: 'Butter Chicken Bowl',
-      price: 450,
-      image: 'https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&q=80&w=300',
-      quantity: 1,
-    },
-    {
-      id: 'masala-cutting-chai',
-      name: 'Masala Cutting Chai',
-      price: 80,
-      image: 'https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&q=80&w=300',
-      quantity: 2,
-    }
-  ]);
+  const [cartOpen, setCartOpen] = useState(false);
+
+  // Initialize cart items as an empty array
+  const [cartItems, setCartItems] = useState([]);
+
   // Add a product to the cart
   const addToCart = (product) => {
     setCartItems((prevItems) => {
@@ -42,11 +32,14 @@ export function CartProvider({ children }) {
         }
       ];
     });
+    setCartOpen(true);
   };
+
   // Remove a product completely from the cart
   const removeFromCart = (id) => {
     setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
   };
+
   // Increase quantity of a product by 1
   const increaseQuantity = (id) => {
     setCartItems((prevItems) =>
@@ -55,6 +48,7 @@ export function CartProvider({ children }) {
       )
     );
   };
+
   // Decrease quantity of a product by 1 (removes if quantity reaches 0)
   const decreaseQuantity = (id) => {
     setCartItems((prevItems) => {
@@ -69,16 +63,19 @@ export function CartProvider({ children }) {
         .filter(Boolean);
     });
   };
+
   // Clear all items from the cart
   const clearCart = () => {
     setCartItems([]);
   };
+
   // Derived state values
   const cartItemsCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
   const subtotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
   const tax = subtotal * 0.05;
   const deliveryFee = subtotal > 500 ? 0 : 40;
   const totalPrice = subtotal + tax + deliveryFee;
+
   return (
     <CartContext.Provider
       value={{
@@ -92,7 +89,9 @@ export function CartProvider({ children }) {
         subtotal,
         tax,
         deliveryFee,
-        totalPrice
+        totalPrice,
+        cartOpen,
+        setCartOpen
       }}
     >
       {children}
