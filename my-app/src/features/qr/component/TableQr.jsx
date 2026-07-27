@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React from "react";
 import { useNavigate, useSearchParams } from "react-router-dom"; // Imported hooks
 
@@ -40,4 +41,15 @@ export default function TableQr() {
       </div>
     </div>
   );
+=======
+export default function TableQr(){
+    console.log("Hello")
+    return(
+        <>
+ <div className="border border-red-500 ">
+    <h1>Hello</h1>
+ </div>
+        </>
+    )
+>>>>>>> devlop
 }
