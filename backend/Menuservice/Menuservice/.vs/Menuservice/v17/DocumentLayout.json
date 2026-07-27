@@ -52,19 +52,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 2,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "p51zsaj1..sql",
-              "DocumentMoniker": "C:\\Users\\dhawa\\AppData\\Local\\Temp\\p51zsaj1..sql",
-              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\AppData\\Local\\Temp\\p51zsaj1..sql",
-              "ToolTip": "C:\\Users\\dhawa\\AppData\\Local\\Temp\\p51zsaj1..sql",
-              "RelativeToolTip": "..\\..\\..\\..\\..\\AppData\\Local\\Temp\\p51zsaj1..sql",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
-              "WhenOpened": "2026-07-22T17:44:09.569Z"
-            },
             {
               "$type": "Document",
               "DocumentIndex": 5,
@@ -101,6 +90,17 @@
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-07-21T06:37:07.944Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "p51zsaj1..sql",
+              "DocumentMoniker": "C:\\Users\\dhawa\\AppData\\Local\\Temp\\p51zsaj1..sql",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\AppData\\Local\\Temp\\p51zsaj1..sql",
+              "ToolTip": "C:\\Users\\dhawa\\AppData\\Local\\Temp\\p51zsaj1..sql",
+              "RelativeToolTip": "..\\..\\..\\..\\..\\AppData\\Local\\Temp\\p51zsaj1..sql",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
+              "WhenOpened": "2026-07-22T17:44:09.569Z"
             },
             {
               "$type": "Document",
