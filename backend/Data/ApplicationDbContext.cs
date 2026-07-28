@@ -1,4 +1,4 @@
-﻿using backend.Models;
+using backend.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace backend.Data
@@ -10,6 +10,8 @@ namespace backend.Data
             {
             }
             public DbSet<Admin> Admins { get; set; }
+            public DbSet<Inventory> Inventories { get; set; }
+            public DbSet<Offer> Offers { get; set; }
         }
     }
 

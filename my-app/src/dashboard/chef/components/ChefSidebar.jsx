@@ -19,6 +19,11 @@ const menuItems = [
     path: "/chef/inventory",
   },
   {
+    title: "Offers",
+    icon: "local_offer",
+    path: "/chef/offers",
+  },
+  {
     title: "Staff",
     icon: "groups",
     path: "/chef/staff",

@@ -1,0 +1,12 @@
+# Build output & IDE
+.vs/
+bin/
+obj/
+node_modules/
+dist/
+.dist/
+*.user
+*.suo
+*.userosv
+*.sln.docstates
+*.log

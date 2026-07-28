@@ -1,4 +1,5 @@
 using backend.Data;
+using backend.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace backend
@@ -12,17 +13,44 @@ namespace backend
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
+            // Add Swagger services
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
+
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(
-        builder.Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(
+                    builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            builder.Services.AddScoped<IInventoryService, InventoryService>();
+            builder.Services.AddScoped<IOfferService, OfferService>();
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowFrontend", policy =>
+                {
+                    var origins = builder.Configuration.GetSection("CorsOrigins").Get<string[]>()
+                        ?? new[] { "http://localhost:5173", "http://localhost:5174" };
+
+                    policy.WithOrigins(origins)
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
 
             var app = builder.Build();
+
+            // Enable Swagger in Development or all environments for easy testing
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "QR Dining API v1");
+                c.RoutePrefix = "swagger";
+            });
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
@@ -31,7 +59,11 @@ namespace backend
 
             app.UseRouting();
 
+            app.UseCors("AllowFrontend");
+
             app.UseAuthorization();
+
+            app.MapControllers();
 
             app.MapControllerRoute(
                 name: "default",
