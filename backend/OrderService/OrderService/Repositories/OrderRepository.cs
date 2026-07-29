@@ -78,7 +78,40 @@ namespace OrderService.Repositories
                         // create db if not exists
                         if (!creator.Exists())
                         {
-                            creator.Create();
+                            try
+                            {
+                                creator.Create();
+                            }
+                            catch (Microsoft.Data.SqlClient.SqlException ex) when (ex.Number == 5170)
+                            {
+                                // SQL Server error 5170: database files already exist on disk but DB is not in SQL Server.
+                                // Clean up the orphaned database files from the user folder and retry.
+                                var userProfile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+                                string[] filesToDelete = {
+                                    System.IO.Path.Combine(userProfile, "QrDiningOrderDb.mdf"),
+                                    System.IO.Path.Combine(userProfile, "QrDiningOrderDb_log.ldf"),
+                                    System.IO.Path.Combine(userProfile, "OrderDb.mdf"),
+                                    System.IO.Path.Combine(userProfile, "OrderDb_log.ldf")
+                                };
+                                
+                                foreach (var file in filesToDelete)
+                                {
+                                    try
+                                    {
+                                        if (System.IO.File.Exists(file))
+                                        {
+                                            System.IO.File.Delete(file);
+                                        }
+                                    }
+                                    catch
+                                    {
+                                        // Ignore any file deletion errors (e.g. if files are locked)
+                                    }
+                                }
+
+                                // Retry creation
+                                creator.Create();
+                            }
                         }
                         
                         // create tables if not exist

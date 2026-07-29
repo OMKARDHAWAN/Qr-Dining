@@ -16,7 +16,7 @@ namespace OrderService.Controllers
             _repository = repository;
         }
 
-        // GET: api/orders
+        // GET:     api/orders
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {

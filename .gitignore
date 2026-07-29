@@ -1,0 +1,62 @@
+# ==========================
+# Visual Studio
+# ==========================
+.vs/
+**/.vs/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# ==========================
+# .NET Build Output
+# ==========================
+**/bin/
+**/obj/
+
+# Build logs
+*.log
+
+# ==========================
+# ASP.NET Core
+# ==========================
+appsettings.Development.json
+
+# ==========================
+# Node.js / React
+# ==========================
+**/node_modules/
+
+# React build output
+**/build/
+**/dist/
+
+# npm/yarn logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ==========================
+# Environment files
+# ==========================
+.env
+.env.*
+!.env.example
+
+# ==========================
+# OS files
+# ==========================
+.DS_Store
+Thumbs.db
+
+# ==========================
+# VS Code
+# ==========================
+.vscode/
+
+# ==========================
+# Rider
+# ==========================
+.idea/
