@@ -92,7 +92,10 @@ namespace OrderService.Controllers
                 Notes = dto.Notes,
                 Status = dto.Status,
                 Quantity = dto.Quantity,
-                Duration = dto.Duration
+                Duration = dto.Duration,
+                PaymentStatus = dto.PaymentStatus,
+                TransactionId = dto.TransactionId,
+                PaymentMethod = dto.PaymentMethod
             };
 
             // create order and save
@@ -193,7 +196,10 @@ namespace OrderService.Controllers
                 Notes = order.Notes,
                 Status = order.Status,
                 Quantity = order.Quantity,
-                Duration = order.Duration
+                Duration = order.Duration,
+                PaymentStatus = order.PaymentStatus,
+                TransactionId = order.TransactionId,
+                PaymentMethod = order.PaymentMethod
             };
         }
     }

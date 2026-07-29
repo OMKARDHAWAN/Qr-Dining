@@ -2,9 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using OrderService.Data;
 using OrderService.Interfaces;
 using OrderService.Repositories;
-
-
-
+using OrderService.Services;
 
 namespace OrderService
 {
@@ -23,6 +21,9 @@ namespace OrderService
 
             // register repository dependency injection
             builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+
+            // register payment gateway service dependency injection
+            builder.Services.AddScoped<IPaymentGatewayService, PaymentGatewayService>();
 
             // Add CORS policy
             builder.Services.AddCors(options =>
