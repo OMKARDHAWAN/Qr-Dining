@@ -1,7 +1,8 @@
 import { FiBell, FiSettings } from "react-icons/fi";
 
-const AdminNavbar = () => {
+export default function AdminNavbar(){
   return (
+    <>
     <div className="bg-white h-24 px-10 flex justify-between items-center border-b shadow-sm">
 
       {/* Left */}
@@ -53,11 +54,8 @@ const AdminNavbar = () => {
           />
 
         </div>
-
-      </div>
-
-    </div>
-  );
-};
-
-export default AdminNavbar;
+        </div>
+        </div>
+        </>
+    )
+}
