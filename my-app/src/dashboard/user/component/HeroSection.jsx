@@ -10,7 +10,7 @@ export default function HeroSection({ userName = "Julian Gold", loyaltyPoints = 
             Premium Experience
           </span>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-[#2D2F2F] tracking-tight leading-tight">
-            Welcome back,<br />
+            {userName === "Guest" ? "Welcome," : "Welcome back,"}<br />
             <span className="bg-gradient-to-r from-[#B41B00] to-[#FF775D] bg-clip-text text-transparent">
               {userName}
             </span>

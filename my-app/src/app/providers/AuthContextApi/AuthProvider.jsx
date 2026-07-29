@@ -5,11 +5,22 @@ const AuthContext = createContext(null);
 
 // The port 5244 is the default HTTP port for our ASP.NET Core API.
 // Change this to match your backend port if needed (e.g., https://localhost:7198 for HTTPS)
-const API_BASE_URL = 'https://localhost:44382/api/auth';
+const API_BASE_URL = 'https://localhost:44383/api/auth';
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  // Helper to handle and format network errors cleanly
+  const getCleanErrorMessage = (error) => {
+    if (error.response?.data?.message) {
+      return error.response.data.message;
+    }
+    if (error.message && error.message.toLowerCase().includes("network")) {
+      return "Failed to connect to the authentication service. Please verify that the backend API is running.";
+    }
+    return error.message || "An unexpected error occurred.";
+  };
 
   // Check if a user session exists when the app initializes
   useEffect(() => {
@@ -23,6 +34,101 @@ export function AuthProvider({ children }) {
     }
     setLoading(false);
   }, []);
+
+  const checkCustomerMobile = async (mobileNumber) => {
+    try {
+      const response = await axios.post(`${API_BASE_URL}/customer-login`, {
+        mobileNumber: mobileNumber,
+        otp: "",
+      });
+      const data = response.data;
+      return {
+        success: true,
+        isRegistered: data.isRegistered !== undefined ? data.isRegistered : data.IsRegistered,
+        otpSent: data.otpSent !== undefined ? data.otpSent : data.OtpSent,
+        message: data.message !== undefined ? data.message : data.Message
+      };
+    } catch (error) {
+      return {
+        success: false,
+        isRegistered: false,
+        otpSent: false,
+        message: getCleanErrorMessage(error),
+      };
+    }
+  };
+
+  const verifyCustomerOtp = async (mobileNumber, otp) => {
+    try {
+      const response = await axios.post(`${API_BASE_URL}/customer-login`, {
+        mobileNumber: mobileNumber,
+        otp: otp,
+      });
+
+      const data = response.data;
+      const token = data.token !== undefined ? data.token : data.Token;
+      const userProfile = data.user !== undefined ? data.user : data.User;
+
+      if (token) {
+        localStorage.setItem("user", JSON.stringify(userProfile));
+        localStorage.setItem("token", token);
+        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+        setUser(userProfile);
+      }
+
+      return {
+        success: true,
+        token,
+        user: userProfile,
+        isRegistered: data.isRegistered !== undefined ? data.isRegistered : data.IsRegistered,
+        otpSent: data.otpSent !== undefined ? data.otpSent : data.OtpSent,
+        message: data.message !== undefined ? data.message : data.Message
+      };
+    } catch (error) {
+      return {
+        success: false,
+        message: getCleanErrorMessage(error),
+      };
+    }
+  };
+
+  const registerCustomer = async ({ mobileNumber, name, email, otp = "" }) => {
+    try {
+      console.log("Registering customer:", mobileNumber, name, email, "OTP:", otp);
+      const response = await axios.post(`${API_BASE_URL}/customer-login`, {
+        mobileNumber: mobileNumber,
+        username: name, // Maps React name -> Backend Username
+        email: email,
+        otp: otp
+      });
+
+      const data = response.data;
+      const token = data.token !== undefined ? data.token : data.Token;
+      const userProfile = data.user !== undefined ? data.user : data.User;
+
+      // Automatically store token on success
+      if (token) {
+        localStorage.setItem("user", JSON.stringify(userProfile));
+        localStorage.setItem("token", token);
+        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+        setUser(userProfile);
+      }
+
+      return {
+        success: true,
+        token,
+        user: userProfile,
+        isRegistered: data.isRegistered !== undefined ? data.isRegistered : data.IsRegistered,
+        otpSent: data.otpSent !== undefined ? data.otpSent : data.OtpSent,
+        message: data.message !== undefined ? data.message : data.Message
+      };
+    } catch (error) {
+      return {
+        success: false,
+        message: getCleanErrorMessage(error),
+      };
+    }
+  };
 
   const login = async (username, password) => {
     try {
@@ -65,7 +171,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, loading }}>
+    <AuthContext.Provider value={{ user, login, logout, loading, checkCustomerMobile, verifyCustomerOtp, registerCustomer }}>
       {!loading && children}
     </AuthContext.Provider>
   );

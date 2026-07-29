@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Search, Bell, ShoppingCart, User, Menu as MenuIcon, X } from 'lucide-react';
 import { useCart } from '../../../shared/hooks/useCart';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../../../app/providers/AuthContextApi/AuthProvider';
 export default function UserNavbar({ 
   searchQuery, 
   setSearchQuery, 
@@ -11,6 +13,7 @@ export default function UserNavbar({
   setActiveSection
 }) {
   const { cartItemsCount } = useCart();
+  const { user, logout } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   return (
     <nav className="sticky top-0 z-40 w-full bg-white/90 backdrop-blur-md border-b border-gray-100 px-4 md:px-6 lg:px-8 py-4 transition-all duration-300">
@@ -34,16 +37,20 @@ export default function UserNavbar({
           >
             DISCOVER
           </button>
-          <button 
+          <Link href='/menu'>
+             <button 
             onClick={() => setActiveSection('menu')}
             className={`transition-colors duration-300 py-1 border-b-2 ${
-              activeSection === 'menu' 
+              activeSection === 'menu'
+
                 ? 'text-[#B41B00] border-b-[#B41B00]' 
                 : 'text-[#2D2F2F]/60 border-b-transparent hover:text-[#2D2F2F]'
             }`}
           >
             MENU
           </button>
+          </Link>
+         
          
         </div>
         {/* Right: Search, Cart, Notifications, Profile */}
@@ -97,6 +104,19 @@ export default function UserNavbar({
               <User className="w-4 h-4 text-[#2D2F2F]" />
             </div>
           </button>
+
+          {/* Log Out Button */}
+          {user && (
+            <button
+              onClick={() => {
+                logout();
+                alert("Logged out successfully!");
+              }}
+              className="px-3.5 py-1.5 bg-[#B41B00] text-white text-[10px] font-black tracking-widest uppercase rounded-full hover:bg-[#FF775D] transition-colors duration-300 shadow-sm active:scale-95"
+            >
+              Log Out
+            </button>
+          )}
         </div>
       </div>
     </nav>

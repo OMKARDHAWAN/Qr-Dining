@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import HeroSection from './HeroSection';
 import MobileBottomNav from './MobileBottomNav';
 import FeaturedOffers from './FeaturedOffers';
@@ -11,19 +11,22 @@ import CartDrawer from './CartDrawer';
 import AIAssistantModal from './AIAssistantModal';
 import { useCart } from '../../../shared/hooks/useCart';
 import UserNavbar from './UserNavbar';
+import { useSearchParams } from 'react-router-dom';
+import { useTable } from '../../../app/providers/TableContextApi/TableProvider';
+import { useAuth } from '../../../app/providers/AuthContextApi/AuthProvider';
 
 export default function UserHome() {
+  const { user } = useAuth();
   // Navigation & Search State
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState(null);
   const [activeSection, setActiveSection] = useState('discover');
 
   // Interactive Drawer States
-  const [cartOpen, setCartOpen] = useState(false);
   const [aiOpen, setAiOpen] = useState(false);
 
   // Consume global cart Context API
-  const { addToCart } = useCart();
+  const { addToCart, cartOpen, setCartOpen } = useCart();
 
   // Helper to add item to order and automatically open the drawer for user feedback
   const handleAddToOrder = (item) => {
@@ -32,7 +35,11 @@ export default function UserHome() {
   };
 
   const handleProfileClick = () => {
-    alert("👤 Julian Gold's Profile Summary:\n- Account Tier: Platinum VIP\n- Table Number: 14\n- Total Spent This Month: ₹4,850");
+    if (user) {
+      alert(`👤 Customer Profile:\n- Name: ${user.username || user.Username}\n- Email: ${user.email || user.Email || "N/A"}\n- Role: Customer`);
+    } else {
+      alert("👤 Profile Summary:\n- Status: Guest (Not logged in)\n- Please add items to the cart and checkout to log in!");
+    }
   };
 
   const handleNotificationClick = () => {
@@ -43,10 +50,27 @@ export default function UserHome() {
     alert(`🎉 Offer Applied: "${offer.title}"! We've added this to your session discounts.`);
   };
 
+  const [searchParams] = useSearchParams();
+  const { setTableId, tableId } = useTable();
+
+  useEffect(() => {
+    // Read tableId from URL query parameter (e.g., /user?tableId=5)
+    const tableIdFromUrl = searchParams.get("tableId");
+    console.log(tableIdFromUrl);
+    if (tableIdFromUrl) {
+      setTableId(tableIdFromUrl); // Updates Context and sessionStorage
+      console.log("Table session started for Table ID:", tableIdFromUrl);
+    }
+  }, [searchParams, setTableId]);
+
   return (
-    <div className="min-h-screen bg-[#F6F6F6] text-[#2D2F2F] flex flex-col font-['Outfit',sans-serif] select-none antialiased">
+
+      <div>
+     
+      {/* ... rest of page */}
+      <div className="min-h-screen bg-[#F6F6F6] text-[#2D2F2F] flex flex-col font-['Outfit',sans-serif] select-none antialiased">
       
-      {/* Navbar Header */}
+      {/* Navbar Header (Rendered in UserLayout) */}
     
 
       {/* Main Layout Container */}
@@ -54,7 +78,7 @@ export default function UserHome() {
         {activeSection === 'discover' ? (
           <>
             {/* Hero Header & Welcome banner */}
-            <HeroSection userName="Julian Gold" loyaltyPoints={2450} />
+            <HeroSection userName={user ? (user.username || user.Username) : "Guest"} loyaltyPoints={user ? 2450 : 0} />
 
             {/* Featured Swiper Promo Carousels */}
             <FeaturedOffers onClaimOffer={handleClaimOffer} />
@@ -68,12 +92,7 @@ export default function UserHome() {
             {/* Chef Selection - Cafe Classics */}
             <IndianCafeClassics onAddToOrder={handleAddToOrder} />
 
-            {/* Search/Filterable product card lists */}
-            <ProductGrid 
-              activeCategory={activeCategory}
-              searchQuery={searchQuery}
-              onAddToOrder={handleAddToOrder}
-            />
+           
 
             {/* Today's Special Highlights */}
             <TodayDesiDelights onAddToOrder={handleAddToOrder} />
@@ -94,11 +113,7 @@ export default function UserHome() {
         )}
       </main>
 
-      {/* Sliding Dialog overlays */}
-      <CartDrawer 
-        isOpen={cartOpen} 
-        onClose={() => setCartOpen(false)} 
-      />
+      {/* Sliding Dialog overlays (Rendered in UserLayout) */}
 
       <AIAssistantModal 
         isOpen={aiOpen} 
@@ -119,5 +134,7 @@ export default function UserHome() {
       />
 
     </div>
+    </div>
+    
   );
 }
