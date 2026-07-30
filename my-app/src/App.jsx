@@ -1,7 +1,16 @@
-import AppRoutes from "./app/router/AppRoutes";
+
+import { useState } from 'react'
+import './App.css'
+import AppRoutes from './app/router/AppRoutes'
 
 function App() {
-  return <AppRoutes />;
+  const [count, setCount] = useState(0)
+
+  return (
+    <>
+      <AppRoutes />
+    </>
+  )
 }
 
-export default App;
+export default App
