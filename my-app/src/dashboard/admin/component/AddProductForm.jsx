@@ -61,7 +61,7 @@ const AddProductForm = ({ onClose }) => {
         <div className="fixed inset-0 bg-black/40 flex justify-center items-center z-50">
             <div className="bg-white rounded-xl shadow-xl w-[500px] p-6">
                 <h2 className="text-2xl font-bold mb-5 font-sans">
-                    Add Menu Item
+                    Add Item
                 </h2>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
