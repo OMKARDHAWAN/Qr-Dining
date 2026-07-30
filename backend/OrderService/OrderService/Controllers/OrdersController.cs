@@ -105,7 +105,7 @@ namespace OrderService.Controllers
             // map to response dto
             var responseDto = MapToDto(createdOrder);
 
-            return CreatedAtAction(nameof(GetById), new { id = responseDto.Id }, responseDto);
+            return StatusCode(201, responseDto);
         }
 
         // PUT: api/orders/5

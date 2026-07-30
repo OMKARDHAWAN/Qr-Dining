@@ -70,6 +70,16 @@ export default function CartDrawer({ isOpen, onClose }) {
       });
 
       if (response.status === 200 || response.status === 201) {
+        const createdOrder = response.data;
+        const orderId = createdOrder.id !== undefined ? createdOrder.id : createdOrder.Id;
+        if (orderId) {
+          const userKey = user?.mobileNumber || user?.MobileNumber || "guest";
+          const keyName = `placed_orders_${userKey}`;
+          const existing = JSON.parse(localStorage.getItem(keyName) || "[]");
+          existing.push(orderId);
+          localStorage.setItem(keyName, JSON.stringify(existing));
+        }
+
         setCompletedTxnId(txnId);
         setDrawerStep("confirmation");
       } else {
@@ -157,7 +167,7 @@ export default function CartDrawer({ isOpen, onClose }) {
           <div>
             <h2 className="text-lg font-bold text-[#2D2F2F]">
               {drawerStep === "cart" 
-                ? "Julian's Order Cart" 
+                ? "Order Cart" 
                 : drawerStep === "payment" 
                 ? "Secure Payment" 
                 : drawerStep === "confirmation" 

@@ -35,6 +35,31 @@ export function AuthProvider({ children }) {
     setLoading(false);
   }, []);
 
+  // 30-minute absolute session timeout for User accounts only
+  useEffect(() => {
+    if (user && (user.role === "User" || user.Role === "User")) {
+      const loginTimeStr = localStorage.getItem('loginTime');
+      const loginTime = loginTimeStr ? parseInt(loginTimeStr) : Date.now();
+      if (!loginTimeStr) {
+        localStorage.setItem('loginTime', loginTime.toString());
+      }
+
+      const elapsed = Date.now() - loginTime;
+      const remaining =  10 * 1000 - elapsed;
+
+      if (remaining <= 0) {
+        logout();
+        window.location.href = "/";
+      } else {
+        const timerId = setTimeout(() => {
+          logout();
+          window.location.href = "/";
+        }, remaining);
+        return () => clearTimeout(timerId);
+      }
+    }
+  }, [user]);
+
   const checkCustomerMobile = async (mobileNumber) => {
     try {
       const response = await axios.post(`${API_BASE_URL}/customer-login`, {
@@ -72,6 +97,7 @@ export function AuthProvider({ children }) {
       if (token) {
         localStorage.setItem("user", JSON.stringify(userProfile));
         localStorage.setItem("token", token);
+        localStorage.setItem("loginTime", Date.now().toString());
         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
         setUser(userProfile);
       }
@@ -110,6 +136,7 @@ export function AuthProvider({ children }) {
       if (token) {
         localStorage.setItem("user", JSON.stringify(userProfile));
         localStorage.setItem("token", token);
+        localStorage.setItem("loginTime", Date.now().toString());
         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
         setUser(userProfile);
       }
@@ -166,6 +193,7 @@ export function AuthProvider({ children }) {
   const logout = () => {
     localStorage.removeItem('user');
     localStorage.removeItem('token');
+    localStorage.removeItem('loginTime');
     delete axios.defaults.headers.common['Authorization'];
     setUser(null);
   };

@@ -19,8 +19,15 @@ export default function Login() {
     const result = await login(username, password);
     if (result.success) {
       console.log("Logged in successfully via Context!");
-      // Redirecting user to the /admin/dashboard route on successful login
-      navigate('/admin/');
+      const savedUser = JSON.parse(localStorage.getItem('user'));
+      const role = savedUser?.role || savedUser?.Role;
+      if (role === 'Admin') {
+        navigate('/admin/');
+      } else if (role === 'Chef') {
+        navigate('/chef/');
+      } else {
+        navigate('/user');
+      }
     } else {
       setError(result.message);
       setSubmitting(false);
