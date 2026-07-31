@@ -18,10 +18,12 @@ const AdminSidebar = () => {
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
   const [activeTab, setActiveTab] = useState("orders");
 
-  // Sync active tab with location for orders and profile
+  // Sync active tab with location
   useEffect(() => {
     if (location.pathname.includes("/profile")) {
       setActiveTab("profile");
+    } else if (location.pathname.includes("/menu-management")) {
+      setActiveTab("menu");
     } else if (location.pathname === "/admin" || location.pathname === "/admin/") {
       setActiveTab("orders");
     }
@@ -70,9 +72,12 @@ const AdminSidebar = () => {
             <span className="font-sans">Order Status</span>
           </button>
 
-          {/* Menu Management - Disabled page navigation */}
+          {/* Menu Management */}
           <button
-            onClick={() => setActiveTab("menu")}
+            onClick={() => {
+              setActiveTab("menu");
+              navigate("/admin/menu-management");
+            }}
             className={getBtnClass("menu")}
           >
             <LuUtensilsCrossed size={22} />

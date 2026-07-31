@@ -16,12 +16,12 @@ namespace AuthManagementService
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // 1. Configure CORS for React client (http://localhost:5173)
+            // 1. Configure CORS for React client (http://localhost:5173 and http://localhost:3000)
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("ReactCorsPolicy", policy =>
                 {
-                    policy.WithOrigins("http://localhost:5173")
+                    policy.WithOrigins("http://localhost:5173", "http://localhost:3000")
                           .AllowAnyMethod()
                           .AllowAnyHeader()
                           .AllowCredentials();
