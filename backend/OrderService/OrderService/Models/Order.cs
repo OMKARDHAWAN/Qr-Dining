@@ -23,5 +23,12 @@ namespace OrderService.Models
         public int Quantity { get; set; }
 
         public string Duration { get; set; } = string.Empty;
+
+        [Required]
+        public string PaymentStatus { get; set; } = "Pending";
+
+        public string? TransactionId { get; set; }
+
+        public string? PaymentMethod { get; set; }
     }
 }

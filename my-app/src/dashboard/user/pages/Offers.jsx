@@ -1,6 +1,6 @@
-import OfferCard from "../components/OfferCard";
-import PlatinumClub from "../components/PlatinumClub";
-import offersData from "../data/offersData";
+import OfferCard from "../component/OfferCard";
+import PlatinumClub from "../component/PlatinumClub";
+import offersData from "../component/data/offersData";
 
 function Offers() {
   return (

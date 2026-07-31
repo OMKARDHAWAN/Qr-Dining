@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   FiClipboard,
   FiBox,
@@ -7,24 +7,37 @@ import {
   FiLogOut,
 } from "react-icons/fi";
 import { LuUtensilsCrossed } from "react-icons/lu";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../../app/providers/AuthContextApi/AuthProvider";
 import LogoutConfirm from "./LogutConfirm";
-
-// Declared outside to optimize performance and prevent re-creation on every render
-const getLinkClass = ({ isActive }) => 
-  "flex items-center gap-4 w-full rounded-xl px-5 py-4 transition-all duration-200 " + 
-  (isActive ? "bg-orange-50 text-orange-600 font-semibold" : "text-gray-600 hover:bg-gray-100");
 
 const AdminSidebar = () => {
   const { logout } = useAuth();
   const navigate = useNavigate();
-  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false); // Controls custom popup
+  const location = useLocation();
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+  const [activeTab, setActiveTab] = useState("orders");
 
-  // Execution when clicking the final popup Logout button
+  // Sync active tab with location
+  useEffect(() => {
+    if (location.pathname.includes("/profile")) {
+      setActiveTab("profile");
+    } else if (location.pathname.includes("/menu-management")) {
+      setActiveTab("menu");
+    } else if (location.pathname === "/admin" || location.pathname === "/admin/") {
+      setActiveTab("orders");
+    }
+  }, [location]);
+
   const handleConfirmLogout = () => {
     logout();
     navigate("/login");
+  };
+
+  const getBtnClass = (tabName) => {
+    const isActive = activeTab === tabName;
+    return "flex items-center gap-4 w-full rounded-xl px-5 py-4 transition-all duration-200 cursor-pointer " + 
+      (isActive ? "bg-orange-50 text-orange-600 font-semibold" : "text-gray-600 hover:bg-gray-100");
   };
 
   return (
@@ -48,44 +61,55 @@ const AdminSidebar = () => {
         {/* Menu Links */}
         <div className="px-5 space-y-2">
           {/* Order Status */}
-          <NavLink
-            to="/admin"
-            end
-            className={getLinkClass}
+          <button
+            onClick={() => {
+              setActiveTab("orders");
+              navigate("/admin");
+            }}
+            className={getBtnClass("orders")}
           >
             <FiClipboard size={22} />
             <span className="font-sans">Order Status</span>
-          </NavLink>
+          </button>
 
           {/* Menu Management */}
-          <NavLink
-            to="/admin/menu-management"
-            className={getLinkClass}
+          <button
+            onClick={() => {
+              setActiveTab("menu");
+              navigate("/admin/menu-management");
+            }}
+            className={getBtnClass("menu")}
           >
             <LuUtensilsCrossed size={22} />
             <span className="font-sans">Menu Management</span>
-          </NavLink>
+          </button>
 
-          {/* Stock & Inventory */}
-          <NavLink
-            to="/admin/stock-inventory"
-            className={getLinkClass}
+          {/* Stock & Inventory - Disabled page navigation */}
+          <button
+            onClick={() => setActiveTab("stock")}
+            className={getBtnClass("stock")}
           >
             <FiBox size={22} />
             <span className="font-sans">Stock & Inventory</span>
-          </NavLink>
+          </button>
 
-          {/* Staff Directory */}
-          <NavLink
-            to="/admin/staff-directory"
-            className={getLinkClass}
+          {/* Staff Directory - Disabled page navigation */}
+          <button
+            onClick={() => setActiveTab("staff")}
+            className={getBtnClass("staff")}
           >
             <FiUsers size={22} />
             <span className="font-sans">Staff Directory</span>
-          </NavLink>
+          </button>
 
           {/* Profile Button */}
-          <button className="flex items-center gap-4 w-full rounded-xl px-5 py-4 text-gray-600 hover:bg-gray-100 cursor-pointer transition-all duration-200">
+          <button
+            onClick={() => {
+              setActiveTab("profile");
+              navigate("/admin/profile");
+            }}
+            className={getBtnClass("profile")}
+          >
             <FiUser size={22} />
             <span className="font-sans">Profile</span>
           </button>
@@ -97,7 +121,7 @@ const AdminSidebar = () => {
         <hr className="border-gray-200" />
         <div className="mt-6">
           <button 
-            onClick={() => setShowLogoutConfirm(true)} // Opens the custom confirmation popup
+            onClick={() => setShowLogoutConfirm(true)}
             className="flex items-center gap-4 text-red-600 hover:text-red-800 cursor-pointer transition-colors font-sans w-full text-left"
           >
             <FiLogOut size={22} />
