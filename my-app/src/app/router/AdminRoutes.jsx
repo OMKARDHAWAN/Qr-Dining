@@ -1,8 +1,8 @@
 import { Route, Routes } from "react-router-dom";
-import AdminHomePage from "../../dashboard/admin/pages/AdminHomePage";
 import AdminLayout from "../../layouts/adminlayout/AdminLayout";
 import Profile from "../../dashboard/user/pages/Profile";
 import MenuManagement from "../../dashboard/admin/component/MenuManagement";
+import AdminHomePage from "../../dashboard/admin/pages/AdminHomePage";
 
 export default function AdminRoutes(){
     return (

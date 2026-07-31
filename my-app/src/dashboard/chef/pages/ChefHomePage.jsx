@@ -1,8 +1,9 @@
+import ChefHome from "../component/ChefHome";
 
-import React from "react";
-import ChefHome from "../components/ChefHomePage";
-
-export default function ChefHomePage() {
-    return <ChefHome />;
+export default function ChefHomePage(){
+    return(
+        <>
+       <ChefHome/>
+        </>
+    )
 }
-

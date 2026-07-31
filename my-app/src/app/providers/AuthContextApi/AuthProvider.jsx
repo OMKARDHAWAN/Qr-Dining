@@ -45,7 +45,7 @@ export function AuthProvider({ children }) {
       }
 
       const elapsed = Date.now() - loginTime;
-      const remaining =  10 * 1000 - elapsed;
+      const remaining =  30 * 60 * 1000 - elapsed;
 
       if (remaining <= 0) {
         logout();
