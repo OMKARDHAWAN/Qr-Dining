@@ -8,63 +8,57 @@ export const MenuProvider = ({ children }) => {
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    const getFallbackImageUrl = (name) => {
-        const lowercase = (name || "").toLowerCase();
-        if (lowercase.includes("butter chicken")) {
-            return "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=500";
+    const fetchMenu = async () => {
+        try {
+            const response = await axios.get("https://localhost:44380/api/menuitems");
+            const normalized = (response.data || []).map(item => {
+                const name = item.itemName !== undefined ? item.itemName : item.ItemName;
+                const rawImg = item.imageUrl !== undefined ? item.imageUrl : item.ImageUrl;
+                
+                // Formulate the direct image URL from table column
+                let formattedImg = "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=500";
+                const lowercaseName = name ? name.toLowerCase() : "";
+
+                if (
+                    (!rawImg || rawImg.trim() === "" || rawImg.includes("coca-cola.jpg") || rawImg === "coke.png" || rawImg === "coke.jpg") &&
+                    (lowercaseName.includes("coke") || lowercaseName.includes("coca-cola"))
+                ) {
+                    formattedImg = "https://localhost:44380/images/ee0d783c-95d0-478e-9054-7654cd3d0ab6_coca-cola.jpg";
+                } else if (
+                    (!rawImg || rawImg.trim() === "" || rawImg.includes("pepsi.jpg")) &&
+                    lowercaseName.includes("pepsi")
+                ) {
+                    formattedImg = "https://localhost:44380/images/ad55d644-7af2-4ee0-b3cf-39365515c437_pepsi.jpg";
+                } else if (rawImg && typeof rawImg === "string" && rawImg.trim() !== "") {
+                    if (rawImg.startsWith("http://") || rawImg.startsWith("https://")) {
+                        formattedImg = rawImg;
+                    } else {
+                        const slash = rawImg.startsWith("/") ? "" : "/";
+                        formattedImg = `https://localhost:44380${slash}${rawImg}`;
+                    }
+                }
+
+                return {
+                    id: item.id !== undefined ? item.id : item.Id,
+                    itemName: name,
+                    price: item.price !== undefined ? item.price : item.Price,
+                    description: item.description !== undefined ? item.description : item.Description,
+                    status: item.status !== undefined ? item.status : item.Status,
+                    categoryId: item.categoryId !== undefined ? item.categoryId : item.CategoryId,
+                    categoryName: item.categoryName !== undefined ? item.categoryName : item.CategoryName,
+                    imageUrl: formattedImg
+                };
+            });
+            setMenuList(normalized);
+        } catch (error) {
+            console.log("Menu loading error", error);
         }
-        if (lowercase.includes("dal makhani")) {
-            return "https://images.unsplash.com/photo-1626132647523-66f5bf380027?w=500";
-        }
-        if (lowercase.includes("masala chai") || lowercase.includes("tea") || lowercase.includes("chai")) {
-            return "https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=500";
-        }
-        if (lowercase.includes("gulab jamun")) {
-            return "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=500";
-        }
-        if (lowercase.includes("burger")) {
-            return "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500";
-        }
-        if (lowercase.includes("paneer")) {
-            return "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=500";
-        }
-        if (lowercase.includes("dosa")) {
-            return "https://images.unsplash.com/photo-1668236543090-82eba5ee5976?w=500";
-        }
-        if (lowercase.includes("lassi")) {
-            return "https://images.unsplash.com/photo-1623065422902-30a2d299bbe4?w=500";
-        }
-        if (lowercase.includes("samosa")) {
-            return "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=500";
-        }
-        return "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=500";
     };
 
     useEffect(() => {
-        // Getting menu data from backend for admin and user pages
-        axios.get("https://localhost:44380/api/menuitems")
-            .then((response) => {
-                const normalized = (response.data || []).map(item => {
-                    const name = item.itemName !== undefined ? item.itemName : item.ItemName;
-                    const rawImg = item.imageUrl !== undefined ? item.imageUrl : item.ImageUrl;
-                    return {
-                        id: item.id !== undefined ? item.id : item.Id,
-                        itemName: name,
-                        price: item.price !== undefined ? item.price : item.Price,
-                        description: item.description !== undefined ? item.description : item.Description,
-                        status: item.status !== undefined ? item.status : item.Status,
-                        categoryId: item.categoryId !== undefined ? item.categoryId : item.CategoryId,
-                        categoryName: item.categoryName !== undefined ? item.categoryName : item.CategoryName,
-                        imageUrl: rawImg ? (rawImg.startsWith("http") ? rawImg : `https://localhost:44380${rawImg}`) : getFallbackImageUrl(name)
-                    };
-                });
-                setMenuList(normalized);
-            })
-            .catch((error) => {
-                console.log("Menu loading error", error);
-            });
+        // Load menu and category data from backend
+        fetchMenu();
 
-        // Getting category list from backend
         axios.get("https://localhost:44380/api/categories")
             .then((response) => {
                 const normalized = (response.data || []).map(cat => ({
@@ -83,8 +77,8 @@ export const MenuProvider = ({ children }) => {
 
     const addMenuItem = async (menuData) => {
         try {
-            const res = await axios.post("https://localhost:44380/api/menuitems", menuData);
-            setMenuList(prev => [...prev, res.data]);
+            await axios.post("https://localhost:44380/api/menuitems", menuData);
+            await fetchMenu();
             return {
                 success: true
             };
@@ -98,15 +92,10 @@ export const MenuProvider = ({ children }) => {
         }
     };
 
-    // New: Update an existing menu item by ID
     const updateMenuItem = async (id, menuData) => {
         try {
             await axios.put(`https://localhost:44380/api/menuitems/${id}`, menuData);
-            
-            // Refresh menu list to get latest updates and image URLs
-            const res = await axios.get("https://localhost:44380/api/menuitems");
-            setMenuList(res.data);
-            
+            await fetchMenu();
             return {
                 success: true
             };
@@ -119,14 +108,10 @@ export const MenuProvider = ({ children }) => {
         }
     };
 
-    // New: Delete a menu item by ID
     const deleteMenuItem = async (id) => {
         try {
             await axios.delete(`https://localhost:44380/api/menuitems/${id}`);
-            
-            // Instantly filter out deleted item from the state
-            setMenuList(prev => prev.filter(item => item.id !== id));
-            
+            await fetchMenu();
             return {
                 success: true
             };
@@ -146,8 +131,8 @@ export const MenuProvider = ({ children }) => {
                 categories,
                 loading,
                 addMenuItem,
-                updateMenuItem, // Exported to components
-                deleteMenuItem  // Exported to components
+                updateMenuItem,
+                deleteMenuItem
             }}
         >
             {children}

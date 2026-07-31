@@ -1,8 +1,10 @@
 using System.Text;
+using System.Linq;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using AuthManagementService.Data;
+using AuthManagementService.Models;
 using AuthManagementService.Repositories;
 using AuthManagementService.Services;
 
@@ -14,12 +16,12 @@ namespace AuthManagementService
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // 1. Configure CORS for React client (http://localhost:5173)
+            // 1. Configure CORS for React client (http://localhost:5173 and http://localhost:3000)
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("ReactCorsPolicy", policy =>
                 {
-                    policy.WithOrigins("http://localhost:5173")
+                    policy.WithOrigins("http://localhost:5173", "http://localhost:3000")
                           .AllowAnyMethod()
                           .AllowAnyHeader()
                           .AllowCredentials();
@@ -34,6 +36,7 @@ namespace AuthManagementService
             // 3. Register Repositories and Services (Dependency Injection)
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IAuthService, AuthService>();
+            builder.Services.AddScoped<IProfileService, ProfileService>();
 
             // 4. Configure JWT Authentication
             var jwtSettings = builder.Configuration.GetSection("Jwt");
@@ -72,7 +75,64 @@ namespace AuthManagementService
             using (var scope = app.Services.CreateScope())
             {
                 var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-                dbContext.Database.EnsureCreated(); // Creates database & tables automatically if they don't exist
+                int retries = 5;
+                while (retries > 0)
+                {
+                    try
+                    {
+                        dbContext.Database.EnsureCreated(); // Creates database & tables automatically if they don't exist
+                        
+                        // Seed or correct staff credentials in database to ensure hashes match the current algorithm
+                        var admin = dbContext.StaffMembers.FirstOrDefault(s => s.Username == "admin");
+                        if (admin != null)
+                        {
+                            admin.PasswordHash = Helpers.PasswordHelper.HashPassword("AdminPassword123");
+                            dbContext.StaffMembers.Update(admin);
+                        }
+                        else
+                        {
+                            dbContext.StaffMembers.Add(new Staff
+                            {
+                                Username = "admin",
+                                Email = "admin@restaurant.com",
+                                MobileNumber = "1112223333",
+                                PasswordHash = Helpers.PasswordHelper.HashPassword("AdminPassword123"),
+                                Role = "Admin"
+                            });
+                        }
+
+                        var chef = dbContext.StaffMembers.FirstOrDefault(s => s.Username == "chef_maria");
+                        if (chef != null)
+                        {
+                            chef.PasswordHash = Helpers.PasswordHelper.HashPassword("ChefPassword123");
+                            dbContext.StaffMembers.Update(chef);
+                        }
+                        else
+                        {
+                            dbContext.StaffMembers.Add(new Staff
+                            {
+                                Username = "chef_maria",
+                                Email = "chef.maria@restaurant.com",
+                                MobileNumber = "4445556666",
+                                PasswordHash = Helpers.PasswordHelper.HashPassword("ChefPassword123"),
+                                Role = "Chef"
+                            });
+                        }
+                        
+                        dbContext.SaveChanges();
+                        break; // Success! Exit retry loop.
+                    }
+                    catch (Exception ex)
+                    {
+                        retries--;
+                        Console.WriteLine($"Database initialization failed. Retrying... ({5 - retries}/5). Error: {ex.Message}");
+                        if (retries == 0)
+                        {
+                            throw; // Re-throw if all retries failed.
+                        }
+                        System.Threading.Thread.Sleep(3000); // Wait 3 seconds before next retry
+                    }
+                }
             }
 
             app.UseHttpsRedirection();

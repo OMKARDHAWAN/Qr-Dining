@@ -1,13 +1,20 @@
 import React from "react";
 import { useNavigate, useSearchParams } from "react-router-dom"; // Imported hooks
+import { useAuth } from "../../../app/providers/AuthContextApi/AuthProvider";
 
 export default function TableQr() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const { logout } = useAuth();
 
   // 1. Read tableId dynamically from current URL (e.g. ?tableId=5), default to "1"
   const rawTableId = searchParams.get("tableId") || "1";
   const formattedTableId = rawTableId.startsWith("#") ? rawTableId : `#${rawTableId}`;
+
+  React.useEffect(() => {
+    // Clear previous customer session to ensure default guest mode on table scan
+    logout();
+  }, [logout]);
 
   // 2. Redirect to /user, passing the identified table number to be picked up by the context
   const handleGo = () => {
