@@ -1,8 +1,6 @@
-
 import React from "react";
-import ChefHome from "../components/ChefHomePage";
+import { Navigate } from "react-router-dom";
 
 export default function ChefHomePage() {
-    return <ChefHome />;
+  return <Navigate to="/chef/orders" replace />;
 }
-

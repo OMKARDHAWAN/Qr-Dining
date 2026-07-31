@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import UserNavbar from "../../dashboard/user/component/UserNavbar";
 import CartDrawer from "../../dashboard/user/component/CartDrawer";
 import { CartProvider } from "../../app/providers/CartProvider";
@@ -11,6 +11,7 @@ function UserLayoutContent() {
   const [activeCategory, setActiveCategory] = useState(null);
   const [activeSection, setActiveSection] = useState('discover');
   const { user } = useAuth();
+  const location = useLocation();
 
   // Consume global cart Context API
   const { cartOpen, setCartOpen } = useCart();
@@ -27,17 +28,21 @@ function UserLayoutContent() {
     alert("🔔 Notifications:\n- Your last order has been served!\n- Happy Hour ends in 45 minutes!");
   };
 
+  const showNavbar = !location.pathname.includes("/menu");
+
   return (
     <div className="flex flex-col w-full">
-      <UserNavbar
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-        onCartClick={() => setCartOpen(true)}
-        onNotificationClick={handleNotificationClick}
-        onProfileClick={handleProfileClick}
-        activeSection={activeSection}
-        setActiveSection={setActiveSection}
-      />
+      {showNavbar && (
+        <UserNavbar
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+          onCartClick={() => setCartOpen(true)}
+          onNotificationClick={handleNotificationClick}
+          onProfileClick={handleProfileClick}
+          activeSection={activeSection}
+          setActiveSection={setActiveSection}
+        />
+      )}
       <Outlet />
       
       {/* Render the single Cart Drawer globally at layout root */}

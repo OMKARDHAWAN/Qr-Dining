@@ -1,112 +1,78 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
-
-
-const menuItems = [
-  {
-    title: "Orders",
-    icon: "receipt_long",
-    path: "/chef/orders",
-  },
-  {
-    title: "Menu",
-    icon: "restaurant_menu",
-    path: "/chef/menu",
-  },
-  {
-    title: "Inventory",
-    icon: "inventory_2",
-    path: "/chef/inventory",
-  },
-  {
-    title: "Staff",
-    icon: "groups",
-    path: "/chef/staff",
-  },
-  {
-    title: "Profile",
-    icon: "account_circle",
-    path: "/chef/profile",
-  },
-];
-
-const bottomItems = [
-  {
-    title: "Help",
-    icon: "help",
-    path: "/chef/help",
-  },
-  {
-    title: "Logout",
-    icon: "logout",
-    path: "/logout",
-  },
-];
+import { NavLink, useNavigate } from "react-router-dom";
+import { useAuth } from "../../../app/providers/AuthContextApi/AuthProvider";
+import { FiClipboard, FiBox, FiUsers, FiUser, FiLogOut } from "react-icons/fi";
+import { LuUtensilsCrossed } from "react-icons/lu";
 
 function ChefSidebar() {
+  const { logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
+
+  const getLinkClass = ({ isActive }) =>
+    isActive
+      ? "flex items-center gap-4 bg-orange-50 text-orange-600 rounded-xl px-5 py-4 shadow-sm font-semibold transition-all duration-200"
+      : "flex items-center gap-4 text-gray-600 hover:text-black hover:bg-gray-100 rounded-xl px-5 py-4 transition-all duration-200";
+
   return (
-    <aside className="h-screen w-72 fixed left-0 top-0 hidden md:flex flex-col border-r border-zinc-200 bg-zinc-50 p-6 z-50">
-
+    <aside className="h-full w-full flex flex-col p-6 bg-zinc-50">
       {/* Logo */}
-
-      <div className="mb-8">
-        <h1 className="text-2xl font-black tracking-tight text-zinc-900">
-          Spice Kitchen
-        </h1>
-
-        <p className="text-sm text-zinc-500 font-medium">
-          Chef's Control Panel
-        </p>
+      <div className="flex items-center gap-4 p-4 mb-8">
+        <div className="bg-orange-500 rounded-xl w-12 h-12 flex items-center justify-center">
+          <LuUtensilsCrossed className="text-white text-2xl" />
+        </div>
+        <div>
+          <h1 className="text-zinc-900 text-xl font-black font-sans leading-none">
+            Spice Kitchen
+          </h1>
+          <p className="text-zinc-500 text-xs font-semibold mt-1 font-sans">
+            Chef's Control
+          </p>
+        </div>
       </div>
 
-      {/* Main Menu */}
+      {/* Main Menu Links */}
+      <nav className="flex flex-col space-y-2 flex-grow px-2">
+        <NavLink to="/chef/orders" className={getLinkClass}>
+          <FiClipboard size={22} />
+          <span className="font-sans">Orders</span>
+        </NavLink>
 
-      <nav className="flex flex-col space-y-2 flex-grow">
+        <NavLink to="/chef/menu" className={getLinkClass}>
+          <LuUtensilsCrossed size={22} />
+          <span className="font-sans">Menu</span>
+        </NavLink>
 
-        {menuItems.map((item) => (
-          <NavLink
-            key={item.title}
-            to={item.path}
-            className={({ isActive }) =>
-              isActive
-                ? "flex items-center gap-3 bg-orange-50 text-orange-700 rounded-xl px-4 py-3 shadow-sm"
-                : "flex items-center gap-3 text-zinc-500 hover:text-black hover:bg-zinc-100 rounded-xl px-4 py-3 transition"
-            }
-          >
-            <span className="material-symbols-outlined">
-              {item.icon}
-            </span>
+        <NavLink to="/chef/inventory" className={getLinkClass}>
+          <FiBox size={22} />
+          <span className="font-sans">Inventory</span>
+        </NavLink>
 
-            <span className="font-medium">
-              {item.title}
-            </span>
-          </NavLink>
-        ))}
+        <NavLink to="/chef/staff" className={getLinkClass}>
+          <FiUsers size={22} />
+          <span className="font-sans">Staff</span>
+        </NavLink>
 
+        <NavLink to="/chef/profile" className={getLinkClass}>
+          <FiUser size={22} />
+          <span className="font-sans">Profile</span>
+        </NavLink>
       </nav>
 
-      {/* Bottom Menu */}
-
-      <div className="pt-6 border-t border-zinc-200 space-y-2">
-
-        {bottomItems.map((item) => (
-          <NavLink
-            key={item.title}
-            to={item.path}
-            className="flex items-center gap-3 text-zinc-500 hover:text-black hover:bg-zinc-100 rounded-xl px-4 py-3 transition"
-          >
-            <span className="material-symbols-outlined">
-              {item.icon}
-            </span>
-
-            <span className="font-medium">
-              {item.title}
-            </span>
-          </NavLink>
-        ))}
-
+      {/* Bottom Menu: Logout */}
+      <div className="pt-6 border-t border-zinc-200 px-4">
+        <button
+          onClick={handleLogout}
+          className="flex items-center gap-4 text-red-600 hover:text-red-800 hover:bg-red-50 rounded-xl px-5 py-4 transition w-full text-left cursor-pointer font-semibold font-sans"
+        >
+          <FiLogOut size={22} />
+          <span>Logout</span>
+        </button>
       </div>
-
     </aside>
   );
 }
