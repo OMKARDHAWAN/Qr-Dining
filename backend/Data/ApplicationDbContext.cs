@@ -12,6 +12,7 @@ namespace backend.Data
             public DbSet<Admin> Admins { get; set; }
             public DbSet<Inventory> Inventories { get; set; }
             public DbSet<Offer> Offers { get; set; }
+            public DbSet<UserInteraction> UserInteractions { get; set; }
         }
     }
 

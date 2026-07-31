@@ -90,7 +90,7 @@ function ChefSidebar() {
 
       </nav>
 
-      {/* Bottom Menu */}
+      {/* Bottom Menu
 
       <div className="pt-6 border-t border-zinc-200 space-y-2">
 
@@ -116,4 +116,4 @@ function ChefSidebar() {
   );
 }
 
-export default ChefSidebar;
+export default ChefSidebar; */}

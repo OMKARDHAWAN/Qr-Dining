@@ -23,6 +23,7 @@ namespace backend
 
             builder.Services.AddScoped<IInventoryService, InventoryService>();
             builder.Services.AddScoped<IOfferService, OfferService>();
+            builder.Services.AddScoped<IAiRecommendationService, AiRecommendationService>();
 
             builder.Services.AddCors(options =>
             {
