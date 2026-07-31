@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useOutletContext } from "react-router-dom";
 import axios from "axios";
 import { Edit2, Trash2, CheckCircle2, Clock, X, Save } from "lucide-react";
 
@@ -6,7 +7,7 @@ function Orders() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [searchQuery, setSearchQuery] = useState("");
+  const { searchQuery } = useOutletContext();
   
   // Edit Order state
   const [editingOrder, setEditingOrder] = useState(null);
@@ -141,15 +142,6 @@ function Orders() {
         <div>
           <h1 className="text-3xl font-black text-gray-800 tracking-tight">Spice Kitchen Orders</h1>
           <p className="text-gray-500 mt-1">Live Chef cooking monitor</p>
-        </div>
-        <div className="relative w-full sm:w-64">
-          <input
-            type="text"
-            placeholder="Search orders..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full px-4 py-2 text-sm rounded-xl border border-zinc-200 bg-white text-zinc-800 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-orange-500"
-          />
         </div>
       </div>
 

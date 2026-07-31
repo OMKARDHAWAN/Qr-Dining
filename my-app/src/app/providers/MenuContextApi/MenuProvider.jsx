@@ -17,7 +17,19 @@ export const MenuProvider = ({ children }) => {
                 
                 // Formulate the direct image URL from table column
                 let formattedImg = "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=500";
-                if (rawImg && typeof rawImg === "string" && rawImg.trim() !== "") {
+                const lowercaseName = name ? name.toLowerCase() : "";
+
+                if (
+                    (!rawImg || rawImg.trim() === "" || rawImg.includes("coca-cola.jpg") || rawImg === "coke.png" || rawImg === "coke.jpg") &&
+                    (lowercaseName.includes("coke") || lowercaseName.includes("coca-cola"))
+                ) {
+                    formattedImg = "https://localhost:44380/images/ee0d783c-95d0-478e-9054-7654cd3d0ab6_coca-cola.jpg";
+                } else if (
+                    (!rawImg || rawImg.trim() === "" || rawImg.includes("pepsi.jpg")) &&
+                    lowercaseName.includes("pepsi")
+                ) {
+                    formattedImg = "https://localhost:44380/images/ad55d644-7af2-4ee0-b3cf-39365515c437_pepsi.jpg";
+                } else if (rawImg && typeof rawImg === "string" && rawImg.trim() !== "") {
                     if (rawImg.startsWith("http://") || rawImg.startsWith("https://")) {
                         formattedImg = rawImg;
                     } else {

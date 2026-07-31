@@ -55,7 +55,7 @@ const MenuManagement = () => {
                 {filteredMenu.map(item => (
 
                     <MenuCard
-                        key={item.menuItemId}
+                        key={item.id}
                         item={item}
                     />
 
