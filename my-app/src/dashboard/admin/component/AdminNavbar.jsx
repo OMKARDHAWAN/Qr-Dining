@@ -38,7 +38,7 @@ const AdminNavbar = () => {
 
           <div className="text-right">
             <h3 className="font-semibold">
-              Krish Kapoor
+                Noah Wilson
             </h3>
 
             <p className="text-sm text-gray-500">
