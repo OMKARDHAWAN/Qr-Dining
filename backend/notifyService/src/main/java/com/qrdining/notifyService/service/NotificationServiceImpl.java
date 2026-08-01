@@ -93,7 +93,7 @@ public class NotificationServiceImpl implements NotificationService {
             "-----------------------------------\n" +
             "Order ID     : %s\n" +
             "Order Date   : %s\n" +
-            "Order Amount : $%.2f\n" +
+            "Order Amount : ₹%.2f\n" +
             "Order Status : %s\n" +
             "-----------------------------------\n\n" +
             "We are preparing your delicious meal. Enjoy your dining experience!\n\n" +
@@ -124,7 +124,7 @@ public class NotificationServiceImpl implements NotificationService {
             "-----------------------------------\n" +
             "Payment ID   : %s\n" +
             "Order ID     : %s\n" +
-            "Amount Paid  : $%.2f\n" +
+            "Amount Paid  : ₹%.2f\n" +
             "Payment Date : %s\n" +
             "Status       : %s\n" +
             "-----------------------------------\n\n" +
@@ -143,7 +143,7 @@ public class NotificationServiceImpl implements NotificationService {
 
         // 2. Send SMS Notification
         if (request.getMobileNumber() != null && !request.getMobileNumber().trim().isEmpty()) {
-            String smsMessage = String.format("Dear %s, payment of $%.2f for Order %s was successful. Txn ID: %s.",
+            String smsMessage = String.format("Dear %s, payment of ₹%.2f for Order %s was successful. Txn ID: %s.",
                 request.getCustomerName(), request.getAmount(), request.getOrderId(), request.getPaymentId());
             sendSmsHelper(request.getMobileNumber(), smsMessage);
         }

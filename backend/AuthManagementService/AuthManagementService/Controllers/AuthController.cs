@@ -66,13 +66,18 @@ namespace AuthManagementService.Controllers
             return Ok(result);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Chef")]
         [HttpPost("create-chef")]
         public async Task<IActionResult> CreateChef([FromBody] ChefRegisterRequest request)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
+            }
+
+            if (string.IsNullOrEmpty(request.Password))
+            {
+                return BadRequest(new { message = "Password is required for new registration." });
             }
 
             var result = await _authService.CreateChefAsync(request);
@@ -115,7 +120,7 @@ namespace AuthManagementService.Controllers
         // STAFF CRUD ENDPOINTS (Admin Only)
         // ====================================================
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Chef")]
         [HttpGet("staff")]
         public async Task<IActionResult> GetAllStaff()
         {
@@ -123,7 +128,7 @@ namespace AuthManagementService.Controllers
             return Ok(list);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Chef")]
         [HttpGet("staff/{id}")]
         public async Task<IActionResult> GetStaffById(int id)
         {
@@ -135,7 +140,7 @@ namespace AuthManagementService.Controllers
             return Ok(item);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Chef")]
         [HttpPut("staff/{id}")]
         public async Task<IActionResult> UpdateStaff(int id, [FromBody] ChefRegisterRequest request)
         {
@@ -147,7 +152,7 @@ namespace AuthManagementService.Controllers
             return Ok(new { message = "Staff member updated successfully." });
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Chef")]
         [HttpDelete("staff/{id}")]
         public async Task<IActionResult> DeleteStaff(int id)
         {

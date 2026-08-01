@@ -24,6 +24,8 @@ const AdminSidebar = () => {
       setActiveTab("profile");
     } else if (location.pathname.includes("/menu-management")) {
       setActiveTab("menu");
+    } else if (location.pathname.includes("/staff-management")) {
+      setActiveTab("staff");
     } else if (location.pathname === "/admin" || location.pathname === "/admin/") {
       setActiveTab("orders");
     }
@@ -93,9 +95,12 @@ const AdminSidebar = () => {
             <span className="font-sans">Stock & Inventory</span>
           </button>
 
-          {/* Staff Directory - Disabled page navigation */}
+          {/* Staff Directory */}
           <button
-            onClick={() => setActiveTab("staff")}
+            onClick={() => {
+              setActiveTab("staff");
+              navigate("/admin/staff-management");
+            }}
             className={getBtnClass("staff")}
           >
             <FiUsers size={22} />

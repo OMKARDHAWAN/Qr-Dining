@@ -1,110 +1,60 @@
-import React, { useContext } from "react";
-import { StaffContext } from "../../../app/providers/StaffContextApi/StaffProvider";
-import { FiMail, FiMapPin, FiEdit, FiTrash2 } from "react-icons/fi";
+import React from "react";
+import { FiEdit, FiTrash2, FiMail, FiPhone, FiAward } from "react-icons/fi";
 
+const StaffCard = ({ member, onEdit, onDelete }) => {
+  const roleColors = {
+    Admin: "bg-red-50 text-red-700 border-red-100",
+    Chef: "bg-orange-50 text-orange-700 border-orange-100",
+    Manager: "bg-blue-50 text-blue-700 border-blue-100",
+    User: "bg-gray-50 text-gray-700 border-gray-100"
+  };
 
-
-const StaffCard = ({ staff, onEdit }) => {
-
-  const { deleteStaff } = useContext(StaffContext);
+  const badgeColor = roleColors[member.role] || "bg-gray-50 text-gray-700 border-gray-100";
 
   return (
-
-    <div className="bg-white rounded-xl shadow-md p-5 hover:shadow-xl transition">
-
-      {/* Image & Status */}
-
-      <div className="flex justify-between items-start">
-
-        <div className="relative">
-  <img
-    src={
-        staff.imageUrl?.startsWith("http")
-            ? staff.imageUrl
-            : `https://localhost:7155${staff.imageUrl}`
-    }
-    alt={staff.name}
-    className="w-20 h-20 rounded-xl object-cover"
-/>
-
-          <span
-            className={`absolute bottom-0 right-0 w-4 h-4 rounded-full border-2 border-white ${
-              staff.status === "On Duty"
-                ? "bg-green-500"
-                : "bg-gray-400"
-            }`}
-          ></span>
-
+    <div className="bg-white rounded-2xl shadow-sm border border-gray-150 p-6 hover:shadow-md transition-shadow duration-200 flex flex-col justify-between h-48">
+      <div>
+        {/* Header: Name and Role */}
+        <div className="flex justify-between items-start mb-3">
+          <h3 className="text-lg font-bold text-gray-800 font-sans tracking-tight">
+            {member.username}
+          </h3>
+          <span className={`text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full border ${badgeColor} font-sans`}>
+            {member.role}
+          </span>
         </div>
 
-        <span
-          className={`text-xs px-3 py-1 rounded-full font-semibold ${
-            staff.status === "On Duty"
-              ? "bg-orange-100 text-orange-600"
-              : "bg-gray-200 text-gray-600"
-          }`}
+        {/* Details List */}
+        <div className="space-y-2 text-gray-500 text-xs font-sans font-medium">
+          <div className="flex items-center gap-2">
+            <FiMail className="text-gray-400" />
+            <span className="truncate">{member.email}</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <FiPhone className="text-gray-400" />
+            <span>{member.mobileNumber || "N/A"}</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Footer Actions */}
+      <div className="flex justify-end gap-3 pt-4 border-t border-gray-100">
+        <button
+          onClick={() => onEdit(member)}
+          className="p-2 text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors cursor-pointer"
+          title="Edit Details"
         >
-
-          {staff.status}
-
-        </span>
-
+          <FiEdit size={16} />
+        </button>
+        <button
+          onClick={() => onDelete(member.id)}
+          className="p-2 text-red-600 bg-red-50 hover:bg-red-100 rounded-lg transition-colors cursor-pointer"
+          title="Delete Staff"
+        >
+          <FiTrash2 size={16} />
+        </button>
       </div>
-
-      {/* Staff Details */}
-
-      <h2 className="text-xl font-bold mt-4">
-        {staff.name}
-      </h2>
-
-      <p className="text-gray-500">
-        {staff.role}
-      </p>
-
-      <div className="bg-gray-100 rounded-lg p-3 mt-4 flex items-center gap-2 text-gray-600 text-sm">
-
-        <FiMapPin />
-
-        {staff.department}
-
-      </div>
-
-      <div className="mt-3 text-sm text-gray-500">
-
-        <p>
-          <strong>Email :</strong> {staff.email}
-        </p>
-
-        <p>
-          <strong>Phone :</strong> {staff.phone}
-        </p>
-
-      </div>
-
-      {/* Buttons */}
-
-<div className="flex gap-2 mt-5">
-
-    <button
-       onClick={() => onEdit(staff)}
-        className="flex-1 bg-blue-500 text-white rounded-lg py-2 flex justify-center items-center gap-2"
-    >
-        <FiEdit />
-        Edit
-    </button>
-
-    <button
-        onClick={() => deleteStaff(staff.staffId)}
-        className="flex-1 bg-red-500 text-white rounded-lg py-2 flex justify-center items-center gap-2"
-    >
-        <FiTrash2 />
-        Delete
-    </button>
-
-</div>
-
     </div>
-
   );
 };
 

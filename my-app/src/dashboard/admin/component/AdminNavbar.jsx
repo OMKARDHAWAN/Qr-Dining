@@ -15,12 +15,13 @@ export default function AdminNavbar({ searchQuery, setSearchQuery }){
     <div className="bg-white h-24 px-10 flex justify-between items-center border-b shadow-sm">
 
       {/* Left */}
-      <div>
-        <h1 className="text-2xl font-bold text-red-700">
-          
+      <div className="flex items-center gap-4">
+        <h1 className="text-2xl font-black tracking-tight text-gray-800 cursor-pointer select-none" onClick={() => navigate("/admin")}>
+          QR<span className="text-red-700">Dine</span>
         </h1>
-        <p className="text-gray-500">
-          
+        <div className="h-6 w-[1px] bg-gray-200"></div>
+        <p className="text-xs font-bold text-gray-400 uppercase tracking-widest font-sans">
+          Admin Portal
         </p>
       </div>
 
@@ -57,7 +58,7 @@ export default function AdminNavbar({ searchQuery, setSearchQuery }){
             </p>
           </div>
 
-          <div className="w-10 h-10 rounded-full border border-gray-250 bg-gray-50 flex items-center justify-center text-gray-600">
+          <div className="w-10 h-10 rounded-full border border-gray-250 bg-gray-50 flex items-center justify-center text-gray-600 cursor-pointer">
             <FiUser size={20} />
           </div>
         </div>
