@@ -82,6 +82,39 @@ function Orders() {
     fetchOrders();
   }, [tableId, user]);
 
+  const handleCancelOrder = async (orderId) => {
+    if (!window.confirm("Are you sure you want to cancel this order?")) {
+      return;
+    }
+
+    try {
+      const token = localStorage.getItem("token");
+      // DELETE request to the C# Order Service
+      const response = await axios.delete(`https://localhost:44311/api/orders/${orderId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      if (response.status === 200) {
+        // Remove from UI state
+        setOrders(prev => prev.filter(o => o.id !== orderId));
+
+        // Remove from local storage placed_orders list
+        const userKey = user?.mobileNumber || user?.MobileNumber || "guest";
+        const keyName = `placed_orders_${userKey}`;
+        const userOrderIds = JSON.parse(localStorage.getItem(keyName) || "[]");
+        const updatedIds = userOrderIds.filter(id => id !== orderId);
+        localStorage.setItem(keyName, JSON.stringify(updatedIds));
+
+        alert("Order cancelled successfully!");
+      }
+    } catch (err) {
+      console.error("Cancel order error:", err);
+      alert(err.response?.data?.message || err.message || "Failed to cancel the order. Please try again.");
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-[#f8f9fa] flex items-center justify-center">
@@ -105,7 +138,7 @@ function Orders() {
         {orders.length > 0 ? (
           <div className="space-y-6">
             {orders.map((order) => (
-              <OrderCard key={order.id} order={order} />
+              <OrderCard key={order.id} order={order} onCancel={handleCancelOrder} />
             ))}
           </div>
         ) : (

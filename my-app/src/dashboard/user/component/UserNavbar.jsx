@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, Bell, ShoppingCart, User, Menu as MenuIcon, X } from 'lucide-react';
+import { Search, ShoppingCart, User, Menu as MenuIcon, X } from 'lucide-react';
 import { useCart } from '../../../shared/hooks/useCart';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../../app/providers/AuthContextApi/AuthProvider';
@@ -14,7 +14,7 @@ export default function UserNavbar({
   setActiveSection
 }) {
   const { cartItemsCount } = useCart();
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const { tableId } = useTable();
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -114,14 +114,7 @@ export default function UserNavbar({
             )}
           </button>
 
-          {/* Notification Icon */}
-          <button 
-            onClick={onNotificationClick}
-            className="relative p-2 rounded-full text-[#2D2F2F] hover:bg-gray-100 active:scale-95 transition-all duration-300"
-          >
-            <Bell className="w-5 h-5" />
-            <span className="absolute top-2 right-2 h-2 w-2 rounded-full bg-[#B41B00] ring-2 ring-white" />
-          </button>
+
 
           {/* Profile Icon / Dropdown (Only for Authenticated Users) */}
           {user && (user.role === "User" || user.Role === "User") && (
@@ -147,6 +140,16 @@ export default function UserNavbar({
                   >
                     Profile Setting
                   </Link>
+                  <button
+                    onClick={() => {
+                      logout();
+                      setDropdownOpen(false);
+                      window.location.reload();
+                    }}
+                    className="w-full text-left block px-4 py-2.5 text-xs font-bold text-red-600 hover:bg-red-50 transition-colors border-t border-gray-100"
+                  >
+                    Logout
+                  </button>
                 </div>
               )}
             </div>
