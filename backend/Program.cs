@@ -1,4 +1,5 @@
 using System.Text;
+using backend.AI;
 using backend.Data;
 using backend.Repositories;
 using backend.Services;
@@ -27,7 +28,17 @@ namespace backend
 
             builder.Services.AddScoped<IInventoryService, InventoryService>();
             builder.Services.AddScoped<IOfferService, OfferService>();
-            builder.Services.AddScoped<IAiRecommendationService, AiRecommendationService>();
+            builder.Services.Configure<AzureAiOptions>(builder.Configuration.GetSection(AzureAiOptions.SectionName));
+            builder.Services.AddHttpClient<IAzureMlScoringClient, AzureMlScoringClient>((serviceProvider, client) =>
+            {
+                var aiOptions = serviceProvider.GetRequiredService<Microsoft.Extensions.Options.IOptions<AzureAiOptions>>().Value;
+                client.Timeout = TimeSpan.FromSeconds(aiOptions.TimeoutSeconds);
+            });
+            builder.Services.AddScoped<RestaurantAiServices>();
+            builder.Services.AddScoped<IRecommendationAiService>(provider => provider.GetRequiredService<RestaurantAiServices>());
+            builder.Services.AddScoped<IDemandPredictionService>(provider => provider.GetRequiredService<RestaurantAiServices>());
+            builder.Services.AddScoped<IOfferPredictionService>(provider => provider.GetRequiredService<RestaurantAiServices>());
+            builder.Services.AddScoped<IInventoryPredictionService>(provider => provider.GetRequiredService<RestaurantAiServices>());
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IAuthService, AuthService>();
 
@@ -88,7 +99,11 @@ namespace backend
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            // The local HTTP profile has no HTTPS listener. Production still always redirects to HTTPS.
+            if (!app.Environment.IsDevelopment())
+            {
+                app.UseHttpsRedirection();
+            }
             app.UseStaticFiles();
 
             app.UseRouting();

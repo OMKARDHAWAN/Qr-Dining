@@ -13,7 +13,7 @@ namespace backend.Migrations
 {
     [DbContext(typeof(AppDbContext))]
     [Migration("20260719170558_InitialCreate")]
-    partial class InitialCreate
+    partial class UserAuthenticationInitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
