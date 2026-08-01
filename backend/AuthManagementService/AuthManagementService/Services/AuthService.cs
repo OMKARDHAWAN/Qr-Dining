@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net.Http;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +21,7 @@ namespace AuthManagementService.Services
 
         // In-memory store for generated OTPs (Mobile -> OTP)
         private static readonly Dictionary<string, string> _activeOtps = new();
+        private static readonly HttpClient _httpClient = new();
 
         public AuthService(IUserRepository userRepository, IConfiguration configuration)
         {
@@ -42,8 +44,7 @@ namespace AuthManagementService.Services
                 // If they did not send an OTP, generate and save a new OTP code
                 if (string.IsNullOrEmpty(request.Otp))
                 {
-                    var random = new Random();
-                    var generatedOtp = random.Next(100000, 999999).ToString();
+                    var generatedOtp = await SendOtpViaNotificationServiceAsync(request.MobileNumber, customer.Email, customer.Name);
                     _activeOtps[request.MobileNumber] = generatedOtp;
 
                     return new CustomerLoginResponse
@@ -96,8 +97,7 @@ namespace AuthManagementService.Services
             // If OTP is null/empty for a new registration request, generate and send an OTP
             if (string.IsNullOrEmpty(request.Otp))
             {
-                var random = new Random();
-                var generatedOtp = random.Next(100000, 999999).ToString();
+                var generatedOtp = await SendOtpViaNotificationServiceAsync(request.MobileNumber, request.Email, request.Username);
                 _activeOtps[request.MobileNumber] = generatedOtp;
 
                 return new CustomerLoginResponse
@@ -404,6 +404,38 @@ namespace AuthManagementService.Services
                     Role = staff.Role
                 }
             };
+        }
+
+        private async Task<string> SendOtpViaNotificationServiceAsync(string mobileNumber, string email, string customerName)
+        {
+            try
+            {
+                var payload = new { mobileNumber = mobileNumber, email = email, customerName = customerName };
+                var json = System.Text.Json.JsonSerializer.Serialize(payload);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                // Call Java Notification Service running on port 8082
+                var response = await _httpClient.PostAsync("http://localhost:8082/api/notifications/send-otp", content);
+                if (response.IsSuccessStatusCode)
+                {
+                    var responseString = await response.Content.ReadAsStringAsync();
+                    using var doc = System.Text.Json.JsonDocument.Parse(responseString);
+                    if (doc.RootElement.TryGetProperty("otp", out var otpProp))
+                    {
+                        return otpProp.GetString() ?? "";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[Notification Service Error] {ex.Message}");
+            }
+
+            // Local fallback OTP generation in case Notification Service is offline
+            var random = new Random();
+            var localOtp = random.Next(100000, 999999).ToString();
+            Console.WriteLine($"[AuthService Fallback] Local OTP Generated: {localOtp}");
+            return localOtp;
         }
     }
 }
