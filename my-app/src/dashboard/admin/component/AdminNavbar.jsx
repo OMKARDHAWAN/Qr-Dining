@@ -1,14 +1,22 @@
 import React from "react";
 import { FiBell, FiSettings, FiUser } from "react-icons/fi";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../../app/providers/AuthContextApi/AuthProvider";
 
 export default function AdminNavbar({ searchQuery, setSearchQuery }){
   const { user } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const name = user?.username || user?.Username || "Admin";
   const role = user?.role || user?.Role || "Administrator";
+
+  const getHeaderTitle = () => {
+    if (location.pathname.includes("/menu-management")) return "Menu Management";
+    if (location.pathname.includes("/staff-management")) return "Staff Directory";
+    if (location.pathname.includes("/profile")) return "Profile Settings";
+    return "Active Orders";
+  };
 
   return (
     <>
@@ -16,13 +24,9 @@ export default function AdminNavbar({ searchQuery, setSearchQuery }){
 
       {/* Left */}
       <div className="flex items-center gap-4">
-        <h1 className="text-2xl font-black tracking-tight text-gray-800 cursor-pointer select-none" onClick={() => navigate("/admin")}>
-          QR<span className="text-red-700">Dine</span>
-        </h1>
-        <div className="h-6 w-[1px] bg-gray-200"></div>
-        <p className="text-xs font-bold text-gray-400 uppercase tracking-widest font-sans">
-          Admin Portal
-        </p>
+        <h2 className="text-2xl font-bold tracking-tight text-zinc-900 font-sans">
+          {getHeaderTitle()}
+        </h2>
       </div>
 
       {/* Right */}

@@ -37,7 +37,7 @@ export default function UserNavbar({
         <div className="flex items-center gap-3">
           <Link to={`/user?tableId=${tableId || 1}`} className="cursor-pointer">
             <span className="text-2xl font-black tracking-tight text-[#2D2F2F] hover:opacity-80 transition-opacity cursor-pointer">
-              QR<span className="text-[#B41B00]">Dine</span>
+              Qr<span className="text-[#B41B00]">Dine</span>
             </span>
           </Link>
         </div>

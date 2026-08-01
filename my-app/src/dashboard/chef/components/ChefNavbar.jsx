@@ -24,11 +24,7 @@ function ChefNavbar({ searchQuery, setSearchQuery }) {
 
             {/* Left Side */}
             <div className="flex items-center gap-4">
-                <span className="text-xl font-black tracking-tight text-zinc-800 cursor-pointer select-none" onClick={() => navigate("/chef")}>
-                    QR<span className="text-orange-600">Dine</span>
-                </span>
-                <div className="h-6 w-[1px] bg-zinc-200"></div>
-                <h2 className="text-lg font-bold tracking-tight text-zinc-900 font-sans">
+                <h2 className="text-2xl font-bold tracking-tight text-zinc-900 font-sans">
                     {getHeaderTitle()}
                 </h2>
 
