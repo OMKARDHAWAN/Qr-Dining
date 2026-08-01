@@ -2,6 +2,10 @@ using Microsoft.AspNetCore.Mvc;
 using OrderService.DTOs;
 using OrderService.Interfaces;
 using OrderService.Models;
+using System;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace OrderService.Controllers
 {
@@ -16,7 +20,7 @@ namespace OrderService.Controllers
             _repository = repository;
         }
 
-        // GET:        api/orders
+        // GET:     api/orders
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -92,17 +96,26 @@ namespace OrderService.Controllers
                 Notes = dto.Notes,
                 Status = dto.Status,
                 Quantity = dto.Quantity,
-                Duration = dto.Duration
+                Duration = dto.Duration,
+                PaymentStatus = dto.PaymentStatus,
+                TransactionId = dto.TransactionId,
+                PaymentMethod = dto.PaymentMethod
             };
 
             // create order and save
             var createdOrder = await _repository.Create(order);
             await _repository.Save();
 
+            // Send order confirmation and payment success notifications in the background
+            _ = Task.Run(async () =>
+            {
+                await TriggerNotificationsAsync(createdOrder.Id, dto);
+            });
+
             // map to response dto
             var responseDto = MapToDto(createdOrder);
 
-            return CreatedAtAction(nameof(GetById), new { id = responseDto.Id }, responseDto);
+            return StatusCode(201, responseDto);
         }
 
         // PUT: api/orders/5
@@ -193,8 +206,58 @@ namespace OrderService.Controllers
                 Notes = order.Notes,
                 Status = order.Status,
                 Quantity = order.Quantity,
-                Duration = order.Duration
+                Duration = order.Duration,
+                PaymentStatus = order.PaymentStatus,
+                TransactionId = order.TransactionId,
+                PaymentMethod = order.PaymentMethod
             };
+        }
+
+        private static readonly HttpClient _httpClient = new();
+
+        private async Task TriggerNotificationsAsync(int orderId, CreateOrderDto dto)
+        {
+            if (string.IsNullOrEmpty(dto.Email)) return;
+
+            try
+            {
+                // 1. Send Order Confirmation Email
+                var orderPayload = new
+                {
+                    orderId = "ORD" + orderId,
+                    customerName = dto.CustomerName ?? "Customer",
+                    email = dto.Email,
+                    amount = (double)dto.Price,
+                    orderDate = DateTime.Now.ToString("yyyy-MM-dd"),
+                    status = "Confirmed"
+                };
+                var orderJson = System.Text.Json.JsonSerializer.Serialize(orderPayload);
+                var orderContent = new StringContent(orderJson, Encoding.UTF8, "application/json");
+                await _httpClient.PostAsync("http://localhost:8082/api/notifications/send-order-email", orderContent);
+
+                // 2. Send Payment Receipt Notification (since payment is completed)
+                if (dto.PaymentStatus == "Completed" && !string.IsNullOrEmpty(dto.TransactionId))
+                {
+                    var paymentPayload = new
+                    {
+                        paymentId = dto.TransactionId,
+                        orderId = "ORD" + orderId,
+                        customerName = dto.CustomerName ?? "Customer",
+                        email = dto.Email,
+                        mobileNumber = dto.MobileNumber ?? "",
+                        amount = (double)dto.Price,
+                        status = "Success",
+                        paymentDate = DateTime.Now.ToString("yyyy-MM-dd")
+                    };
+                    var paymentJson = System.Text.Json.JsonSerializer.Serialize(paymentPayload);
+                    var paymentContent = new StringContent(paymentJson, Encoding.UTF8, "application/json");
+                    await _httpClient.PostAsync("http://localhost:8082/api/notifications/send-payment-notification", paymentContent);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[OrderService Notification Error] {ex.Message}");
+            }
         }
     }
 }

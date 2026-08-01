@@ -41,16 +41,6 @@ export default function MobileBottomNav({
           </div>
           <span className="text-[9px] font-black tracking-wider uppercase">Orders</span>
         </button>
-        {/* AI Assistant tab */}
-        <button
-          onClick={onAIClick}
-          className="flex flex-col items-center gap-1 text-gray-400 hover:text-[#B41B00] transition-colors duration-300 relative"
-        >
-          <div className="p-2.5 bg-gradient-to-r from-[#B41B00] to-[#FF775D] rounded-full text-white -mt-7 shadow-lg active:scale-95 transition-transform duration-300">
-            <Sparkles className="w-5 h-5" />
-          </div>
-          <span className="text-[9px] font-black tracking-wider uppercase">AI Chat</span>
-        </button>
         {/* Profile tab */}
         <button
           onClick={onProfileClick}

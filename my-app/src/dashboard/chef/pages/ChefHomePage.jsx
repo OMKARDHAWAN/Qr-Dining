@@ -1,9 +1,6 @@
-import ChefHome from "../component/ChefHome";
+import React from "react";
+import { Navigate } from "react-router-dom";
 
-export default function ChefHomePage(){
-    return(
-        <>
-       <ChefHome/>
-        </>
-    )
+export default function ChefHomePage() {
+  return <Navigate to="/chef/orders" replace />;
 }

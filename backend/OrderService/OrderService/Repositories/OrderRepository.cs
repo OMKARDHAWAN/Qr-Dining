@@ -35,7 +35,7 @@ namespace OrderService.Repositories
         public async Task<Order> Create(Order order)
         {
             // check database and tables existence
-            CheckDatabaseAndTableCreated();
+            // CheckDatabaseAndTableCreated();
 
             await _context.Orders.AddAsync(order);
             return order;

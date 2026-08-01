@@ -23,5 +23,17 @@ namespace OrderService.DTOs
         public int Quantity { get; set; }
 
         public string Duration { get; set; } = string.Empty;
+
+        public string PaymentStatus { get; set; } = "Pending";
+
+        public string? TransactionId { get; set; }
+
+        public string? PaymentMethod { get; set; }
+
+        public string? Email { get; set; }
+
+        public string? CustomerName { get; set; }
+
+        public string? MobileNumber { get; set; }
     }
 }
