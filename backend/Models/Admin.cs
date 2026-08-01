@@ -9,11 +9,11 @@ namespace backend.Models
 
             [Required]
             [StringLength(100)]
-            public string Admin_Name { get; set; }
+            public string Admin_Name { get; set; } = string.Empty;
 
             [Required]
             [StringLength(255)]
-            public string Password { get; set; }
+            public string Password { get; set; } = string.Empty;
         }
     }
 

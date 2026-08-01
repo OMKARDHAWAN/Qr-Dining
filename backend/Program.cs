@@ -1,6 +1,10 @@
+using System.Text;
 using backend.Data;
+using backend.Repositories;
 using backend.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace backend
 {
@@ -24,6 +28,8 @@ namespace backend
             builder.Services.AddScoped<IInventoryService, InventoryService>();
             builder.Services.AddScoped<IOfferService, OfferService>();
             builder.Services.AddScoped<IAiRecommendationService, AiRecommendationService>();
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<IAuthService, AuthService>();
 
             builder.Services.AddCors(options =>
             {
@@ -34,8 +40,35 @@ namespace backend
 
                     policy.WithOrigins(origins)
                         .AllowAnyHeader()
-                        .AllowAnyMethod();
+                        .AllowAnyMethod()
+                        .AllowCredentials();
                 });
+            });
+
+            var jwtSettings = builder.Configuration.GetSection("Jwt");
+            var secretKey = jwtSettings["SecretKey"] ?? "SuperSecretKeyForRestaurantManagementSystem123!";
+            var issuer = jwtSettings["Issuer"] ?? "RestaurantAuthService";
+            var audience = jwtSettings["Audience"] ?? "RestaurantReactClient";
+
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.RequireHttpsMetadata = false;
+                options.SaveToken = true;
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey)),
+                    ValidateIssuer = true,
+                    ValidIssuer = issuer,
+                    ValidateAudience = true,
+                    ValidAudience = audience,
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.Zero
+                };
             });
 
             var app = builder.Build();
@@ -62,6 +95,7 @@ namespace backend
 
             app.UseCors("AllowFrontend");
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllers();
