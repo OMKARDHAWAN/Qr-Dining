@@ -29,5 +29,11 @@ namespace OrderService.DTOs
         public string? TransactionId { get; set; }
 
         public string? PaymentMethod { get; set; }
+
+        public string? Email { get; set; }
+
+        public string? CustomerName { get; set; }
+
+        public string? MobileNumber { get; set; }
     }
 }

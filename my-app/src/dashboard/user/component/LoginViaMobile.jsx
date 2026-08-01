@@ -187,18 +187,7 @@ export default function LoginViaMobile({
       ) : (
         // OTP Step
         <form onSubmit={handleVerifyOTP} className="space-y-4">
-          {/* Test Verification OTP Display Banner */}
-          {mockOtp && (
-            <div className="mb-4 p-3 bg-[#EBF5FF] border border-blue-100 rounded-xl flex items-center justify-between text-[11px] font-bold text-blue-700">
-              <div className="flex items-center gap-1.5">
-                <Info className="w-4 h-4 text-blue-500" />
-                <span>Test Code:</span>
-              </div>
-              <span className="text-xs bg-white px-2 py-1 rounded-lg border border-blue-200 tracking-widest text-blue-900 font-extrabold shadow-sm">
-                {mockOtp}
-              </span>
-            </div>
-          )}
+
 
           <div className="relative">
             <input
