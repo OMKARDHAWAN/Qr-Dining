@@ -66,7 +66,7 @@ export default function CartDrawer({ isOpen, onClose }) {
     };
 
     try {
-      const response = await axios.post("https://localhost:44311/api/orders", orderPayload, {
+      const response = await axios.post("/api/orders", orderPayload, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -109,7 +109,7 @@ export default function CartDrawer({ isOpen, onClose }) {
     };
 
     try {
-      const response = await axios.post("https://localhost:44311/api/payments/process", paymentPayload);
+      const response = await axios.post("/api/payments/process", paymentPayload);
       if (response.data && response.data.success) {
         const txnId = response.data.transactionId;
         // Continue to save order

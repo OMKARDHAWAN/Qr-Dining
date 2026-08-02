@@ -167,7 +167,9 @@ namespace AuthManagementService.Services
                 Email = request.Email,
                 MobileNumber = request.MobileNumber,
                 PasswordHash = PasswordHelper.HashPassword(request.Password),
-                Role = "Chef"
+                Role = string.IsNullOrEmpty(request.Role) ? "Chef" : request.Role,
+                DutyPeriod = request.DutyPeriod,
+                IsOnDuty = request.IsOnDuty
             };
 
             await _userRepository.AddStaffAsync(chef);
@@ -179,7 +181,9 @@ namespace AuthManagementService.Services
                 Username = chef.Username,
                 Email = chef.Email,
                 MobileNumber = chef.MobileNumber,
-                Role = chef.Role
+                Role = chef.Role,
+                DutyPeriod = chef.DutyPeriod,
+                IsOnDuty = chef.IsOnDuty
             };
         }
 
@@ -199,7 +203,9 @@ namespace AuthManagementService.Services
                     Username = item.Username,
                     Email = item.Email,
                     MobileNumber = item.MobileNumber,
-                    Role = item.Role
+                    Role = item.Role,
+                    DutyPeriod = item.DutyPeriod,
+                    IsOnDuty = item.IsOnDuty
                 });
             }
             return dtos;
@@ -216,7 +222,9 @@ namespace AuthManagementService.Services
                 Username = item.Username,
                 Email = item.Email,
                 MobileNumber = item.MobileNumber,
-                Role = item.Role
+                Role = item.Role,
+                DutyPeriod = item.DutyPeriod,
+                IsOnDuty = item.IsOnDuty
             };
         }
 
@@ -228,6 +236,9 @@ namespace AuthManagementService.Services
             item.Username = request.Username;
             item.Email = request.Email;
             item.MobileNumber = request.MobileNumber;
+            item.Role = string.IsNullOrEmpty(request.Role) ? item.Role : request.Role;
+            item.DutyPeriod = request.DutyPeriod;
+            item.IsOnDuty = request.IsOnDuty;
             
             // Only update password if a new one is sent
             if (!string.IsNullOrEmpty(request.Password))

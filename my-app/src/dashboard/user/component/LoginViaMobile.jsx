@@ -62,6 +62,16 @@ export default function LoginViaMobile({
       return;
     }
 
+    if (mobileNumber.startsWith("0")) {
+      setError("Mobile number cannot start with 0.");
+      return;
+    }
+
+    if (/^0+$/.test(mobileNumber)) {
+      setError("Mobile number cannot be all zeros.");
+      return;
+    }
+
     setLoading(true);
     const result = await checkCustomerMobile(mobileNumber);
     setLoading(false);

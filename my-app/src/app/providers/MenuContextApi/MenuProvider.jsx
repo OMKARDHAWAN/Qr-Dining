@@ -10,7 +10,7 @@ export const MenuProvider = ({ children }) => {
 
     const fetchMenu = async () => {
         try {
-            const response = await axios.get("https://localhost:44380/api/menuitems");
+            const response = await axios.get("/api/menuitems");
             const normalized = (response.data || []).map(item => {
                 const name = item.itemName !== undefined ? item.itemName : item.ItemName;
                 const rawImg = item.imageUrl !== undefined ? item.imageUrl : item.ImageUrl;
@@ -23,18 +23,18 @@ export const MenuProvider = ({ children }) => {
                     (!rawImg || rawImg.trim() === "" || rawImg.includes("coca-cola.jpg") || rawImg === "coke.png" || rawImg === "coke.jpg") &&
                     (lowercaseName.includes("coke") || lowercaseName.includes("coca-cola"))
                 ) {
-                    formattedImg = "https://localhost:44380/images/ee0d783c-95d0-478e-9054-7654cd3d0ab6_coca-cola.jpg";
+                    formattedImg = "/assets/images/coca-cola.jpg";
                 } else if (
                     (!rawImg || rawImg.trim() === "" || rawImg.includes("pepsi.jpg")) &&
                     lowercaseName.includes("pepsi")
                 ) {
-                    formattedImg = "https://localhost:44380/images/ad55d644-7af2-4ee0-b3cf-39365515c437_pepsi.jpg";
+                    formattedImg = "/assets/images/pepsi.jpg";
                 } else if (rawImg && typeof rawImg === "string" && rawImg.trim() !== "") {
                     if (rawImg.startsWith("http://") || rawImg.startsWith("https://")) {
                         formattedImg = rawImg;
                     } else {
                         const slash = rawImg.startsWith("/") ? "" : "/";
-                        formattedImg = `https://localhost:44380${slash}${rawImg}`;
+                        formattedImg = `${slash}${rawImg}`;
                     }
                 }
 
@@ -59,7 +59,7 @@ export const MenuProvider = ({ children }) => {
         // Load menu and category data from backend
         fetchMenu();
 
-        axios.get("https://localhost:44380/api/categories")
+        axios.get("/api/categories")
             .then((response) => {
                 const normalized = (response.data || []).map(cat => ({
                     id: cat.id !== undefined ? cat.id : cat.Id,
@@ -77,7 +77,7 @@ export const MenuProvider = ({ children }) => {
 
     const addMenuItem = async (menuData) => {
         try {
-            await axios.post("https://localhost:44380/api/menuitems", menuData);
+            await axios.post("/api/menuitems", menuData);
             await fetchMenu();
             return {
                 success: true
@@ -94,7 +94,7 @@ export const MenuProvider = ({ children }) => {
 
     const updateMenuItem = async (id, menuData) => {
         try {
-            await axios.put(`https://localhost:44380/api/menuitems/${id}`, menuData);
+            await axios.put(`/api/menuitems/${id}`, menuData);
             await fetchMenu();
             return {
                 success: true
@@ -110,7 +110,7 @@ export const MenuProvider = ({ children }) => {
 
     const deleteMenuItem = async (id) => {
         try {
-            await axios.delete(`https://localhost:44380/api/menuitems/${id}`);
+            await axios.delete(`/api/menuitems/${id}`);
             await fetchMenu();
             return {
                 success: true

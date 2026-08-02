@@ -21,7 +21,7 @@ function Orders() {
 
     const fetchOrders = async () => {
       try {
-        const response = await axios.get("https://localhost:44311/api/orders");
+        const response = await axios.get("/api/orders");
         const data = response.data || [];
         
         // Filter orders by active tableId and user's placed order IDs
