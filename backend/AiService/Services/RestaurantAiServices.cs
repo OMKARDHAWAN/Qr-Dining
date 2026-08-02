@@ -1,4 +1,4 @@
-using backend.AI;
+using backend.AiService;
 using backend.DTOs;
 using Microsoft.Extensions.Options;
 

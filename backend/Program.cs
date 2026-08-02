@@ -1,5 +1,5 @@
 using System.Text;
-using backend.AI;
+using backend.AiService;
 using backend.Data;
 using backend.Repositories;
 using backend.Services;
@@ -112,6 +112,20 @@ namespace backend
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            using (var scope = app.Services.CreateScope())
+            {
+                try
+                {
+                    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+                    dbContext.Database.EnsureCreated();
+                }
+                catch (Exception ex)
+                {
+                    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(ex, "An error occurred while initializing the database.");
+                }
+            }
 
             app.MapControllers();
 

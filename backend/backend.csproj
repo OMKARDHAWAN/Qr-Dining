@@ -4,14 +4,12 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <DefaultItemExcludes>$(DefaultItemExcludes);AuthManagementService\**;OrderService\**;Menuservice\**</DefaultItemExcludes>
+    <DefaultItemExcludes>$(DefaultItemExcludes);AuthManagementService\AuthManagementService\**;OrderService\OrderService\**;Menuservice\Menuservice\**</DefaultItemExcludes>
   </PropertyGroup>
 
   <ItemGroup>
     <Folder Include="Helpers\" />
     <Folder Include="Middleware\" />
-    <Folder Include="Repositories\" />
-    <Folder Include="Services\" />
   </ItemGroup>
 
   <ItemGroup>
