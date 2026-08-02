@@ -16,5 +16,9 @@ namespace AuthManagementService.DTOs
 
         [MinLength(6, ErrorMessage = "Password must be at least 6 characters")]
         public string? Password { get; set; }
+
+        public string Role { get; set; } = string.Empty;
+        public string DutyPeriod { get; set; } = string.Empty;
+        public bool IsOnDuty { get; set; } = true;
     }
 }
