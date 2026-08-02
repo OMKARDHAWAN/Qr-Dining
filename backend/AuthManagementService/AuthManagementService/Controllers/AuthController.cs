@@ -70,7 +70,7 @@ namespace AuthManagementService.Controllers
             return Ok(result);
         }
 
-        [Authorize(Roles = "Admin,Chef")]
+        [AllowAnonymous]
         [HttpPost("create-chef")]
         public async Task<IActionResult> CreateChef([FromForm] ChefRegisterRequest request, IFormFile? Image)
         {

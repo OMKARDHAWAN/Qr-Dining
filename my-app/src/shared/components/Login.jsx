@@ -16,6 +16,34 @@ export default function Login() {
     e.preventDefault();
     setError('');
     setSubmitting(true);
+
+    // Password validation rule
+    const minLength = 8;
+    const hasUpperCase = /[A-Z]/.test(password);
+    const hasLowerCase = /[a-z]/.test(password);
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+    if (password.length < minLength) {
+      setError("Password must be at least 8 characters long.");
+      setSubmitting(false);
+      return;
+    }
+    if (!hasUpperCase) {
+      setError("Password must contain at least one capital letter.");
+      setSubmitting(false);
+      return;
+    }
+    if (!hasLowerCase) {
+      setError("Password must contain at least one small letter.");
+      setSubmitting(false);
+      return;
+    }
+    if (!hasSpecialChar) {
+      setError("Password must contain at least one special symbol.");
+      setSubmitting(false);
+      return;
+    }
+
     const result = await login(username, password);
     if (result.success) {
       console.log("Logged in successfully via Context!");
@@ -39,8 +67,8 @@ export default function Login() {
         <div className="text-center mb-6">
           <h1 className="text-2xl font-bold text-gray-800">Login</h1>
         </div>
-        {error && <div className="mb-4 p-3 text-sm text-red-600 bg-red-50 rounded-lg">{error}</div>}
-        <form className="space-y-5" onSubmit={handleSubmit}>
+        {error && <div className="mb-4 p-3 text-sm text-red-600 bg-red-50 rounded-lg text-left">{error}</div>}
+        <form className="space-y-5 text-left" onSubmit={handleSubmit}>
           <div>
             <label className="block mb-2 text-sm font-medium text-gray-700">Username</label>
             <input 
@@ -64,11 +92,20 @@ export default function Login() {
           <button 
             type="submit" 
             disabled={submitting}
-            className="w-full py-3 rounded-lg bg-[#B71F04] text-white font-semibold hover:bg-[#FD745A] disabled:opacity-50 transition-colors duration-200"
+            className="w-full py-3 rounded-lg bg-[#B71F04] text-white font-semibold hover:bg-[#FD745A] disabled:opacity-50 transition-colors duration-200 cursor-pointer"
           >
             {submitting ? 'Authenticating...' : 'Login'}
           </button>
         </form>
+        <div className="text-center mt-5">
+          <span className="text-xs text-gray-500">no account ? </span>
+          <span 
+            onClick={() => navigate('/register')} 
+            className="text-xs text-[#B71F04] font-bold hover:underline cursor-pointer"
+          >
+            pleases register ?
+          </span>
+        </div>
       </div>
     </div>
   );
