@@ -1,11 +1,12 @@
+using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using AuthManagementService.DTOs;
-using AuthManagementService.Services;
+using backend.DTOs;
+using backend.Services;
 
-namespace AuthManagementService.Controllers
+namespace backend.Controllers
 {
     [ApiController]
     [Route("api/auth")]
@@ -32,18 +33,9 @@ namespace AuthManagementService.Controllers
 
             var result = await _authService.CustomerLoginAsync(request);
 
-            if (!result.IsRegistered && !string.IsNullOrEmpty(request.Username) && !string.IsNullOrEmpty(request.Email))
+            if (result == null)
             {
-                if (result.OtpSent)
-                {
-                    return Ok(result);
-                }
-                return BadRequest(new { message = result.Message });
-            }
-
-            if (result.IsRegistered && result.OtpSent && string.IsNullOrEmpty(result.Token) && !string.IsNullOrEmpty(request.Otp))
-            {
-                return BadRequest(new { message = result.Message });
+                return BadRequest(new { message = "Username or Email is already registered by a staff member." });
             }
 
             return Ok(result);
@@ -167,7 +159,7 @@ namespace AuthManagementService.Controllers
             return Ok(new { message = "Staff member updated successfully." });
         }
 
-                [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpDelete("staff/{id}")]
         public async Task<IActionResult> DeleteStaff(int id)
         {

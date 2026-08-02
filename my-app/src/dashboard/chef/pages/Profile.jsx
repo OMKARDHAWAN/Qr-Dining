@@ -23,7 +23,7 @@ export default function Profile() {
     const fetchProfile = async () => {
         try {
             const token = localStorage.getItem("token");
-            const response = await axios.get("/api/profile", {
+            const response = await axios.get("/api/auth/profile", {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
