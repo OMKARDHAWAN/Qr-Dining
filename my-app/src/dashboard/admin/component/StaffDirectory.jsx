@@ -1,100 +1,96 @@
-import React from "react";
-import StaffData from "./StaffData";
+import React, { useEffect, useState, useContext } from "react";
+import { useAuth } from "../../../app/providers/AuthContextApi/AuthProvider";
 import StaffCard from "./StaffCard";
+import AddStaffForm from "./AddStaffForm";
 
 const StaffDirectory = () => {
+  const { staffList, fetchStaff, deleteStaff, loading } = useAuth();
+  const [showForm, setShowForm] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const loadData = async () => {
+    await fetchStaff();
+  };
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const handleDelete = async (id) => {
+    if (window.confirm("Are you sure you want to delete this staff member?")) {
+      const response = await deleteStaff(id);
+      if (response.success) {
+        alert("Staff Member Deleted Successfully");
+      } else {
+        alert(response.message);
+      }
+    }
+  };
+
+  if (loading) {
+    return <h2 className="p-6 text-xl font-bold font-sans">Loading staff directory...</h2>;
+  }
+
+  // Filter staff by username, email, or role search query
+  const filteredStaff = (staffList || []).filter(member => {
+    const q = searchQuery.toLowerCase();
+    return (
+      (member.username || "").toLowerCase().includes(q) ||
+      (member.email || "").toLowerCase().includes(q) ||
+      (member.role || "").toLowerCase().includes(q)
+    );
+  });
+
   return (
-    <div className="p-8 bg-gray-50 min-h-screen">
+    <div className="p-6">
+      {/* Header section identical to MenuManagement */}
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-3xl font-bold font-sans">
+          Staff Directory
+        </h1>
 
-      {/* Heading */}
-
-      <div className="flex justify-between items-center mb-8">
-
-        <div>
-
-          <h1 className="text-4xl font-bold">
-            Staff Directory
-          </h1>
-
-          <p className="text-gray-500 mt-2">
-            Manage your restaurant staff.
-          </p>
-
-        </div>
-
-        <button className="bg-orange-500 text-white px-6 py-3 rounded-lg hover:bg-orange-600">
+        <button
+          onClick={() => setShowForm(true)}
+          className="bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 cursor-pointer font-sans transition-colors duration-200 font-semibold"
+        >
           + Add Staff
         </button>
-
       </div>
 
-      {/* Stats */}
-
-      <div className="flex gap-10 mb-8">
-
-        <div>
-          <p className="text-gray-500 text-sm">
-            TOTAL BRIGADE
-          </p>
-
-          <h2 className="text-4xl font-bold">
-            24
-          </h2>
-        </div>
-
-        <div>
-          <p className="text-gray-500 text-sm">
-            ON DUTY
-          </p>
-
-          <h2 className="text-4xl font-bold text-red-600">
-            12
-          </h2>
-        </div>
-
-        <div>
-          <p className="text-gray-500 text-sm">
-            OFF DUTY
-          </p>
-
-          <h2 className="text-4xl font-bold">
-            12
-          </h2>
-        </div>
-
+      {/* Live Search Bar */}
+      <div className="mb-6 max-w-sm">
+        <input
+          type="text"
+          placeholder="Search staff by name or email..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="w-full border rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 font-sans"
+        />
       </div>
 
-      {/* Staff Cards */}
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-
-        {StaffData.map((staff) => (
-          <StaffCard
-            key={staff.id}
-            staff={staff}
-          />
-        ))}
-
-        {/* Add Staff Card */}
-
-        <div className="border-2 border-dashed border-orange-300 rounded-xl flex flex-col justify-center items-center h-80">
-
-          <div className="w-20 h-20 rounded-full bg-orange-100 flex items-center justify-center text-5xl text-orange-600">
-            +
-          </div>
-
-          <h2 className="text-2xl font-bold mt-6 text-red-600">
-            Onboard Staff
-          </h2>
-
-          <p className="text-gray-500 mt-3">
-            Add new member to the brigade
-          </p>
-
+      {/* Staff Card Grid matching MenuManagement */}
+      {filteredStaff.length > 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredStaff.map((member) => (
+            <StaffCard
+              key={member.id}
+              member={member}
+              onDelete={handleDelete}
+            />
+          ))}
         </div>
+      ) : (
+        <div className="bg-white rounded-xl border p-12 text-center text-gray-400 font-sans">
+          No staff members found.
+        </div>
+      )}
 
-      </div>
-
+      {/* Add Staff Modal */}
+      {showForm && (
+        <AddStaffForm
+          onClose={() => setShowForm(false)}
+        />
+      )}
     </div>
   );
 };
