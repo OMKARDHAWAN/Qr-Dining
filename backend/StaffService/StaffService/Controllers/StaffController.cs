@@ -84,45 +84,14 @@ namespace StaffService.Controllers
 
         // UPDATE STAFF
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateStaff(int id, [FromForm] AddStaffDto dto)
+        public IActionResult UpdateStaff(int id, Staff staff)
         {
-            var staff = service.GetStaffById(id);
-
-            if (staff == null)
-                return NotFound();
-
-            staff.Name = dto.Name;
-            staff.Role = dto.Role;
-            staff.Department = dto.Department;
-            staff.Email = dto.Email;
-            staff.Phone = dto.Phone;
-            staff.Status = dto.Status;
-
-            if (dto.Image != null)
-            {
-                string folder = Path.Combine(environment.WebRootPath, "images");
-
-                if (!Directory.Exists(folder))
-                {
-                    Directory.CreateDirectory(folder);
-                }
-
-                string fileName = Guid.NewGuid().ToString() +
-                                  Path.GetExtension(dto.Image.FileName);
-
-                string filePath = Path.Combine(folder, fileName);
-
-                using (var stream = new FileStream(filePath, FileMode.Create))
-                {
-                    await dto.Image.CopyToAsync(stream);
-                }
-
-                staff.ImageUrl = "/images/" + fileName;
-            }
+            if (id != staff.StaffId)
+                return BadRequest();
 
             service.UpdateStaff(staff);
 
-            return Ok(staff);
+            return Ok("Staff Updated Successfully");
         }
 
         // DELETE STAFF
