@@ -1,5 +1,5 @@
 
-function OrderCard({ order }) {
+function OrderCard({ order, onCancel }) {
   return (
     <div
       className="
@@ -58,9 +58,20 @@ function OrderCard({ order }) {
           {order.items}
         </p>
 
-        <h3 className="text-2xl font-bold text-[#ff5233] mt-4">
-          {order.price}
-        </h3>
+        <div className="flex justify-between items-end mt-4">
+          <h3 className="text-2xl font-bold text-[#ff5233]">
+            {order.price}
+          </h3>
+
+          {order.status && order.status.toLowerCase() === "pending" && (
+            <button
+              onClick={() => onCancel(order.id)}
+              className="px-4 py-2 bg-red-50 hover:bg-red-100 text-red-600 font-bold text-xs rounded-xl border border-red-200 transition-all duration-200 active:scale-95 shadow-sm"
+            >
+              Cancel Order
+            </button>
+          )}
+        </div>
 
       </div>
     </div>

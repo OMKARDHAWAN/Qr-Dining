@@ -24,6 +24,8 @@ const AdminSidebar = () => {
       setActiveTab("profile");
     } else if (location.pathname.includes("/menu-management")) {
       setActiveTab("menu");
+    } else if (location.pathname.includes("/staff-management")) {
+      setActiveTab("staff");
     } else if (location.pathname === "/admin" || location.pathname === "/admin/") {
       setActiveTab("orders");
     }
@@ -49,11 +51,11 @@ const AdminSidebar = () => {
             <LuUtensilsCrossed className="text-white text-3xl" />
           </div>
           <div>
-            <h1 className="text-red-700 text-3xl font-bold font-sans">
-              Admin Dashboard
-            </h1>
-            <p className="text-gray-500 font-sans">
-              Indian Café Edition
+             <span className="text-2xl font-black tracking-tight text-[#2D2F2F] hover:opacity-80 transition-opacity cursor-pointer">
+              Qr<span className="text-[#B41B00]">Dine</span>
+            </span>
+            <p className="text-zinc-500 text-xs font-semibold mt-1 font-sans">
+              Admin Portal
             </p>
           </div>
         </div>
@@ -93,9 +95,12 @@ const AdminSidebar = () => {
             <span className="font-sans">Stock & Inventory</span>
           </button>
 
-          {/* Staff Directory - Disabled page navigation */}
+          {/* Staff Directory */}
           <button
-            onClick={() => setActiveTab("staff")}
+            onClick={() => {
+              setActiveTab("staff");
+              navigate("/admin/staff-management");
+            }}
             className={getBtnClass("staff")}
           >
             <FiUsers size={22} />

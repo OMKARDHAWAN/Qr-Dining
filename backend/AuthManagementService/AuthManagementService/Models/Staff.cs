@@ -10,5 +10,7 @@ namespace AuthManagementService.Models
         public string MobileNumber { get; set; } = string.Empty;
         public string PasswordHash { get; set; } = string.Empty;
         public string Role { get; set; } = string.Empty; // "Admin" or "Chef"
+        public string DutyPeriod { get; set; } = string.Empty;
+        public bool IsOnDuty { get; set; } = true;
     }
 }

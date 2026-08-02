@@ -190,6 +190,48 @@ export function AuthProvider({ children }) {
     }
   };
 
+  const [staffList, setStaffList] = useState([]);
+
+  const fetchStaff = async () => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/staff`);
+      setStaffList(response.data || []);
+      return { success: true };
+    } catch (error) {
+      return { success: false, message: error.response?.data?.message || error.message };
+    }
+  };
+
+  const addStaff = async (staffData) => {
+    try {
+      await axios.post(`${API_BASE_URL}/create-chef`, staffData);
+      await fetchStaff();
+      return { success: true };
+    } catch (error) {
+      return { success: false, message: error.response?.data?.message || error.message };
+    }
+  };
+
+  const updateStaff = async (id, staffData) => {
+    try {
+      await axios.put(`${API_BASE_URL}/staff/${id}`, staffData);
+      await fetchStaff();
+      return { success: true };
+    } catch (error) {
+      return { success: false, message: error.response?.data?.message || error.message };
+    }
+  };
+
+  const deleteStaff = async (id) => {
+    try {
+      await axios.delete(`${API_BASE_URL}/staff/${id}`);
+      await fetchStaff();
+      return { success: true };
+    } catch (error) {
+      return { success: false, message: error.response?.data?.message || error.message };
+    }
+  };
+
   const logout = () => {
     localStorage.removeItem('user');
     localStorage.removeItem('token');
@@ -199,7 +241,20 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, loading, checkCustomerMobile, verifyCustomerOtp, registerCustomer }}>
+    <AuthContext.Provider value={{ 
+      user, 
+      login, 
+      logout, 
+      loading, 
+      checkCustomerMobile, 
+      verifyCustomerOtp, 
+      registerCustomer,
+      staffList,
+      fetchStaff,
+      addStaff,
+      updateStaff,
+      deleteStaff
+    }}>
       {!loading && children}
     </AuthContext.Provider>
   );
