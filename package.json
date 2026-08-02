@@ -1,0 +1,14 @@
+{
+  "name": "qrrestaurant-root",
+  "private": true,
+  "scripts": {
+    "dev": "npm --prefix my-react-app run dev",
+    "build": "npm --prefix my-react-app run build",
+    "preview": "npm --prefix my-react-app run preview",
+    "lint": "npm --prefix my-react-app run lint"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "tailwindcss": "^4.3.3"
+  }
+}
