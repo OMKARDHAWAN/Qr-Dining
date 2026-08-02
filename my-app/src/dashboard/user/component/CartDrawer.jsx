@@ -59,7 +59,10 @@ export default function CartDrawer({ isOpen, onClose }) {
       Duration: "15-20 mins",
       PaymentStatus: "Completed",
       TransactionId: txnId,
-      PaymentMethod: method
+      PaymentMethod: method,
+      Email: user?.email || user?.Email || "",
+      CustomerName: user?.username || user?.Username || user?.Name || "Customer",
+      MobileNumber: user?.mobileNumber || user?.MobileNumber || ""
     };
 
     try {

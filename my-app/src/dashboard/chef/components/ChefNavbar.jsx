@@ -24,7 +24,7 @@ function ChefNavbar({ searchQuery, setSearchQuery }) {
 
             {/* Left Side */}
             <div className="flex items-center gap-4">
-                <h2 className="text-2xl font-bold tracking-tight text-zinc-900">
+                <h2 className="text-2xl font-bold tracking-tight text-zinc-900 font-sans">
                     {getHeaderTitle()}
                 </h2>
 
@@ -58,7 +58,7 @@ function ChefNavbar({ searchQuery, setSearchQuery }) {
                     onClick={() => navigate("/chef/profile")}
                     className="flex items-center gap-3 cursor-pointer hover:opacity-85 transition-opacity pl-4 border-l border-gray-300"
                 >
-                    <div className="w-10 h-10 rounded-full border border-zinc-300 bg-white flex items-center justify-center text-zinc-600 hover:border-orange-500 transition-colors">
+                    <div className="w-10 h-10 rounded-full border border-zinc-300 bg-white flex items-center justify-center text-zinc-600 hover:border-orange-500 transition-colors cursor-pointer">
                         <FiUser size={18} />
                     </div>
 

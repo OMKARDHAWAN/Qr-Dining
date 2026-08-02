@@ -4,6 +4,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using AuthManagementService.DTOs;
 using AuthManagementService.Services;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using System;
+using System.Linq;
 
 namespace AuthManagementService.Controllers
 {
@@ -66,13 +70,18 @@ namespace AuthManagementService.Controllers
             return Ok(result);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Chef")]
         [HttpPost("create-chef")]
-        public async Task<IActionResult> CreateChef([FromBody] ChefRegisterRequest request)
+        public async Task<IActionResult> CreateChef([FromForm] ChefRegisterRequest request, IFormFile? Image)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
+            }
+
+            if (string.IsNullOrEmpty(request.Password))
+            {
+                request.Password = Guid.NewGuid().ToString();
             }
 
             var result = await _authService.CreateChefAsync(request);
@@ -81,7 +90,56 @@ namespace AuthManagementService.Controllers
                 return BadRequest(new { message = "Username or Email is already registered." });
             }
 
+            if (Image != null)
+            {
+                try
+                {
+                    SaveStaffImage(Image, request.Username);
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(new { message = ex.Message });
+                }
+            }
+
             return Ok(new { message = "Chef account created successfully.", chefDetails = result });
+        }
+
+        private string SaveStaffImage(IFormFile file, string username)
+        {
+            if (file == null || file.Length == 0)
+            {
+                return string.Empty;
+            }
+
+            var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".webp" };
+            var extension = Path.GetExtension(file.FileName).ToLower();
+            if (!System.Linq.Enumerable.Contains(allowedExtensions, extension))
+            {
+                throw new ArgumentException("Only JPG, JPEG, PNG, and WEBP image formats are allowed.");
+            }
+
+            var wwwRootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
+            var imagesFolder = Path.Combine(wwwRootPath, "images");
+            if (!Directory.Exists(imagesFolder))
+            {
+                Directory.CreateDirectory(imagesFolder);
+            }
+
+            var fileName = $"staff_{username.ToLower()}{extension}";
+            var filePath = Path.Combine(imagesFolder, fileName);
+
+            if (System.IO.File.Exists(filePath))
+            {
+                System.IO.File.Delete(filePath);
+            }
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                file.CopyTo(stream);
+            }
+
+            return $"/images/{fileName}";
         }
 
         [Authorize]
@@ -110,44 +168,106 @@ namespace AuthManagementService.Controllers
         {
             return Ok(new { message = "Logged out successfully. Please delete the token from the client-side storage." });
         }
-
         // ====================================================
         // STAFF CRUD ENDPOINTS (Admin Only)
         // ====================================================
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Chef")]
         [HttpGet("staff")]
         public async Task<IActionResult> GetAllStaff()
         {
             var list = await _authService.GetAllStaffAsync();
-            return Ok(list);
+            var wwwRootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
+            var imagesFolder = Path.Combine(wwwRootPath, "images");
+
+            var resultList = list.Select(staff => {
+                string imageUrl = "";
+                if (Directory.Exists(imagesFolder))
+                {
+                    var files = Directory.GetFiles(imagesFolder, $"staff_{staff.Username.ToLower()}.*");
+                    if (files.Length > 0)
+                    {
+                        var filename = Path.GetFileName(files[0]);
+                        imageUrl = $"https://localhost:44383/images/{filename.Replace(" ", "%20")}";
+                    }
+                }
+
+                return new {
+                    staff.Id,
+                    staff.Username,
+                    staff.Email,
+                    staff.MobileNumber,
+                    staff.Role,
+                    staff.DutyPeriod,
+                    staff.IsOnDuty,
+                    ImageUrl = imageUrl
+                };
+            });
+
+            return Ok(resultList);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Chef")]
         [HttpGet("staff/{id}")]
         public async Task<IActionResult> GetStaffById(int id)
         {
-            var item = await _authService.GetStaffByIdAsync(id);
-            if (item == null)
+            var staff = await _authService.GetStaffByIdAsync(id);
+            if (staff == null)
             {
                 return NotFound(new { message = "Staff member not found." });
             }
-            return Ok(item);
+
+            var wwwRootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
+            var imagesFolder = Path.Combine(wwwRootPath, "images");
+            string imageUrl = "";
+            if (Directory.Exists(imagesFolder))
+            {
+                var files = Directory.GetFiles(imagesFolder, $"staff_{staff.Username.ToLower()}.*");
+                if (files.Length > 0)
+                {
+                    var filename = Path.GetFileName(files[0]);
+                    imageUrl = $"https://localhost:44383/images/{filename.Replace(" ", "%20")}";
+                }
+            }
+
+            return Ok(new {
+                staff.Id,
+                staff.Username,
+                staff.Email,
+                staff.MobileNumber,
+                staff.Role,
+                staff.DutyPeriod,
+                staff.IsOnDuty,
+                ImageUrl = imageUrl
+            });
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Chef")]
         [HttpPut("staff/{id}")]
-        public async Task<IActionResult> UpdateStaff(int id, [FromBody] ChefRegisterRequest request)
+        public async Task<IActionResult> UpdateStaff(int id, [FromForm] ChefRegisterRequest request, IFormFile? Image)
         {
             var success = await _authService.UpdateStaffAsync(id, request);
             if (!success)
             {
                 return NotFound(new { message = "Staff member not found or update failed." });
             }
+
+            if (Image != null)
+            {
+                try
+                {
+                    SaveStaffImage(Image, request.Username);
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(new { message = ex.Message });
+                }
+            }
+
             return Ok(new { message = "Staff member updated successfully." });
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Chef")]
         [HttpDelete("staff/{id}")]
         public async Task<IActionResult> DeleteStaff(int id)
         {

@@ -14,8 +14,11 @@ namespace AuthManagementService.DTOs
         [Required(ErrorMessage = "Mobile Number is required")]
         public string MobileNumber { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "Password is required")]
         [MinLength(6, ErrorMessage = "Password must be at least 6 characters")]
-        public string Password { get; set; } = string.Empty;
+        public string? Password { get; set; }
+
+        public string Role { get; set; } = string.Empty;
+        public string DutyPeriod { get; set; } = string.Empty;
+        public bool IsOnDuty { get; set; } = true;
     }
 }

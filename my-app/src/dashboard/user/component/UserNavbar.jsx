@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, Bell, ShoppingCart, User, Menu as MenuIcon, X } from 'lucide-react';
+import { Search, ShoppingCart, User, Menu as MenuIcon, X } from 'lucide-react';
 import { useCart } from '../../../shared/hooks/useCart';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../../app/providers/AuthContextApi/AuthProvider';
@@ -14,7 +14,7 @@ export default function UserNavbar({
   setActiveSection
 }) {
   const { cartItemsCount } = useCart();
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const { tableId } = useTable();
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -35,9 +35,9 @@ export default function UserNavbar({
         
         {/* Left: Logo */}
         <div className="flex items-center gap-3">
-          <Link to={`/user?tableId=${tableId || 1}`}>
+          <Link to={`/user?tableId=${tableId || 1}`} className="cursor-pointer">
             <span className="text-2xl font-black tracking-tight text-[#2D2F2F] hover:opacity-80 transition-opacity cursor-pointer">
-              Culinary<span className="text-[#B41B00]">AI</span>
+              Qr<span className="text-[#B41B00]">Dine</span>
             </span>
           </Link>
         </div>
@@ -46,7 +46,7 @@ export default function UserNavbar({
         <div className="hidden md:flex items-center gap-8 font-semibold text-sm tracking-wider">
           <Link 
             to={`/user?tableId=${tableId || 1}`}
-            className={`transition-colors duration-300 py-1 border-b-2 ${
+            className={`transition-colors duration-300 py-1 border-b-2 cursor-pointer ${
               active === 'discover' 
                 ? 'text-[#B41B00] border-b-[#B41B00]' 
                 : 'text-[#2D2F2F]/60 border-b-transparent hover:text-[#2D2F2F]'
@@ -56,7 +56,7 @@ export default function UserNavbar({
           </Link>
           <Link 
             to={`/user/menu?tableId=${tableId || 1}`}
-            className={`transition-colors duration-300 py-1 border-b-2 ${
+            className={`transition-colors duration-300 py-1 border-b-2 cursor-pointer ${
               active === 'menu' 
                 ? 'text-[#B41B00] border-b-[#B41B00]' 
                 : 'text-[#2D2F2F]/60 border-b-transparent hover:text-[#2D2F2F]'
@@ -66,7 +66,7 @@ export default function UserNavbar({
           </Link>
           <Link 
             to={`/user/offers?tableId=${tableId || 1}`}
-            className={`transition-colors duration-300 py-1 border-b-2 ${
+            className={`transition-colors duration-300 py-1 border-b-2 cursor-pointer ${
               active === 'offers' 
                 ? 'text-[#B41B00] border-b-[#B41B00]' 
                 : 'text-[#2D2F2F]/60 border-b-transparent hover:text-[#2D2F2F]'
@@ -76,7 +76,7 @@ export default function UserNavbar({
           </Link>
           <Link 
             to={`/user/orders?tableId=${tableId || 1}`}
-            className={`transition-colors duration-300 py-1 border-b-2 ${
+            className={`transition-colors duration-300 py-1 border-b-2 cursor-pointer ${
               active === 'orders' 
                 ? 'text-[#B41B00] border-b-[#B41B00]' 
                 : 'text-[#2D2F2F]/60 border-b-transparent hover:text-[#2D2F2F]'
@@ -104,7 +104,7 @@ export default function UserNavbar({
           {/* Cart Icon */}
           <button 
             onClick={onCartClick}
-            className="relative p-2 rounded-full text-[#2D2F2F] hover:bg-gray-100 active:scale-95 transition-all duration-300"
+            className="relative p-2 rounded-full text-[#2D2F2F] hover:bg-gray-100 active:scale-95 transition-all duration-300 cursor-pointer"
           >
             <ShoppingCart className="w-5 h-5" />
             {cartItemsCount > 0 && (
@@ -112,15 +112,6 @@ export default function UserNavbar({
                 {cartItemsCount}
               </span>
             )}
-          </button>
-
-          {/* Notification Icon */}
-          <button 
-            onClick={onNotificationClick}
-            className="relative p-2 rounded-full text-[#2D2F2F] hover:bg-gray-100 active:scale-95 transition-all duration-300"
-          >
-            <Bell className="w-5 h-5" />
-            <span className="absolute top-2 right-2 h-2 w-2 rounded-full bg-[#B41B00] ring-2 ring-white" />
           </button>
 
           {/* Profile Icon / Dropdown (Only for Authenticated Users) */}
@@ -132,7 +123,7 @@ export default function UserNavbar({
             >
               <button 
                 onClick={() => setDropdownOpen(!dropdownOpen)}
-                className="flex items-center justify-center p-2 rounded-full border border-gray-200 hover:border-[#B41B00] active:scale-95 transition-all duration-300"
+                className="flex items-center justify-center p-2 rounded-full border border-gray-200 hover:border-[#B41B00] active:scale-95 transition-all duration-300 cursor-pointer"
               >
                 <User className="w-5 h-5 text-[#2D2F2F]" />
               </button>
@@ -143,10 +134,20 @@ export default function UserNavbar({
                   <Link
                     to={`/user/profile?tableId=${tableId || 1}`}
                     onClick={() => setDropdownOpen(false)}
-                    className="block px-4 py-2.5 text-xs font-bold text-gray-700 hover:bg-gray-50 transition-colors"
+                    className="block px-4 py-2.5 text-xs font-bold text-gray-700 hover:bg-gray-50 transition-colors cursor-pointer"
                   >
                     Profile Setting
                   </Link>
+                  <button
+                    onClick={() => {
+                      logout();
+                      setDropdownOpen(false);
+                      window.location.reload();
+                    }}
+                    className="w-full text-left block px-4 py-2.5 text-xs font-bold text-red-600 hover:bg-red-50 transition-colors border-t border-gray-100 cursor-pointer"
+                  >
+                    Logout
+                  </button>
                 </div>
               )}
             </div>
