@@ -4,22 +4,8 @@ export const CartContext = createContext();
 // Create the Provider wrapper
 export function CartProvider({ children }) {
   // Pre-load mock items exactly as in the original state
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 'butter-chicken-bowl',
-      name: 'Butter Chicken Bowl',
-      price: 450,
-      image: 'https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&q=80&w=300',
-      quantity: 1,
-    },
-    {
-      id: 'masala-cutting-chai',
-      name: 'Masala Cutting Chai',
-      price: 80,
-      image: 'https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&q=80&w=300',
-      quantity: 2,
-    }
-  ]);
+  const [cartItems, setCartItems] = useState([]);
+  const [cartOpen, setCartOpen] = useState(false);
   // Add a product to the cart
   const addToCart = (product) => {
     setCartItems((prevItems) => {
@@ -31,13 +17,16 @@ export function CartProvider({ children }) {
         );
       }
       
+      const name = product.name || product.itemName || "Item";
+      const image = product.image || product.imageUrl || 'https://images.unsplash.com/photo-1601050690597-df056fb4ce78?auto=format&fit=crop&q=80&w=300';
+      
       return [
         ...prevItems,
         {
           id: product.id,
-          name: product.name,
+          name: name,
           price: product.price,
-          image: product.image || 'https://images.unsplash.com/photo-1601050690597-df056fb4ce78?auto=format&fit=crop&q=80&w=300',
+          image: image,
           quantity: 1,
         }
       ];
@@ -92,7 +81,9 @@ export function CartProvider({ children }) {
         subtotal,
         tax,
         deliveryFee,
-        totalPrice
+        totalPrice,
+        cartOpen,
+        setCartOpen
       }}
     >
       {children}

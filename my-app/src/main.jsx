@@ -1,35 +1,19 @@
-
-
-// import React from "react";
-// import ReactDOM from "react-dom/client";
-// import { BrowserRouter } from "react-router-dom";
-// import App from "./App";
-// import "./index.css";
-
-// ReactDOM.createRoot(document.getElementById("root")).render(
-//    <React.StrictMode>
-//       <BrowserRouter>
-//          <App />
-//       </BrowserRouter>
-//    </React.StrictMode>
-// );
-
-
-
-import React from "react";
-import ReactDOM from "react-dom/client";
-import { BrowserRouter } from "react-router-dom";
-import App from "./App";
-import "./index.css";
-import { AuthProvider } from "./app/providers/AuthContextApi/AuthProvider";
-import { CartProvider } from "./app/providers/CartProvider";
-
-ReactDOM.createRoot(document.getElementById("root")).render(
-  <AuthProvider>
-    <CartProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </CartProvider>
-  </AuthProvider>
-);
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import './index.css'
+import App from './App.jsx'
+import {BrowserRouter} from "react-router-dom"
+import { AuthProvider } from './app/providers/AuthContextApi/AuthProvider.jsx'
+import { MenuProvider } from './app/providers/MenuContextApi/MenuProvider.jsx'
+import { TableProvider } from './app/providers/TableContextApi/TableProvider.jsx'
+createRoot(document.getElementById('root')).render(
+   <TableProvider>
+   <AuthProvider>
+    <MenuProvider>
+     <BrowserRouter>
+       <App/>
+     </BrowserRouter>
+    </MenuProvider>
+   </AuthProvider>
+   </TableProvider>
+)

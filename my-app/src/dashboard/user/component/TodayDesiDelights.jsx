@@ -1,5 +1,6 @@
 import React from 'react';
 import { Plus } from 'lucide-react';
+import '../../../../public/TodayDesiDelights.css';
 export default function TodayDesiDelights({ onAddToOrder }) {
   const items = [
     {

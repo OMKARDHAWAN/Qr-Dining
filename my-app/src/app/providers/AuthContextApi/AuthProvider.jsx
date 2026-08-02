@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
+import axios from 'axios';
 
 const AuthContext = createContext(null);
 
@@ -10,6 +11,17 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // Helper to handle and format network errors cleanly
+  const getCleanErrorMessage = (error) => {
+    if (error.response?.data?.message) {
+      return error.response.data.message;
+    }
+    if (error.message && error.message.toLowerCase().includes("network")) {
+      return "Failed to connect to the authentication service. Please verify that the backend API is running.";
+    }
+    return error.message || "An unexpected error occurred.";
+  };
+
   // Check if a user session exists when the app initializes
   useEffect(() => {
     const savedUser = localStorage.getItem('user');
@@ -17,28 +29,153 @@ export function AuthProvider({ children }) {
     
     if (savedUser && token) {
       setUser(JSON.parse(savedUser));
+      // Attach the token to all future Axios requests globally:
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     }
     setLoading(false);
   }, []);
 
+  // 30-minute absolute session timeout for User accounts only
+  useEffect(() => {
+    if (user && (user.role === "User" || user.Role === "User")) {
+      const loginTimeStr = localStorage.getItem('loginTime');
+      const loginTime = loginTimeStr ? parseInt(loginTimeStr) : Date.now();
+      if (!loginTimeStr) {
+        localStorage.setItem('loginTime', loginTime.toString());
+      }
+
+      const elapsed = Date.now() - loginTime;
+      const remaining =  30 * 60 * 1000 - elapsed;
+
+      if (remaining <= 0) {
+        logout();
+        window.location.href = "/";
+      } else {
+        const timerId = setTimeout(() => {
+          logout();
+          window.location.href = "/";
+        }, remaining);
+        return () => clearTimeout(timerId);
+      }
+    }
+  }, [user]);
+
+  const checkCustomerMobile = async (mobileNumber) => {
+    try {
+      const response = await axios.post(`${API_BASE_URL}/customer-login`, {
+        mobileNumber: mobileNumber,
+        otp: "",
+      });
+      const data = response.data;
+      return {
+        success: true,
+        isRegistered: data.isRegistered !== undefined ? data.isRegistered : data.IsRegistered,
+        otpSent: data.otpSent !== undefined ? data.otpSent : data.OtpSent,
+        message: data.message !== undefined ? data.message : data.Message
+      };
+    } catch (error) {
+      return {
+        success: false,
+        isRegistered: false,
+        otpSent: false,
+        message: getCleanErrorMessage(error),
+      };
+    }
+  };
+
+  const verifyCustomerOtp = async (mobileNumber, otp) => {
+    try {
+      const response = await axios.post(`${API_BASE_URL}/customer-login`, {
+        mobileNumber: mobileNumber,
+        otp: otp,
+      });
+
+      const data = response.data;
+      const token = data.token !== undefined ? data.token : data.Token;
+      const userProfile = data.user !== undefined ? data.user : data.User;
+
+      if (token) {
+        localStorage.setItem("user", JSON.stringify(userProfile));
+        localStorage.setItem("token", token);
+        localStorage.setItem("loginTime", Date.now().toString());
+        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+        setUser(userProfile);
+      }
+
+      return {
+        success: true,
+        token,
+        user: userProfile,
+        isRegistered: data.isRegistered !== undefined ? data.isRegistered : data.IsRegistered,
+        otpSent: data.otpSent !== undefined ? data.otpSent : data.OtpSent,
+        message: data.message !== undefined ? data.message : data.Message
+      };
+    } catch (error) {
+      return {
+        success: false,
+        message: getCleanErrorMessage(error),
+      };
+    }
+  };
+
+  const registerCustomer = async ({ mobileNumber, name, email, otp = "" }) => {
+    try {
+      console.log("Registering customer:", mobileNumber, name, email, "OTP:", otp);
+      const response = await axios.post(`${API_BASE_URL}/customer-login`, {
+        mobileNumber: mobileNumber,
+        username: name, // Maps React name -> Backend Username
+        email: email,
+        otp: otp
+      });
+
+      const data = response.data;
+      const token = data.token !== undefined ? data.token : data.Token;
+      const userProfile = data.user !== undefined ? data.user : data.User;
+
+      // Automatically store token on success
+      if (token) {
+        localStorage.setItem("user", JSON.stringify(userProfile));
+        localStorage.setItem("token", token);
+        localStorage.setItem("loginTime", Date.now().toString());
+        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+        setUser(userProfile);
+      }
+
+      return {
+        success: true,
+        token,
+        user: userProfile,
+        isRegistered: data.isRegistered !== undefined ? data.isRegistered : data.IsRegistered,
+        otpSent: data.otpSent !== undefined ? data.otpSent : data.OtpSent,
+        message: data.message !== undefined ? data.message : data.Message
+      };
+    } catch (error) {
+      return {
+        success: false,
+        message: getCleanErrorMessage(error),
+      };
+    }
+  };
+
   const login = async (username, password) => {
     try {
-      const response = await fetch(`${API_BASE_URL}/staff-login`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password }),
+      console.log(username,password);
+      console.log(`${API_BASE_URL}/staff-login`);
+      // Sends a request to our ASP.NET Core Staff Login endpoint
+      const response = await axios.post(`${API_BASE_URL}/staff-login`, { 
+        username, 
+        password 
       });
-      const data = await response.json();
-      if (!response.ok) {
-        throw new Error(data?.message || 'Invalid Username or Password.');
-      }
       
       // Extract the JWT token and user profile returned by the backend
-      const { token, user: userProfile } = data;
+      const { token, user: userProfile } = response.data;
       
       // Save details in browser local storage to maintain session on refresh
       localStorage.setItem('user', JSON.stringify(userProfile));
       localStorage.setItem('token', token);
+      
+      // Set default authorization header for all subsequent Axios requests
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       
       // Update local React state
       setUser(userProfile);
@@ -48,7 +185,7 @@ export function AuthProvider({ children }) {
       // Return server-side error message if authentication fails
       return { 
         success: false, 
-        message: error.message || 'Invalid Username or Password.' 
+        message: error.response?.data?.message || 'Invalid Username or Password.' 
       };
     }
   };
@@ -56,11 +193,13 @@ export function AuthProvider({ children }) {
   const logout = () => {
     localStorage.removeItem('user');
     localStorage.removeItem('token');
+    localStorage.removeItem('loginTime');
+    delete axios.defaults.headers.common['Authorization'];
     setUser(null);
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, loading }}>
+    <AuthContext.Provider value={{ user, login, logout, loading, checkCustomerMobile, verifyCustomerOtp, registerCustomer }}>
       {!loading && children}
     </AuthContext.Provider>
   );

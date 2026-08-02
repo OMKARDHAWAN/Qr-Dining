@@ -1,21 +1,49 @@
-import { useNavigate } from "react-router-dom";
+import React from "react";
+import { useNavigate, useSearchParams } from "react-router-dom"; // Imported hooks
+import { useAuth } from "../../../app/providers/AuthContextApi/AuthProvider";
 
 export default function TableQr() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const { logout } = useAuth();
+
+  // 1. Read tableId dynamically from current URL (e.g. ?tableId=5), default to "1"
+  const rawTableId = searchParams.get("tableId") || "1";
+  const formattedTableId = rawTableId.startsWith("#") ? rawTableId : `#${rawTableId}`;
+
+  React.useEffect(() => {
+    // Clear previous customer session to ensure default guest mode on table scan
+    logout();
+  }, [logout]);
+
+  // 2. Redirect to /user, passing the identified table number to be picked up by the context
+  const handleGo = () => {
+    const cleanId = rawTableId.replace("#", "").trim();
+    navigate(`/user?tableId=${cleanId}`);
+  };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#F6F6F6] p-4">
-      <div className="w-full max-w-sm rounded-2xl bg-white p-8 text-center shadow-xl">
-        <p className="text-sm font-semibold uppercase tracking-widest text-[#B41B00]">QR Dining</p>
-        <h1 className="mt-2 text-3xl font-bold text-slate-800">Table #1</h1>
-        <p className="mt-3 text-slate-600">Browse the menu, add dishes to your cart, and get AI recommendations.</p>
-        <button
-          type="button"
-          onClick={() => navigate("/user")}
-          className="mt-6 w-full rounded-xl bg-[#B41B00] px-4 py-3 font-semibold text-white transition hover:bg-[#8f1600]"
-        >
-          View menu
-        </button>
+    <div className="h-screen flex justify-center items-center bg-[#F6F6F6]">
+      <div className="w-max p-5 bg-white rounded-2xl shadow-2xl">
+        <div className="flex flex-col">
+          <h1 className="text-center mt-5 font-sans font-semibold text-gray-700">
+            Table No
+          </h1>
+          
+          <input
+            type="text"
+            className="border border-gray-300 my-2 py-2 px-4 text-gray-500 text-center rounded-lg bg-gray-50 font-sans font-bold"
+            value={formattedTableId}
+            disabled
+          />
+          
+          <button 
+            onClick={handleGo}
+            className="border-2 border-green-500 my-2 rounded-2xl p-2 cursor-pointer hover:bg-green-500 hover:text-white transition duration-300 font-sans font-semibold text-green-600"
+          >
+            Go
+          </button>
+        </div>
       </div>
     </div>
   );

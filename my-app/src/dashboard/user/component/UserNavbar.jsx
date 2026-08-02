@@ -1,51 +1,91 @@
 import React, { useState } from 'react';
 import { Search, Bell, ShoppingCart, User, Menu as MenuIcon, X } from 'lucide-react';
 import { useCart } from '../../../shared/hooks/useCart';
+import { Link, useLocation } from 'react-router-dom';
+import { useAuth } from '../../../app/providers/AuthContextApi/AuthProvider';
+import { useTable } from '../../../app/providers/TableContextApi/TableProvider';
+
 export default function UserNavbar({ 
   searchQuery, 
   setSearchQuery, 
   onCartClick, 
-  onNotificationClick, 
-  onProfileClick,
+  onNotificationClick,
   activeSection,
   setActiveSection
 }) {
   const { cartItemsCount } = useCart();
+  const { user } = useAuth();
+  const { tableId } = useTable();
+  const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const getActiveSection = () => {
+    if (location.pathname.includes("/menu")) return "menu";
+    if (location.pathname.includes("/offers")) return "offers";
+    if (location.pathname.includes("/orders")) return "orders";
+    if (location.pathname.includes("/profile")) return "profile";
+    return "discover";
+  };
+  const active = getActiveSection();
+
   return (
     <nav className="sticky top-0 z-40 w-full bg-white/90 backdrop-blur-md border-b border-gray-100 px-4 md:px-6 lg:px-8 py-4 transition-all duration-300">
       <div className="max-w-[1440px] mx-auto flex items-center justify-between">
         
         {/* Left: Logo */}
         <div className="flex items-center gap-3">
-          <span className="text-2xl font-black tracking-tight text-[#2D2F2F] hover:opacity-80 transition-opacity cursor-pointer">
-            Culinary<span className="text-[#B41B00]">AI</span>
-          </span>
+          <Link to={`/user?tableId=${tableId || 1}`}>
+            <span className="text-2xl font-black tracking-tight text-[#2D2F2F] hover:opacity-80 transition-opacity cursor-pointer">
+              Culinary<span className="text-[#B41B00]">AI</span>
+            </span>
+          </Link>
         </div>
+
         {/* Center: Desktop Navigation Links */}
         <div className="hidden md:flex items-center gap-8 font-semibold text-sm tracking-wider">
-          <button 
-            onClick={() => setActiveSection('discover')}
+          <Link 
+            to={`/user?tableId=${tableId || 1}`}
             className={`transition-colors duration-300 py-1 border-b-2 ${
-              activeSection === 'discover' 
+              active === 'discover' 
                 ? 'text-[#B41B00] border-b-[#B41B00]' 
                 : 'text-[#2D2F2F]/60 border-b-transparent hover:text-[#2D2F2F]'
             }`}
           >
             DISCOVER
-          </button>
-          <button 
-            onClick={() => setActiveSection('menu')}
+          </Link>
+          <Link 
+            to={`/user/menu?tableId=${tableId || 1}`}
             className={`transition-colors duration-300 py-1 border-b-2 ${
-              activeSection === 'menu' 
+              active === 'menu' 
                 ? 'text-[#B41B00] border-b-[#B41B00]' 
                 : 'text-[#2D2F2F]/60 border-b-transparent hover:text-[#2D2F2F]'
             }`}
           >
             MENU
-          </button>
-         
+          </Link>
+          <Link 
+            to={`/user/offers?tableId=${tableId || 1}`}
+            className={`transition-colors duration-300 py-1 border-b-2 ${
+              active === 'offers' 
+                ? 'text-[#B41B00] border-b-[#B41B00]' 
+                : 'text-[#2D2F2F]/60 border-b-transparent hover:text-[#2D2F2F]'
+            }`}
+          >
+            OFFERS
+          </Link>
+          <Link 
+            to={`/user/orders?tableId=${tableId || 1}`}
+            className={`transition-colors duration-300 py-1 border-b-2 ${
+              active === 'orders' 
+                ? 'text-[#B41B00] border-b-[#B41B00]' 
+                : 'text-[#2D2F2F]/60 border-b-transparent hover:text-[#2D2F2F]'
+            }`}
+          >
+            ORDERS
+          </Link>
         </div>
+
         {/* Right: Search, Cart, Notifications, Profile */}
         <div className="flex items-center gap-3 md:gap-5">
           
@@ -60,6 +100,7 @@ export default function UserNavbar({
             />
             <Search className="absolute left-3.5 top-2.5 w-4 h-4 text-gray-400" />
           </div>
+
           {/* Cart Icon */}
           <button 
             onClick={onCartClick}
@@ -72,6 +113,7 @@ export default function UserNavbar({
               </span>
             )}
           </button>
+
           {/* Notification Icon */}
           <button 
             onClick={onNotificationClick}
@@ -80,23 +122,35 @@ export default function UserNavbar({
             <Bell className="w-5 h-5" />
             <span className="absolute top-2 right-2 h-2 w-2 rounded-full bg-[#B41B00] ring-2 ring-white" />
           </button>
-          {/* Profile Icon */}
-          <button 
-            onClick={onProfileClick}
-            className="flex items-center justify-center p-0.5 rounded-full border-2 border-transparent hover:border-[#B41B00] active:scale-95 transition-all duration-300"
-          >
-            <div className="w-8 h-8 rounded-full overflow-hidden bg-gray-200 flex items-center justify-center">
-              <img 
-                src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=150&h=150" 
-                alt="User Profile" 
-                className="w-full h-full object-cover"
-                onError={(e) => {
-                  e.target.style.display = 'none';
-                }}
-              />
-              <User className="w-4 h-4 text-[#2D2F2F]" />
+
+          {/* Profile Icon / Dropdown (Only for Authenticated Users) */}
+          {user && (user.role === "User" || user.Role === "User") && (
+            <div 
+              className="relative"
+              onMouseEnter={() => setDropdownOpen(true)}
+              onMouseLeave={() => setDropdownOpen(false)}
+            >
+              <button 
+                onClick={() => setDropdownOpen(!dropdownOpen)}
+                className="flex items-center justify-center p-2 rounded-full border border-gray-200 hover:border-[#B41B00] active:scale-95 transition-all duration-300"
+              >
+                <User className="w-5 h-5 text-[#2D2F2F]" />
+              </button>
+
+              {/* Avatar Dropdown */}
+              {dropdownOpen && (
+                <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-100 py-1.5 z-50">
+                  <Link
+                    to={`/user/profile?tableId=${tableId || 1}`}
+                    onClick={() => setDropdownOpen(false)}
+                    className="block px-4 py-2.5 text-xs font-bold text-gray-700 hover:bg-gray-50 transition-colors"
+                  >
+                    Profile Setting
+                  </Link>
+                </div>
+              )}
             </div>
-          </button>
+          )}
         </div>
       </div>
     </nav>

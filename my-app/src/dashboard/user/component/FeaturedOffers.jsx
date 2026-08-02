@@ -6,6 +6,7 @@ import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
+import '../../../../public/FeaturedOffers.css';
 
 export default function FeaturedOffers({ onClaimOffer }) {
   const offers = [
