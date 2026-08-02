@@ -81,6 +81,17 @@ namespace AuthManagementService
                     try
                     {
                         dbContext.Database.EnsureCreated(); // Creates database & tables automatically if they don't exist
+
+                        // Dynamically add columns if they are missing in the existing database
+                        try 
+                        {
+                            dbContext.Database.ExecuteSqlRaw("IF NOT EXISTS(SELECT * FROM sys.columns WHERE Name = N'IsOnDuty' AND Object_ID = Object_ID(N'StaffMembers')) ALTER TABLE StaffMembers ADD IsOnDuty BIT NOT NULL DEFAULT 1;");
+                            dbContext.Database.ExecuteSqlRaw("IF NOT EXISTS(SELECT * FROM sys.columns WHERE Name = N'DutyPeriod' AND Object_ID = Object_ID(N'StaffMembers')) ALTER TABLE StaffMembers ADD DutyPeriod NVARCHAR(MAX) NOT NULL DEFAULT '';");
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"Dynamic database updates warning: {ex.Message}");
+                        }
                         
                         // Seed or correct staff credentials in database to ensure hashes match the current algorithm
                         var admin = dbContext.StaffMembers.FirstOrDefault(s => s.Username == "admin");
@@ -136,6 +147,7 @@ namespace AuthManagementService
             }
 
             app.UseHttpsRedirection();
+            app.UseStaticFiles();
 
             app.UseRouting();
 

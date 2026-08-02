@@ -26,9 +26,9 @@ function ChefSidebar() {
           <LuUtensilsCrossed className="text-white text-2xl" />
         </div>
         <div>
-          <h1 className="text-zinc-900 text-xl font-black font-sans leading-none">
-            Spice Kitchen
-          </h1>
+           <span className="text-2xl font-black tracking-tight text-[#2D2F2F] hover:opacity-80 transition-opacity cursor-pointer">
+                        Qr<span className="text-[#B41B00]">Dine</span>
+                      </span>
           <p className="text-zinc-500 text-xs font-semibold mt-1 font-sans">
             Chef's Control
           </p>
