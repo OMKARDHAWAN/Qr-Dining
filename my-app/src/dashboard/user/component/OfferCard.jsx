@@ -1,6 +1,15 @@
 import { ArrowRight } from "lucide-react";
 
 function OfferCard({ offer }) {
+  const handleClaim = () => {
+    if (offer.badge && offer.badge !== "PROMO") {
+      navigator.clipboard.writeText(offer.badge);
+      alert(`🎉 Coupon Code "${offer.badge}" copied to clipboard!\nUse this coupon code at checkout to apply your discount.`);
+    } else {
+      alert(`🎉 Promo Applied: "${offer.title}"!\nThis offer will be applied automatically at checkout.`);
+    }
+  };
+
   return (
     <div
       className="
@@ -74,6 +83,7 @@ function OfferCard({ offer }) {
         </p>
 
         <button
+          onClick={handleClaim}
           className="
           mt-auto
           bg-[#ff5233]
@@ -87,6 +97,7 @@ function OfferCard({ offer }) {
           gap-2
           font-semibold
           transition
+          cursor-pointer
           "
         >
           Claim Offer

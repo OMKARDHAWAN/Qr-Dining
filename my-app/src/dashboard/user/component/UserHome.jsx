@@ -81,7 +81,7 @@ export default function UserHome() {
             <HeroSection userName={user ? (user.username || user.Username) : "Guest"} loyaltyPoints={user ? 2450 : 0} />
 
             {/* Featured Swiper Promo Carousels */}
-            <FeaturedOffers onClaimOffer={handleClaimOffer} />
+            <FeaturedOffers />
 
             {/* Categories filter layout */}
             <CategorySection 
