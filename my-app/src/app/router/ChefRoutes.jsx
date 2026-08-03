@@ -4,14 +4,7 @@ import OrdersPage from "../../dashboard/chef/pages/Orders";
 import MenuPage from "../../dashboard/chef/pages/Menu";
 import ProfilePage from "../../dashboard/chef/pages/Profile";
 import StaffDirectory from "../../dashboard/admin/component/StaffDirectory";
-
-// Placeholder components to prevent compile crash until pulled from devlop branch
-const InventoryPage = () => (
-  <div className="p-8 bg-white rounded-2xl shadow-sm border border-gray-150 m-6">
-    <h1 className="text-3xl font-black text-gray-800 tracking-tight">Inventory Management</h1>
-    <p className="text-gray-500 mt-1">This module will be updated automatically after pulling from the devlop branch.</p>
-  </div>
-);
+import StockInventoryPage from "../../dashboard/admin/pages/StockInventoryPage";
 
 export default function ChefRoutes() {
   return (
@@ -20,7 +13,7 @@ export default function ChefRoutes() {
         <Route index element={<Navigate to="/chef/orders" replace />} />
         <Route path="orders" element={<OrdersPage />} />
         <Route path="menu" element={<MenuPage />} />
-        <Route path="inventory" element={<InventoryPage />} />
+        <Route path="inventory" element={<StockInventoryPage />} />
         <Route path="staff" element={<StaffDirectory />} />
         <Route path="profile" element={<ProfilePage />} />
       </Route>

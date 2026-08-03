@@ -5,6 +5,7 @@ import AdminRoutes from "./AdminRoutes";
 import ChefRoutes from "./ChefRoutes";
 import TablePage from "../../features/qr/pages/TablePage";
 import Login from "../../shared/components/Login";
+import Register from "../../shared/components/Register";
 import { useAuth } from "../providers/AuthContextApi/AuthProvider";
 
 // Protects admin routes: only accessible by Admin
@@ -51,6 +52,7 @@ export default function AppRoutes() {
 
       {/* Staff Login Route */}
       <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
 
       {/* Admin Protected Routes */}
       <Route path="/admin/*" element={<AdminGuard><AdminRoutes /></AdminGuard>} />

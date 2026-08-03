@@ -46,7 +46,7 @@ namespace AuthManagementService.Data
                     Username = "admin",
                     Email = "admin@restaurant.com",
                     MobileNumber = "1112223333",
-                    PasswordHash = PasswordHelper.HashPassword("AdminPassword123"),
+                    PasswordHash = PasswordHelper.HashPassword("AdminPassword@123"),
                     Role = "Admin"
                 },
                 new Staff
@@ -55,7 +55,7 @@ namespace AuthManagementService.Data
                     Username = "chef_maria",
                     Email = "chef.maria@restaurant.com",
                     MobileNumber = "4445556666",
-                    PasswordHash = PasswordHelper.HashPassword("ChefPassword123"),
+                    PasswordHash = PasswordHelper.HashPassword("ChefPassword@123"),
                     Role = "Chef"
                 }
             );

@@ -57,8 +57,8 @@ export default function LoginViaMobile({
     setInfoMsg("");
     setMockOtp("");
 
-    if (!/^[0-9]{10}$/.test(mobileNumber)) {
-      setError("Please enter valid 10 digit mobile number.");
+    if (!/^[6-9][0-9]{9}$/.test(mobileNumber)) {
+      setError("Mobile number must be a valid 10-digit Indian number starting with 6, 7, 8, or 9.");
       return;
     }
 

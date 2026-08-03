@@ -38,6 +38,37 @@ const AddStaffForm = ({ onClose }) => {
     e.preventDefault();
     setErrorMsg("");
 
+    // Email Validation
+    const email = formData.email;
+    if (!email.includes("@")) {
+      setErrorMsg("Email must include '@'.");
+      return;
+    }
+    if (/^[0-9]/.test(email)) {
+      setErrorMsg("Email must not start with a number.");
+      return;
+    }
+    const emailRegex = /^[a-zA-Z][a-zA-Z0-9._%+-]*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(email)) {
+      setErrorMsg("Email must have a valid domain structure (e.g. name@domain.com).");
+      return;
+    }
+
+    // Allowed Domains Whitelist
+    const emailParts = email.split("@");
+    const domain = emailParts[emailParts.length - 1].toLowerCase();
+    const allowedDomains = ["gmail.com", "hotmail.com", "outlook.com"];
+    if (!allowedDomains.includes(domain)) {
+      setErrorMsg("Only gmail.com, hotmail.com, and outlook.com email domains are allowed.");
+      return;
+    }
+
+    // Indian Mobile Number Validation
+    if (!/^[6-9][0-9]{9}$/.test(formData.mobileNumber)) {
+      setErrorMsg("Mobile number must be a valid 10-digit Indian number starting with 6, 7, 8, or 9.");
+      return;
+    }
+
     const data = new FormData();
     data.append("username", formData.username);
     data.append("email", formData.email); 
@@ -107,13 +138,14 @@ const AddStaffForm = ({ onClose }) => {
             <label className="block text-sm font-semibold text-gray-700 mb-1">
               Phone Number
             </label>
-            <input
+             <input
               type="tel"
               name="mobileNumber"
               placeholder="e.g. 9876543210"
               value={formData.mobileNumber}
               onChange={handleChange}
               className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-orange-500"
+              maxLength={10}
               required
             />
           </div>

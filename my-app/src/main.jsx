@@ -9,15 +9,21 @@ import { AuthProvider } from './app/providers/AuthContextApi/AuthProvider.jsx'
 import { MenuProvider } from './app/providers/MenuContextApi/MenuProvider.jsx'
 import { TableProvider } from './app/providers/TableContextApi/TableProvider.jsx'
 import StaffProvider from './app/providers/StaffContextApi/StaffProvider.jsx'
+import { InventoryProvider } from './app/providers/InventoryContextApi/InventoryProvider.jsx'
+import { OfferProvider } from './app/providers/OfferContextApi/OfferProvider.jsx'
 
 createRoot(document.getElementById('root')).render(
-    <TableProvider>
+  <TableProvider>
     <AuthProvider>
       <MenuProvider>
         <StaffProvider>
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>
+          <InventoryProvider>
+            <OfferProvider>
+              <BrowserRouter>
+                <App />
+              </BrowserRouter>
+            </OfferProvider>
+          </InventoryProvider>
         </StaffProvider>
       </MenuProvider>
     </AuthProvider>
