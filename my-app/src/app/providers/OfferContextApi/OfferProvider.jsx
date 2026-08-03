@@ -9,8 +9,8 @@ export const OfferProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const API_BASE = "https://localhost:7067/api/Offer";
-  const AI_API_BASE = "https://localhost:7067/api/offers";
+  const API_BASE = "https://localhost:44367/api/Offer";
+  const AI_API_BASE = "https://localhost:44367/api/offers";
 
   // Normalize API data to camelCase for the frontend
   const normalizeOffer = (offer) => {
