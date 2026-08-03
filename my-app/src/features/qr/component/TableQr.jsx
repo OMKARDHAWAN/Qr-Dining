@@ -12,7 +12,7 @@ export default function TableQr() {
   const targetPath = `${origin}/user?tableId=${tableId}`;
   
   // Free QR Code generator API to generate a scanable QR code image for Table #1
-  const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&color=b41b00&data=${encodeURIComponent(targetPath)}`;
+  const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&color=000000&data=${encodeURIComponent(targetPath)}`;
 
   useEffect(() => {
     // Clear previous customer session to ensure default guest mode on table scan simulation
