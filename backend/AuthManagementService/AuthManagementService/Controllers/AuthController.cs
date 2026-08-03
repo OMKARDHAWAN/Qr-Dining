@@ -242,10 +242,30 @@ namespace AuthManagementService.Controllers
             });
         }
 
+        [Authorize(Roles = "Admin")]
+        [HttpPost("staff")]
+        public async Task<IActionResult> CreateStaff([FromBody] ChefRegisterRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var result = await _authService.CreateStaffAsync(request);
+            if (result == null)
+            {
+                return BadRequest(new { message = "Username or Email is already registered." });
+            }
+            return Ok(new { message = "Staff member created successfully.", staffDetails = result });
+        }
+
         [Authorize(Roles = "Admin,Chef")]
         [HttpPut("staff/{id}")]
         public async Task<IActionResult> UpdateStaff(int id, [FromForm] ChefRegisterRequest request, IFormFile? Image)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             var success = await _authService.UpdateStaffAsync(id, request);
             if (!success)
             {

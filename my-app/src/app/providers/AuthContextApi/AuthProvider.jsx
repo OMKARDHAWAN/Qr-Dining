@@ -5,7 +5,7 @@ const AuthContext = createContext(null);
 
 // The port 5244 is the default HTTP port for our ASP.NET Core API.
 // Change this to match your backend port if needed (e.g., https://localhost:7198 for HTTPS)
-const API_BASE_URL = 'https://localhost:44383/api/auth';
+const API_BASE_URL = `${import.meta.env.VITE_API_BASE_URL ?? ''}/api/auth`;
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);

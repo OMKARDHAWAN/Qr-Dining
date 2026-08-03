@@ -1,5 +1,4 @@
-
-import { Route, Routes, Navigate } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import UserRoutes from "./UserRoutes";
 import AdminRoutes from "./AdminRoutes";
 import ChefRoutes from "./ChefRoutes";
@@ -62,4 +61,3 @@ export default function AppRoutes() {
     </Routes>
   );
 }
-

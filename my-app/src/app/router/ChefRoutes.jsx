@@ -1,28 +1,24 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import ChefLayout from "../../layouts/cheflayout/ChefLayout";
-import OrdersPage from "../../dashboard/chef/pages/Orders";
-import MenuPage from "../../dashboard/chef/pages/Menu";
-import ProfilePage from "../../dashboard/chef/pages/Profile";
-import StaffDirectory from "../../dashboard/admin/component/StaffDirectory";
-
-// Placeholder components to prevent compile crash until pulled from devlop branch
-const InventoryPage = () => (
-  <div className="p-8 bg-white rounded-2xl shadow-sm border border-gray-150 m-6">
-    <h1 className="text-3xl font-black text-gray-800 tracking-tight">Inventory Management</h1>
-    <p className="text-gray-500 mt-1">This module will be updated automatically after pulling from the devlop branch.</p>
-  </div>
-);
+import ChefHomePage from "../../dashboard/chef/pages/ChefHomePage";
+import Orders from "../../dashboard/chef/pages/Orders";
+import Menu from "../../dashboard/chef/pages/Menu";
+import Inventory from "../../dashboard/chef/pages/Inventory";
+import Staff from "../../dashboard/chef/pages/Staff";
+import Offers from "../../dashboard/chef/pages/Offers";
+import Profile from "../../dashboard/chef/pages/Profile";
 
 export default function ChefRoutes() {
   return (
     <Routes>
       <Route element={<ChefLayout />}>
-        <Route index element={<Navigate to="/chef/orders" replace />} />
-        <Route path="orders" element={<OrdersPage />} />
-        <Route path="menu" element={<MenuPage />} />
-        <Route path="inventory" element={<InventoryPage />} />
-        <Route path="staff" element={<StaffDirectory />} />
-        <Route path="profile" element={<ProfilePage />} />
+        <Route path="/" element={<ChefHomePage />} />
+        <Route path="/orders" element={<Orders />} />
+        <Route path="/menu" element={<Menu />} />
+        <Route path="/inventory" element={<Inventory />} />
+        <Route path="/staff" element={<Staff />} />
+        <Route path="/offers" element={<Offers />} />
+        <Route path="/profile" element={<Profile />} />
       </Route>
     </Routes>
   );
