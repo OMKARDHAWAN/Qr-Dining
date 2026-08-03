@@ -97,7 +97,7 @@ namespace AuthManagementService
                         var admin = dbContext.StaffMembers.FirstOrDefault(s => s.Username == "admin");
                         if (admin != null)
                         {
-                            admin.PasswordHash = Helpers.PasswordHelper.HashPassword("AdminPassword123");
+                            admin.PasswordHash = Helpers.PasswordHelper.HashPassword("AdminPassword@123");
                             dbContext.StaffMembers.Update(admin);
                         }
                         else
@@ -107,7 +107,7 @@ namespace AuthManagementService
                                 Username = "admin",
                                 Email = "admin@restaurant.com",
                                 MobileNumber = "1112223333",
-                                PasswordHash = Helpers.PasswordHelper.HashPassword("AdminPassword123"),
+                                PasswordHash = Helpers.PasswordHelper.HashPassword("AdminPassword@123"),
                                 Role = "Admin"
                             });
                         }
@@ -115,7 +115,7 @@ namespace AuthManagementService
                         var chef = dbContext.StaffMembers.FirstOrDefault(s => s.Username == "chef_maria");
                         if (chef != null)
                         {
-                            chef.PasswordHash = Helpers.PasswordHelper.HashPassword("ChefPassword123");
+                            chef.PasswordHash = Helpers.PasswordHelper.HashPassword("ChefPassword@123");
                             dbContext.StaffMembers.Update(chef);
                         }
                         else
@@ -125,7 +125,7 @@ namespace AuthManagementService
                                 Username = "chef_maria",
                                 Email = "chef.maria@restaurant.com",
                                 MobileNumber = "4445556666",
-                                PasswordHash = Helpers.PasswordHelper.HashPassword("ChefPassword123"),
+                                PasswordHash = Helpers.PasswordHelper.HashPassword("ChefPassword@123"),
                                 Role = "Chef"
                             });
                         }
