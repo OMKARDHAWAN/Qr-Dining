@@ -38,13 +38,34 @@ const AddStaffForm = ({ onClose }) => {
     e.preventDefault();
     setErrorMsg("");
 
-    if (!/^[0-9]{10}$/.test(formData.mobileNumber)) {
-      setErrorMsg("Phone number must be exactly 10 digits.");
+    // Email Validation
+    const email = formData.email;
+    if (!email.includes("@")) {
+      setErrorMsg("Email must include '@'.");
+      return;
+    }
+    if (/^[0-9]/.test(email)) {
+      setErrorMsg("Email must not start with a number.");
+      return;
+    }
+    const emailRegex = /^[a-zA-Z][a-zA-Z0-9._%+-]*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(email)) {
+      setErrorMsg("Email must have a valid domain structure (e.g. name@domain.com).");
       return;
     }
 
-    if (formData.mobileNumber.startsWith("0")) {
-      setErrorMsg("Phone number cannot start with 0.");
+    // Allowed Domains Whitelist
+    const emailParts = email.split("@");
+    const domain = emailParts[emailParts.length - 1].toLowerCase();
+    const allowedDomains = ["gmail.com", "hotmail.com", "outlook.com"];
+    if (!allowedDomains.includes(domain)) {
+      setErrorMsg("Only gmail.com, hotmail.com, and outlook.com email domains are allowed.");
+      return;
+    }
+
+    // Indian Mobile Number Validation
+    if (!/^[6-9][0-9]{9}$/.test(formData.mobileNumber)) {
+      setErrorMsg("Mobile number must be a valid 10-digit Indian number starting with 6, 7, 8, or 9.");
       return;
     }
 

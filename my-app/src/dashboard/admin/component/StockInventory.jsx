@@ -101,9 +101,9 @@ const StockInventory = () => {
       <StockTable onEdit={(item) => setEditingItem(item)} />
 
       {/* Bottom Cards */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
+      {/* <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8"> */}
         {/* AI Prediction Section */}
-        <div className="bg-white rounded-xl shadow-md p-6 border border-gray-150 flex flex-col justify-between">
+        {/* <div className="bg-white rounded-xl shadow-md p-6 border border-gray-150 flex flex-col justify-between">
           <div>
             <div className="flex items-center gap-2 mb-3">
               <div className="bg-indigo-100 p-2.5 rounded-lg text-indigo-600">
@@ -116,11 +116,11 @@ const StockInventory = () => {
             
             <p className="text-gray-500 text-sm font-sans mb-4">
               Select or search an item to estimate depletion rate and get suggested restock recommendations.
-            </p>
+            </p> */}
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+            {/* <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4"> */}
               {/* Dropdown Selection */}
-              <div>
+              {/* <div>
                 <label className="block text-xs font-semibold text-gray-500 mb-1 font-sans">Select Item</label>
                 <select
                   value={selectedIngredient}
@@ -140,7 +140,7 @@ const StockInventory = () => {
               </div>
 
               {/* Custom search */}
-              <form onSubmit={handleCustomPredictSubmit} className="flex flex-col justify-end">
+              {/* <form onSubmit={handleCustomPredictSubmit} className="flex flex-col justify-end">
                 <label className="block text-xs font-semibold text-gray-500 mb-1 font-sans">Or Enter Ingredient</label>
                 <div className="flex gap-2">
                   <input
@@ -158,10 +158,10 @@ const StockInventory = () => {
                   </button>
                 </div>
               </form>
-            </div>
+            </div> */}
 
             {/* Prediction Output */}
-            {predictLoading && (
+            {/* {predictLoading && (
               <div className="py-6 flex justify-center items-center">
                 <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-indigo-500"></div>
                 <span className="ml-2 text-sm text-gray-400 font-sans">Querying Prediction Service...</span>
@@ -200,11 +200,11 @@ const StockInventory = () => {
                 )}
               </div>
             )}
-          </div>
-        </div>
+          </div> */}
+        {/* </div>  */}
 
         {/* Supplier Connect Section */}
-        <div className="bg-purple-50 rounded-xl shadow-md p-6 border border-purple-100 flex flex-col justify-between">
+        {/* <div className="bg-purple-50 rounded-xl shadow-md p-6 border border-purple-100 flex flex-col justify-between">
           <div>
             <div className="flex items-center gap-2 mb-3">
               <div className="bg-purple-100 p-2.5 rounded-lg text-purple-700">
@@ -251,7 +251,7 @@ const StockInventory = () => {
             <span>Generate Supplier Reorder Email</span>
           </button>
         </div>
-      </div>
+      </div> */}
 
       {/* Forms Overlay Modals */}
       {showAddForm && (

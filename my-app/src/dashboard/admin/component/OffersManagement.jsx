@@ -246,7 +246,7 @@ const OffersManagement = () => {
       </div>
 
       {/* AI discount prediction panel */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-8">
+      {/* <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-8">
         <div className="bg-white border rounded-xl p-6 shadow-md lg:col-span-2 flex flex-col justify-between">
           <div>
             <div className="flex items-center gap-2 mb-3">
@@ -355,7 +355,7 @@ const OffersManagement = () => {
             <span>+ Create New Coupon Code</span>
           </button>
         </div>
-      </div>
+      </div> */}
 
       {/* Modals */}
       {showAddForm && (
