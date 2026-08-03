@@ -38,6 +38,16 @@ const AddStaffForm = ({ onClose }) => {
     e.preventDefault();
     setErrorMsg("");
 
+    if (!/^[0-9]{10}$/.test(formData.mobileNumber)) {
+      setErrorMsg("Phone number must be exactly 10 digits.");
+      return;
+    }
+
+    if (formData.mobileNumber.startsWith("0")) {
+      setErrorMsg("Phone number cannot start with 0.");
+      return;
+    }
+
     const data = new FormData();
     data.append("username", formData.username);
     data.append("email", formData.email); 
@@ -107,13 +117,14 @@ const AddStaffForm = ({ onClose }) => {
             <label className="block text-sm font-semibold text-gray-700 mb-1">
               Phone Number
             </label>
-            <input
+             <input
               type="tel"
               name="mobileNumber"
               placeholder="e.g. 9876543210"
               value={formData.mobileNumber}
               onChange={handleChange}
               className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-orange-500"
+              maxLength={10}
               required
             />
           </div>
