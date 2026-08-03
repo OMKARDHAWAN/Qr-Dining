@@ -1,3 +1,7 @@
+# QR-Dining Frontend
+
+The frontend of the QR-Dining Restaurant Management System built using React and Vite. It provides responsive dashboards and user interfaces for customers, administrators, chefs, and staff.
+
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
@@ -36,3 +40,11 @@ npm run dev
 ```bash
 npm run build
 ```
+## Tech Stack
+
+- React.js
+- Vite
+- React Router DOM
+- Axios
+- Tailwind CSS
+- Framer Motion
