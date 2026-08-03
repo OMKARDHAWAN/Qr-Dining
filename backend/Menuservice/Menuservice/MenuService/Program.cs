@@ -60,8 +60,8 @@ namespace MenuService
                 try
                 {
                     var context = services.GetRequiredService<ApplicationDbContext>();
-                    // Migrate applies any pending migrations and creates database if not exists
-                    context.Database.Migrate();
+                    // EnsureCreated creates the database and schema if they don't exist
+                    context.Database.EnsureCreated();
 
                     // Seed Categories and Menu Items if database is empty
                     if (!context.Categories.Any())

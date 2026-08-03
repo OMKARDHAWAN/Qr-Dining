@@ -43,20 +43,39 @@ export default function Register() {
     setErrorMsg("");
     setSubmitting(true);
 
-    // 1. Mobile Number Validation
+    // 1. Email Validation
+    const email = formData.email;
+    if (!email.includes("@")) {
+      setErrorMsg("Email must include '@'.");
+      setSubmitting(false);
+      return;
+    }
+    if (/^[0-9]/.test(email)) {
+      setErrorMsg("Email must not start with a number.");
+      setSubmitting(false);
+      return;
+    }
+    const emailRegex = /^[a-zA-Z][a-zA-Z0-9._%+-]*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(email)) {
+      setErrorMsg("Email must have a valid domain structure (e.g. name@domain.com).");
+      setSubmitting(false);
+      return;
+    }
+
+    // Allowed Domains Whitelist
+    const emailParts = email.split("@");
+    const domain = emailParts[emailParts.length - 1].toLowerCase();
+    const allowedDomains = ["gmail.com", "hotmail.com", "outlook.com"];
+    if (!allowedDomains.includes(domain)) {
+      setErrorMsg("Only gmail.com, hotmail.com, and outlook.com email domains are allowed.");
+      setSubmitting(false);
+      return;
+    }
+
+    // 2. Mobile Number Validation
     const mobile = formData.mobileNumber;
-    if (!/^[0-9]{10}$/.test(mobile)) {
-      setErrorMsg("Phone number must be exactly 10 digits.");
-      setSubmitting(false);
-      return;
-    }
-    if (mobile.startsWith("0")) {
-      setErrorMsg("Phone number cannot start with 0.");
-      setSubmitting(false);
-      return;
-    }
-    if (/^0+$/.test(mobile)) {
-      setErrorMsg("Phone number cannot be all zeros.");
+    if (!/^[6-9][0-9]{9}$/.test(mobile)) {
+      setErrorMsg("Mobile number must be a valid 10-digit Indian number starting with 6, 7, 8, or 9.");
       setSubmitting(false);
       return;
     }

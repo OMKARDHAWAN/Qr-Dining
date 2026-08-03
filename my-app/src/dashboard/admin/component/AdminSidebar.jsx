@@ -5,6 +5,7 @@ import {
   FiUsers,
   FiUser,
   FiLogOut,
+  FiTrendingUp,
 } from "react-icons/fi";
 import { LuUtensilsCrossed } from "react-icons/lu";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -26,6 +27,10 @@ const AdminSidebar = () => {
       setActiveTab("menu");
     } else if (location.pathname.includes("/staff-management")) {
       setActiveTab("staff");
+    } else if (location.pathname.includes("/inventory")) {
+      setActiveTab("stock");
+    } else if (location.pathname.includes("/offers")) {
+      setActiveTab("offers");
     } else if (location.pathname === "/admin" || location.pathname === "/admin/") {
       setActiveTab("orders");
     }
@@ -86,13 +91,28 @@ const AdminSidebar = () => {
             <span className="font-sans">Menu Management</span>
           </button>
 
-          {/* Stock & Inventory - Disabled page navigation */}
+          {/* Stock & Inventory */}
           <button
-            onClick={() => setActiveTab("stock")}
+            onClick={() => {
+              setActiveTab("stock");
+              navigate("/admin/inventory");
+            }}
             className={getBtnClass("stock")}
           >
             <FiBox size={22} />
             <span className="font-sans">Stock & Inventory</span>
+          </button>
+
+          {/* Promotions & Offers */}
+          <button
+            onClick={() => {
+              setActiveTab("offers");
+              navigate("/admin/offers");
+            }}
+            className={getBtnClass("offers")}
+          >
+            <FiTrendingUp size={22} />
+            <span className="font-sans">Promotions & Offers</span>
           </button>
 
           {/* Staff Directory */}

@@ -32,9 +32,27 @@ export default function LoginViaCredential({
         return;
       }
 
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      // Custom Email Validation
+      if (!email.includes("@")) {
+        setError("Email must include '@'.");
+        return;
+      }
+      if (/^[0-9]/.test(email)) {
+        setError("Email must not start with a number.");
+        return;
+      }
+      const emailRegex = /^[a-zA-Z][a-zA-Z0-9._%+-]*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
       if (!emailRegex.test(email)) {
-        setError("Please enter a valid email address.");
+        setError("Email must have a valid domain structure (e.g. name@domain.com).");
+        return;
+      }
+
+      // Whitelist check
+      const emailParts = email.split("@");
+      const domain = emailParts[emailParts.length - 1].toLowerCase();
+      const allowedDomains = ["gmail.com", "hotmail.com", "outlook.com"];
+      if (!allowedDomains.includes(domain)) {
+        setError("Only gmail.com, hotmail.com, and outlook.com email domains are allowed.");
         return;
       }
 
