@@ -57,8 +57,7 @@ namespace OrderService.Repositories
                 _context.Orders.Remove(order);
             }
         }
-
-        // save changes
+        // Save all pending changes to the database
         public async Task Save()
         {
             await _context.SaveChangesAsync();
