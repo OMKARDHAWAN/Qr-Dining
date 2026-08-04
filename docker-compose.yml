@@ -1,0 +1,70 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: ./Qr-Dining/my-app
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+      - "5173:5173"
+    environment:
+      - VITE_API_HOST=13.48.37.222
+      - VITE_API_PROTOCOL=http
+    restart: always
+
+  auth-service:
+    build:
+      context: ./Qr-Dining/backend/AuthManagementService
+      dockerfile: AuthManagementService/Dockerfile
+    ports:
+      - "44383:80"
+    restart: always
+
+  order-service:
+    build:
+      context: ./Qr-Dining/backend/OrderService
+      dockerfile: OrderService/Dockerfile
+    ports:
+      - "44311:80"
+    restart: always
+
+  menu-service:
+    build:
+      context: ./Qr-Dining/backend/Menuservice/Menuservice
+      dockerfile: MenuService/Dockerfile
+    ports:
+      - "44380:80"
+    restart: always
+
+  offer-service:
+    build:
+      context: ./Qr-Dining/backend/OfferService
+      dockerfile: OfferService/Dockerfile
+    ports:
+      - "44367:80"
+    restart: always
+
+  inventory-service:
+    build:
+      context: ./Qr-Dining/backend/InventoryService
+      dockerfile: InventoryService/Dockerfile
+    ports:
+      - "44345:80"
+    restart: always
+
+  staff-service:
+    build:
+      context: ./Qr-Dining/backend/StaffService
+      dockerfile: StaffService/Dockerfile
+    ports:
+      - "7155:80"
+    restart: always
+
+  ai-service:
+    build:
+      context: ./Qr-Dining/backend/AiService
+      dockerfile: AiService/Dockerfile
+    ports:
+      - "5174:80"
+    restart: always
