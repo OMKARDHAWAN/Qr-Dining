@@ -25,7 +25,7 @@ namespace OrderService
             // register payment gateway service dependency injection
             builder.Services.AddScoped<IPaymentGatewayService, PaymentGatewayService>();
 
-            // Configure CORS policy for React frontend
+            // Add CORS policy
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("ReactApp", policy =>
