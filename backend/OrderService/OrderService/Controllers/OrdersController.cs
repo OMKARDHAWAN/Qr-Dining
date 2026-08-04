@@ -194,7 +194,7 @@ namespace OrderService.Controllers
             return Ok(new { message = "Order deleted successfully" });
         }
 
-        // manual mapping helper
+        // Helper method to map Order entity to OrderResponseDto
         private OrderResponseDto MapToDto(Order order)
         {
             return new OrderResponseDto
