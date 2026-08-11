@@ -1,0 +1,133 @@
+version: '3.8'
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: mssql_db
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=YourStrongSAPassword@123
+    ports:
+      - "1433:1433"
+    restart: always
+
+  auth-service:
+    build:
+      context: ./backend/AuthManagementService/AuthManagementService
+      dockerfile: Dockerfile
+    container_name: auth-service
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=RestaurantAuthDb;User Id=sa;Password=YourStrongSAPassword@123;TrustServerCertificate=True;MultipleActiveResultSets=True;
+      - ASPNETCORE_URLS=http://+:80
+      - ASPNETCORE_ENVIRONMENT=Production
+    depends_on:
+      - sqlserver
+    restart: always
+
+  menu-service:
+    build:
+      context: ./backend/Menuservice/Menuservice/MenuService
+      dockerfile: Dockerfile
+    container_name: menu-service
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=QrDiningMenuDb;User Id=sa;Password=YourStrongSAPassword@123;TrustServerCertificate=True;MultipleActiveResultSets=True;
+      - ASPNETCORE_URLS=http://+:80
+      - ASPNETCORE_ENVIRONMENT=Production
+    depends_on:
+      - sqlserver
+    restart: always
+
+  order-service:
+    build:
+      context: ./backend/OrderService/OrderService
+      dockerfile: Dockerfile
+    container_name: order-service
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=QrDiningOrderDb;User Id=sa;Password=YourStrongSAPassword@123;TrustServerCertificate=True;MultipleActiveResultSets=True;
+      - ASPNETCORE_URLS=http://+:80
+      - ASPNETCORE_ENVIRONMENT=Production
+    depends_on:
+      - sqlserver
+    restart: always
+
+  inventory-service:
+    build:
+      context: ./backend/InventoryService/InventoryService
+      dockerfile: Dockerfile
+    container_name: inventory-service
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=QrDiningInventoryDb;User Id=sa;Password=YourStrongSAPassword@123;TrustServerCertificate=True;MultipleActiveResultSets=True;
+      - ASPNETCORE_URLS=http://+:80
+      - ASPNETCORE_ENVIRONMENT=Production
+    depends_on:
+      - sqlserver
+    restart: always
+
+  offer-service:
+    build:
+      context: ./backend/OfferService/OfferService
+      dockerfile: Dockerfile
+    container_name: offer-service
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=QrDiningOfferDb;User Id=sa;Password=YourStrongSAPassword@123;TrustServerCertificate=True;MultipleActiveResultSets=True;
+      - ASPNETCORE_URLS=http://+:80
+      - ASPNETCORE_ENVIRONMENT=Production
+    depends_on:
+      - sqlserver
+    restart: always
+
+  staff-service:
+    build:
+      context: ./backend/StaffService/StaffService
+      dockerfile: Dockerfile
+    container_name: staff-service
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=StaffDB;User Id=sa;Password=YourStrongSAPassword@123;TrustServerCertificate=True;MultipleActiveResultSets=True;
+      - ASPNETCORE_URLS=http://+:80
+      - ASPNETCORE_ENVIRONMENT=Production
+    depends_on:
+      - sqlserver
+    restart: always
+
+  ai-service:
+    build:
+      context: ./backend/AiService/AiService
+      dockerfile: Dockerfile
+    container_name: ai-service
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=RestaurantAuthDb;User Id=sa;Password=YourStrongSAPassword@123;TrustServerCertificate=True;MultipleActiveResultSets=True;
+      - ConnectionStrings__MenuConnection=Server=sqlserver,1433;Database=QrDiningMenuDb;User Id=sa;Password=YourStrongSAPassword@123;TrustServerCertificate=True;MultipleActiveResultSets=True;
+      - ConnectionStrings__OrderConnection=Server=sqlserver,1433;Database=QrDiningOrderDb;User Id=sa;Password=YourStrongSAPassword@123;TrustServerCertificate=True;MultipleActiveResultSets=True;
+      - ConnectionStrings__InventoryConnection=Server=sqlserver,1433;Database=QrDiningInventoryDb;User Id=sa;Password=YourStrongSAPassword@123;TrustServerCertificate=True;MultipleActiveResultSets=True;
+      - ConnectionStrings__OfferConnection=Server=sqlserver,1433;Database=QrDiningOfferDb;User Id=sa;Password=YourStrongSAPassword@123;TrustServerCertificate=True;MultipleActiveResultSets=True;
+      - ASPNETCORE_URLS=http://+:80
+      - ASPNETCORE_ENVIRONMENT=Production
+    depends_on:
+      - sqlserver
+    restart: always
+
+  notify-service:
+    build:
+      context: ./backend/notifyService
+      dockerfile: Dockerfile
+    container_name: notify-service
+    ports:
+      - "8082:8082"
+    restart: always
+
+  frontend:
+    build:
+      context: ./my-app
+      dockerfile: Dockerfile
+    container_name: frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - auth-service
+      - menu-service
+      - order-service
+      - inventory-service
+      - offer-service
+      - staff-service
+      - notify-service
+    restart: always
