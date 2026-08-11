@@ -7,6 +7,14 @@ services:
       - MSSQL_SA_PASSWORD=YourStrongSAPassword@123
     ports:
       - "1433:1433"
+    volumes:
+      - mssql_data:/var/opt/mssql/data
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P 'YourStrongSAPassword@123' -Q 'SELECT 1' -C || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
     restart: always
 
   auth-service:
@@ -19,7 +27,8 @@ services:
       - ASPNETCORE_URLS=http://+:80
       - ASPNETCORE_ENVIRONMENT=Production
     depends_on:
-      - sqlserver
+      sqlserver:
+        condition: service_healthy
     restart: always
 
   menu-service:
@@ -32,7 +41,8 @@ services:
       - ASPNETCORE_URLS=http://+:80
       - ASPNETCORE_ENVIRONMENT=Production
     depends_on:
-      - sqlserver
+      sqlserver:
+        condition: service_healthy
     restart: always
 
   order-service:
@@ -45,7 +55,8 @@ services:
       - ASPNETCORE_URLS=http://+:80
       - ASPNETCORE_ENVIRONMENT=Production
     depends_on:
-      - sqlserver
+      sqlserver:
+        condition: service_healthy
     restart: always
 
   inventory-service:
@@ -58,7 +69,8 @@ services:
       - ASPNETCORE_URLS=http://+:80
       - ASPNETCORE_ENVIRONMENT=Production
     depends_on:
-      - sqlserver
+      sqlserver:
+        condition: service_healthy
     restart: always
 
   offer-service:
@@ -71,7 +83,8 @@ services:
       - ASPNETCORE_URLS=http://+:80
       - ASPNETCORE_ENVIRONMENT=Production
     depends_on:
-      - sqlserver
+      sqlserver:
+        condition: service_healthy
     restart: always
 
   staff-service:
@@ -84,7 +97,8 @@ services:
       - ASPNETCORE_URLS=http://+:80
       - ASPNETCORE_ENVIRONMENT=Production
     depends_on:
-      - sqlserver
+      sqlserver:
+        condition: service_healthy
     restart: always
 
   ai-service:
@@ -101,7 +115,8 @@ services:
       - ASPNETCORE_URLS=http://+:80
       - ASPNETCORE_ENVIRONMENT=Production
     depends_on:
-      - sqlserver
+      sqlserver:
+        condition: service_healthy
     restart: always
 
   notify-service:
@@ -129,3 +144,6 @@ services:
       - staff-service
       - notify-service
     restart: always
+
+volumes:
+  mssql_data:
