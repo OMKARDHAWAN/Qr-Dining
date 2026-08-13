@@ -21,7 +21,7 @@ function Orders() {
 
     const fetchOrders = async () => {
       try {
-        const response = await axios.get("https://localhost:44311/api/orders");
+        const response = await axios.get("/api/orders");
         const data = response.data || [];
         
         // Filter orders by active tableId and user's placed order IDs
@@ -90,7 +90,7 @@ function Orders() {
     try {
       const token = localStorage.getItem("token");
       // DELETE request to the C# Order Service
-      const response = await axios.delete(`https://localhost:44311/api/orders/${orderId}`, {
+      const response = await axios.delete(`/api/orders/${orderId}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }

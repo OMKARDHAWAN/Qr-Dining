@@ -9,8 +9,8 @@ export const InventoryProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const API_BASE = "https://localhost:44345/api/Inventory";
-  const AI_API_BASE = "https://localhost:44345/api/inventory";
+  const API_BASE = "/api/Inventory";
+  const AI_API_BASE = "/api/inventory";
 
   // Fetch all inventory items
   const fetchInventory = async () => {

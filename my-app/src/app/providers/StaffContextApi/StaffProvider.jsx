@@ -7,7 +7,7 @@ const StaffProvider = ({ children }) => {
 
     const [staffs, setStaffs] = useState([]);
 
-    const API = "https://localhost:7155/api/Staff";
+    const API = "/api/Staff";
 
     // GET ALL STAFF
 

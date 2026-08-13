@@ -23,7 +23,7 @@ export default function AdminHome() {
 
   const fetchOrders = async () => {
     try {
-      const response = await axios.get("https://localhost:44311/api/orders");
+      const response = await axios.get("/api/orders");
       // Sort newest orders first
       const data = response.data || [];
       setOrders(data.reverse());
@@ -41,7 +41,7 @@ export default function AdminHome() {
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this order?")) return;
     try {
-      await axios.delete(`https://localhost:44311/api/orders/${id}`);
+      await axios.delete(`/api/orders/${id}`);
       alert("Order deleted successfully!");
       fetchOrders();
     } catch (err) {
@@ -72,7 +72,7 @@ export default function AdminHome() {
 
   const handleSaveEdit = async (id) => {
     try {
-      await axios.put(`https://localhost:44311/api/orders/${id}`, {
+      await axios.put(`/api/orders/${id}`, {
         TableId: parseInt(editFormData.tableId),
         OrderItems: editFormData.orderItems,
         Price: parseFloat(editFormData.price),
@@ -94,7 +94,7 @@ export default function AdminHome() {
     if (duration === null) return; // user cancelled
 
     try {
-      await axios.put(`https://localhost:44311/api/orders/${order.id}`, {
+      await axios.put(`/api/orders/${order.id}`, {
         TableId: order.tableId,
         OrderItems: order.orderItems,
         Price: order.price,
