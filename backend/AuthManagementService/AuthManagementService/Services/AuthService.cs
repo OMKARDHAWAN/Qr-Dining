@@ -51,7 +51,7 @@ namespace AuthManagementService.Services
                     {
                         IsRegistered = true,
                         OtpSent = true,
-                        Message = $"OTP sent to your registered mobile number. (For Testing, your OTP is: {generatedOtp})"
+                        Message = "OTP sent to your registered email address."
                     };
                 }
 
@@ -104,7 +104,7 @@ namespace AuthManagementService.Services
                 {
                     IsRegistered = false,
                     OtpSent = true,
-                    Message = $"OTP sent to your mobile number. (For Testing, your OTP is: {generatedOtp})"
+                    Message = "OTP sent to your email address."
                 };
             }
 
@@ -426,7 +426,7 @@ namespace AuthManagementService.Services
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
                 // Call Java Notification Service running on port 8082
-                var response = await _httpClient.PostAsync("http://localhost:8082/api/notifications/send-otp", content);
+                var response = await _httpClient.PostAsync("http://notify-service:8082/api/notifications/send-otp", content);
                 if (response.IsSuccessStatusCode)
                 {
                     var responseString = await response.Content.ReadAsStringAsync();

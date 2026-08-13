@@ -233,7 +233,7 @@ namespace OrderService.Controllers
                 };
                 var orderJson = System.Text.Json.JsonSerializer.Serialize(orderPayload);
                 var orderContent = new StringContent(orderJson, Encoding.UTF8, "application/json");
-                await _httpClient.PostAsync("http://localhost:8082/api/notifications/send-order-email", orderContent);
+                await _httpClient.PostAsync("http://notify-service:8082/api/notifications/send-order-email", orderContent);
 
                 // 2. Send Payment Receipt Notification (since payment is completed)
                 if (dto.PaymentStatus == "Completed" && !string.IsNullOrEmpty(dto.TransactionId))
@@ -251,7 +251,7 @@ namespace OrderService.Controllers
                     };
                     var paymentJson = System.Text.Json.JsonSerializer.Serialize(paymentPayload);
                     var paymentContent = new StringContent(paymentJson, Encoding.UTF8, "application/json");
-                    await _httpClient.PostAsync("http://localhost:8082/api/notifications/send-payment-notification", paymentContent);
+                    await _httpClient.PostAsync("http://notify-service:8082/api/notifications/send-payment-notification", paymentContent);
                 }
             }
             catch (Exception ex)
